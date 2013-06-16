@@ -17,6 +17,10 @@ class Range
 
     unitY: -> @top + @bottom + 1
 
+    markX: (point) -> ((1 << @unitX()) - 1) << point.x - @left
+
+    markY: (point) -> ((1 << @unitY()) - 1) << point.y - @top
+
 
 class Color
 
@@ -91,6 +95,7 @@ class Calculate
 
     constructor: (@grid) ->
 
+    # TODO: make private
     getCellRange: (cell) ->
 
         point = cell.get Point
@@ -136,6 +141,24 @@ class Calculate
             if bottom.range.top >= absY and top.range.left >= absX
                 return true
 
+        [leftMarks, rightMarks] = (getMarkBits item for item in [left, right])
+
+        if result = getBitAdd leftMarks.x, rightMarks.x
+            for i in [0...result.length]
+                list = @grid.getCol i + result.offset
+                count = 0
+                for j in [top.point.y..bottom.point.y]
+                    count++ if list[j].get(State).done
+                return true if count is absY + 1
+
+        if result = getBitAdd leftMarks.y, rightMarks.y
+            for i in [0...result.length]
+                list = @grid.getRow i + result.offset
+                count = 0
+                for j in [left.point.x..right.point.x]
+                    count++ if list[j].get(State).done
+                return true if count is absX + 1
+
         false
 
     markMatch: (cell) ->
@@ -152,6 +175,24 @@ class Calculate
 
         cellRange.right?.left = range.unitX()
         cellRange.left?.right = range.unitX()
+
+    getMarkBits = (item) ->
+        x: item.range.markX item.point
+        y: item.range.markY item.point
+
+    # TODO: cache
+    getBitAdd = (a, b) ->
+
+        result = a & b
+
+        return false if result is 0
+
+        result = result.toString(2).split('0').reverse()
+
+        {
+            offset: result.length - 1
+            length: result[result.length - 1].length
+        }
 
 
 angular.module('controller')
