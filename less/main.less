@@ -1,0 +1,35 @@
+.content {
+  margin: 0 auto;
+}
+
+#main {
+  .panel {
+    margin-top: 40px;
+    margin-bottom: 20px;
+
+    .area {
+      text-align: center;
+
+      .cell-row {
+        line-height: 0;
+
+        .cell {
+          cursor: pointer;
+          display: inline-block;
+          border: 2px solid #ffffff;
+          width: 40px;
+          height: 40px;
+
+          &.click {
+            border: 2px solid black;
+          }
+
+          &.done {
+            cursor: default;
+            background-color: transparent !important;
+          }
+        }
+      }
+    }
+  }
+}
