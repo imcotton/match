@@ -95,23 +95,6 @@ class Calculate
 
     constructor: (@grid) ->
 
-    # TODO: make private
-    getCellRange: (cell) ->
-
-        point = cell.get Point
-        range = cell.get Range
-
-        list =
-            top:    @grid.getCell point.x, point.y - range.top - 1
-            bottom: @grid.getCell point.x, point.y + range.bottom + 1
-            left:   @grid.getCell point.x - range.left - 1, point.y
-            right:  @grid.getCell point.x + range.right + 1, point.y
-
-        for key, value of list
-            list[key] = value?.get Range
-
-        list
-
     hasMatch: (foo, bar) ->
 
         return if foo is bar
@@ -168,13 +151,29 @@ class Calculate
 
         range = cell.get Range
 
-        cellRange = @getCellRange cell
+        cellRange = @_getCellRange cell
 
         cellRange.bottom?.top = range.unitY()
         cellRange.top?.bottom = range.unitY()
 
         cellRange.right?.left = range.unitX()
         cellRange.left?.right = range.unitX()
+
+    _getCellRange: (cell) ->
+
+        point = cell.get Point
+        range = cell.get Range
+
+        list =
+            top:    @grid.getCell point.x, point.y - range.top - 1
+            bottom: @grid.getCell point.x, point.y + range.bottom + 1
+            left:   @grid.getCell point.x - range.left - 1, point.y
+            right:  @grid.getCell point.x + range.right + 1, point.y
+
+        for key, value of list
+            list[key] = value?.get Range
+
+        list
 
     getMarkBits = (item) ->
         x: item.range.markX item.point
