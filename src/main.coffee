@@ -116,8 +116,8 @@ class Calculate
         [top, bottom] = `foo.point.y < bar.point.y ? [foo, bar] : [bar, foo]`
         [left, right] = `foo.point.x < bar.point.x ? [foo, bar] : [bar, foo]`
 
-        absX = Math.abs left.point.x - right.point.x
-        absY = Math.abs top.point.y - bottom.point.y
+        absX = right.point.x - left.point.x
+        absY = bottom.point.y - top.point.y
 
         if foo.point.y is bar.point.y and absX is left.range.right + 1
             return true
