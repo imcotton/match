@@ -44,11 +44,11 @@ class CellModel
         @typeHash = {}
         @nameHash = {}
 
-    add: (element) ->
-        @typeHash[element.constructor] = element
+    add: (instance) ->
+        @typeHash[instance.constructor] = instance
 
-    get: (type) ->
-        @typeHash[type]
+    get: (clazz) ->
+        @typeHash[clazz]
 
     gets: (types...) ->
 
@@ -125,16 +125,16 @@ class Calculate
             if bottom.range.top >= absY and top.range.left >= absX
                 return true
 
-        [leftMarks, rightMarks] = (getMarkBits item for item in [left, right])
+        [fooMarks, barMarks] = (getMarkBits item for item in [foo, bar])
 
-        if result = getBitAdd leftMarks.x, rightMarks.x
+        if result = getBitAdd fooMarks.x, barMarks.x
             for i in [0...result.length]
                 list = @grid.getCol i + result.offset
                 for j in [top.point.y...bottom.point.y]
                     break unless list[j].get(State).done
                 return true if j is bottom.point.y
 
-        if result = getBitAdd leftMarks.y, rightMarks.y
+        if result = getBitAdd fooMarks.y, barMarks.y
             for i in [0...result.length]
                 list = @grid.getRow i + result.offset
                 for j in [left.point.x...right.point.x]
