@@ -8,8 +8,7 @@ class Point
 
     constructor: (@x = 0, @y = 0) ->
 
-    toString: ->
-        "#{@x}-#{@y}"
+    toString: -> "#{@x}-#{@y}"
 
 
 class Range
@@ -36,8 +35,7 @@ class Color
 
     constructor: (@hex, @name) ->
 
-    toString: ->
-        @name
+    toString: -> @name
 
 
 class CellModel
