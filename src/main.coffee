@@ -8,6 +8,9 @@ class Point
 
     constructor: (@x = 0, @y = 0) ->
 
+    toString: ->
+        "#{@x}-#{@y}"
+
 
 class Range
 
@@ -201,6 +204,7 @@ angular.module('controller')
         constructor: ->
 
             @list = []
+            @hash = {}
 
             grid = new GridModel 7, 7
 
@@ -217,9 +221,14 @@ angular.module('controller')
                     cell = grid.getCell x, y
                     cell.add value for key, value of item
 
-                    item.cell = cell
+                    item.toString = -> @point.toString()
+
+                    @hash[item] = cell
 
             @calulate = new Calculate grid
+
+        getCell: (item) ->
+            @hash[item]
 
         cellClick: (item) ->
 
@@ -239,10 +248,10 @@ angular.module('controller')
 
             return unless item.color is prev.color
 
-            return unless @calulate.hasMatch item.cell, prev.cell
+            return unless @calulate.hasMatch @getCell(item), @getCell(prev)
 
             for i in [item, prev]
-                @calulate.markMatch i.cell
+                @calulate.markMatch @getCell i
 
             @prev.click = false
             @prev = null
