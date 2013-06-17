@@ -132,18 +132,16 @@ class Calculate
         if result = getBitAdd leftMarks.x, rightMarks.x
             for i in [0...result.length]
                 list = @grid.getCol i + result.offset
-                count = 0
-                for j in [top.point.y..bottom.point.y]
-                    count++ if list[j].get(State).done
-                return true if count is absY + 1
+                for j in [top.point.y...bottom.point.y]
+                    break unless list[j].get(State).done
+                return true if j is bottom.point.y
 
         if result = getBitAdd leftMarks.y, rightMarks.y
             for i in [0...result.length]
                 list = @grid.getRow i + result.offset
-                count = 0
-                for j in [left.point.x..right.point.x]
-                    count++ if list[j].get(State).done
-                return true if count is absX + 1
+                for j in [left.point.x...right.point.x]
+                    break unless list[j].get(State).done
+                return true if j is right.point.x
 
         false
 
