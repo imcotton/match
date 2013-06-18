@@ -19,9 +19,9 @@ class Range
 
     unitY: -> @top + @bottom + 1
 
-    markX: (point) -> ((1 << @unitX()) - 1) << point.x - @left
+    markX: (offset) -> ((1 << @unitX()) - 1) << offset - @left
 
-    markY: (point) -> ((1 << @unitY()) - 1) << point.y - @top
+    markY: (offset) -> ((1 << @unitY()) - 1) << offset - @top
 
 
 class Color
@@ -193,8 +193,8 @@ class Calculate
         result
 
     getMarkBits = (item) ->
-        x: item.range.markX item.point
-        y: item.range.markY item.point
+        x: item.range.markX item.point.x
+        y: item.range.markY item.point.y
 
     # TODO: cache
     getBitAdd = (a, b) ->
