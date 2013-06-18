@@ -27,10 +27,12 @@ class Range
 class Color
 
     @list = [
-        @RED    = new @ '#FF0000', 'red'
-        @BLUE   = new @ '#0000FF', 'blue'
+        @maroon = new @ '#800000', 'maroon'
+        @NAVY   = new @ '#000080', 'navy'
         @PURPLE = new @ '#800080', 'purple'
         @GREEN  = new @ '#008000', 'green'
+        @TEAL   = new @ '#008080', 'teal'
+        @OLIVE  = new @ '#808000', 'olive'
     ]
 
     constructor: (@hex, @name) ->
