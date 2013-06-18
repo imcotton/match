@@ -125,6 +125,13 @@ class Calculate
             if bottom.range.top >= absY and top.range.left >= absX
                 return true
 
+        [fooOuter, barOuter] = for item in [foo, bar]
+            getOuterRange item, @grid.width(), @grid.height()
+
+        for key, value of fooOuter
+            if value is barOuter[key] is true
+                return true
+
         [fooMarks, barMarks] = (getMarkBits item for item in [foo, bar])
 
         if result = getBitAdd fooMarks.x, barMarks.x
@@ -173,6 +180,12 @@ class Calculate
             list[key] = value?.get Range
 
         list
+
+    getOuterRange = (item, width, height) ->
+        top: item.point.y is item.range.top
+        bottom: item.point.y + item.range.bottom + 1 is height
+        left: item.point.x is item.range.left
+        right: item.point.x + item.range.right + 1 is width
 
     getMarkBits = (item) ->
         x: item.range.markX item.point
