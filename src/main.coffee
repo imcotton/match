@@ -27,7 +27,7 @@ class Range
 class Color
 
     @list = [
-        @maroon = new @ '#800000', 'maroon'
+        @MAROON = new @ '#800000', 'maroon'
         @NAVY   = new @ '#000080', 'navy'
         @PURPLE = new @ '#800080', 'purple'
         @GREEN  = new @ '#008000', 'green'
