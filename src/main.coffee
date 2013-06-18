@@ -196,19 +196,23 @@ class Calculate
         x: item.range.markX item.point.x
         y: item.range.markY item.point.y
 
-    # TODO: cache
-    getBitAdd = (a, b) ->
+    getBitAdd = _.memoize(
 
-        result = a & b
+        (a, b) ->
 
-        return false if result is 0
+            result = a & b
 
-        result = result.toString(2).split('0').reverse()
+            return false if result is 0
 
-        {
-            offset: result.length - 1
-            length: result[result.length - 1].length
-        }
+            result = result.toString(2).split('0').reverse()
+
+            {
+                offset: result.length - 1
+                length: result[result.length - 1].length
+            }
+
+        (a, b) -> a & b
+    )
 
 
 angular.module('controller')
