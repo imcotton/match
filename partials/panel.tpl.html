@@ -1,0 +1,22 @@
+<div ng-controller="PanelCtrl as panel"
+     class="panel content"
+>
+
+    <div class="area">
+
+        <div ng-repeat="row in panel.list"
+             class="cell-row"
+        >
+
+            <span ng-repeat="item in row"
+                  ng-style="{'background-color': item.color.hex}"
+                  ng-class="{click: item.click, done: item.state.done}"
+                  ng-click="panel.cellClick(item)"
+                  class="cell"
+            ></span>
+
+        </div>
+
+    </div>
+
+</div>
