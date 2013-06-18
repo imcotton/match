@@ -157,7 +157,7 @@ class Calculate
 
         range = cell.get Range
 
-        cellRange = @_getCellRange cell
+        cellRange = getCellRange @grid, cell
 
         cellRange.bottom?.top = range.unitY()
         cellRange.top?.bottom = range.unitY()
@@ -165,16 +165,16 @@ class Calculate
         cellRange.right?.left = range.unitX()
         cellRange.left?.right = range.unitX()
 
-    _getCellRange: (cell) ->
+    getCellRange = (grid, cell) ->
 
         point = cell.get Point
         range = cell.get Range
 
         list =
-            top:    @grid.getCell point.x, point.y - range.top - 1
-            bottom: @grid.getCell point.x, point.y + range.bottom + 1
-            left:   @grid.getCell point.x - range.left - 1, point.y
-            right:  @grid.getCell point.x + range.right + 1, point.y
+            top:    grid.getCell point.x, point.y - range.top - 1
+            bottom: grid.getCell point.x, point.y + range.bottom + 1
+            left:   grid.getCell point.x - range.left - 1, point.y
+            right:  grid.getCell point.x + range.right + 1, point.y
 
         for key, value of list
             list[key] = value?.get Range
