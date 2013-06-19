@@ -69,11 +69,11 @@ class CellModel
 
 class GridModel
 
-    constructor: (width = 0, height = 0) ->
+    constructor: (cellClass = Object, width = 0, height = 0) ->
 
         @row = _.arrayInit height, ->
             _.arrayInit width, ->
-                new CellModel
+                new cellClass
 
         @col = _.arrayInit width, (i) =>
             _.arrayInit height, (j) =>
