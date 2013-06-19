@@ -59,7 +59,7 @@ class CellModel
         for type in types when type of @typeHash
 
             unless type of @nameHash
-                key = type.toString().match /^function (.)([^\(]+)/
+                key = type.toString().match(/^function (.)([^\(]+)/)
                 key = key[1].toLowerCase() + key[2]
                 @nameHash[type] = key
 
@@ -200,16 +200,12 @@ class Calculate
 
         (a, b) ->
 
-            result = a & b
+            return false if 0 is result = a & b
 
-            return false if result is 0
+            result = result.toString(2).split('0')
 
-            result = result.toString(2).split('0').reverse()
-
-            {
-                offset: result.length - 1
-                length: result[result.length - 1].length
-            }
+            offset: result.length - 1
+            length: result[0].length
 
         (a, b) -> a & b
     )
