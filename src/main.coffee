@@ -19,15 +19,15 @@ class Range
 
     unitY: -> @top + @bottom + 1
 
-    markX: (point) -> ((1 << @unitX()) - 1) << point.x - @left
+    markX: (offset) -> ((1 << @unitX()) - 1) << offset - @left
 
-    markY: (point) -> ((1 << @unitY()) - 1) << point.y - @top
+    markY: (offset) -> ((1 << @unitY()) - 1) << offset - @top
 
 
 class Color
 
     @list = [
-        @maroon = new @ '#800000', 'maroon'
+        @MAROON = new @ '#800000', 'maroon'
         @NAVY   = new @ '#000080', 'navy'
         @PURPLE = new @ '#800080', 'purple'
         @GREEN  = new @ '#008000', 'green'
@@ -59,7 +59,7 @@ class CellModel
         for type in types when type of @typeHash
 
             unless type of @nameHash
-                key = type.toString().match /^function (.)([^\(]+)/
+                key = type.toString().match(/^function (.)([^\(]+)/)
                 key = key[1].toLowerCase() + key[2]
                 @nameHash[type] = key
 
@@ -128,11 +128,9 @@ class Calculate
                 return true
 
         [fooOuter, barOuter] = for item in [foo, bar]
-            getOuterRange item, @grid.width(), @grid.height()
+            getOuterBits item, @grid.width(), @grid.height()
 
-        for key, value of fooOuter
-            if value is barOuter[key] is true
-                return true
+        return true if fooOuter & barOuter
 
         [fooMarks, barMarks] = (getMarkBits item for item in [foo, bar])
 
@@ -159,7 +157,7 @@ class Calculate
 
         range = cell.get Range
 
-        cellRange = @_getCellRange cell
+        cellRange = getCellRange @grid, cell
 
         cellRange.bottom?.top = range.unitY()
         cellRange.top?.bottom = range.unitY()
@@ -167,45 +165,50 @@ class Calculate
         cellRange.right?.left = range.unitX()
         cellRange.left?.right = range.unitX()
 
-    _getCellRange: (cell) ->
+    getCellRange = (grid, cell) ->
 
         point = cell.get Point
         range = cell.get Range
 
         list =
-            top:    @grid.getCell point.x, point.y - range.top - 1
-            bottom: @grid.getCell point.x, point.y + range.bottom + 1
-            left:   @grid.getCell point.x - range.left - 1, point.y
-            right:  @grid.getCell point.x + range.right + 1, point.y
+            top:    grid.getCell point.x, point.y - range.top - 1
+            bottom: grid.getCell point.x, point.y + range.bottom + 1
+            left:   grid.getCell point.x - range.left - 1, point.y
+            right:  grid.getCell point.x + range.right + 1, point.y
 
         for key, value of list
             list[key] = value?.get Range
 
         list
 
-    getOuterRange = (item, width, height) ->
-        top: item.point.y is item.range.top
-        bottom: item.point.y + item.range.bottom + 1 is height
-        left: item.point.x is item.range.left
-        right: item.point.x + item.range.right + 1 is width
+    getOuterBits = (item, width, height) ->
+        result   = 0
+        result  += item.point.y is item.range.top
+        result <<= 1
+        result  += item.point.y + item.range.bottom + 1 is height
+        result <<= 1
+        result  += item.point.x is item.range.left
+        result <<= 1
+        result  += item.point.x + item.range.right + 1 is width
+        result
 
     getMarkBits = (item) ->
-        x: item.range.markX item.point
-        y: item.range.markY item.point
+        x: item.range.markX item.point.x
+        y: item.range.markY item.point.y
 
-    # TODO: cache
-    getBitAdd = (a, b) ->
+    getBitAdd = _.memoize(
 
-        result = a & b
+        (a, b) ->
 
-        return false if result is 0
+            return false if 0 is result = a & b
 
-        result = result.toString(2).split('0').reverse()
+            result = result.toString(2).split('0')
 
-        {
             offset: result.length - 1
-            length: result[result.length - 1].length
-        }
+            length: result[0].length
+
+        (a, b) -> a & b
+    )
 
 
 angular.module('controller')
