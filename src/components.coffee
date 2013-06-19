@@ -71,10 +71,12 @@ class GridModel
 
     constructor: (cellClass = Object, width = 0, height = 0) ->
 
+        # TODO: remove dependency of underscore
         @row = _.arrayInit height, ->
             _.arrayInit width, ->
                 new cellClass
 
+        # TODO: remove dependency of underscore
         @col = _.arrayInit width, (i) =>
             _.arrayInit height, (j) =>
                 @row[j][i]
@@ -196,6 +198,7 @@ class Calculate
         x: item.range.markX item.point.x
         y: item.range.markY item.point.y
 
+    # TODO: remove dependency of underscore
     getBitAdd = _.memoize(
 
         (a, b) ->
