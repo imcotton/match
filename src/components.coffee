@@ -1,209 +1,209 @@
-class State
+    class State
 
-    constructor: (@done = false) ->
-
-
-class Point
-
-    constructor: (@x = 0, @y = 0) ->
-
-    toString: -> "#{@x}-#{@y}"
+        constructor: (@done = false) ->
 
 
-class Range
+    class Point
 
-    constructor: (@top = 0, @bottom = 0, @left = 0, @right = 0) ->
+        constructor: (@x = 0, @y = 0) ->
 
-    unitX: -> @left + @right + 1
-
-    unitY: -> @top + @bottom + 1
-
-    markX: (offset) -> ((1 << @unitX()) - 1) << offset - @left
-
-    markY: (offset) -> ((1 << @unitY()) - 1) << offset - @top
+        toString: -> "#{@x}-#{@y}"
 
 
-class CellModel
+    class Range
 
-    constructor: ->
-        @typeHash = {}
-        @nameHash = {}
+        constructor: (@top = 0, @bottom = 0, @left = 0, @right = 0) ->
 
-    add: (instance) ->
-        @typeHash[instance.constructor] = instance
+        unitX: -> @left + @right + 1
 
-    get: (clazz) ->
-        @typeHash[clazz]
+        unitY: -> @top + @bottom + 1
 
-    gets: (types...) ->
+        markX: (offset) -> ((1 << @unitX()) - 1) << offset - @left
 
-        obj = {}
-
-        for type in types when type of @typeHash
-
-            unless type of @nameHash
-                key = type.toString().match(/^function (.)([^\(]+)/)
-                key = key[1].toLowerCase() + key[2]
-                @nameHash[type] = key
-
-            obj[@nameHash[type]] = @get type
-
-        obj
+        markY: (offset) -> ((1 << @unitY()) - 1) << offset - @top
 
 
-class GridModel
+    class CellModel
 
-    constructor: (width = 0, height = 0, cellClass = Object) ->
+        constructor: ->
+            @typeHash = {}
+            @nameHash = {}
 
-        @row = []
-        @col = []
+        add: (instance) ->
+            @typeHash[instance.constructor] = instance
 
-        for i in [0...height]
-            @row[i] = []
-            for j in [0...width]
-                @row[i][j] = new cellClass
+        get: (clazz) ->
+            @typeHash[clazz]
 
-        for i in [0...width]
-            @col[i] = []
-            for j in [0...height]
-                @col[i][j] = @row[j][i]
+        gets: (types...) ->
 
-    height: -> @row.length
-    width: -> @col.length
+            obj = {}
 
-    getRow: (index) -> @row[index]
-    getCol: (index) -> @col[index]
+            for type in types when type of @typeHash
 
-    getCell: (x, y) ->
+                unless type of @nameHash
+                    key = type.toString().match(/^function (.)([^\(]+)/)
+                    key = key[1].toLowerCase() + key[2]
+                    @nameHash[type] = key
 
-        return null if x < 0 or x >= @width()
-        return null if y < 0 or y >= @height()
+                obj[@nameHash[type]] = @get type
 
-        @getRow(y)[x]
+            obj
 
 
-class Calculate
+    class GridModel
 
-    constructor: (@grid) ->
+        constructor: (width = 0, height = 0, cellClass = Object) ->
 
-    hasMatch: (foo, bar) ->
+            @row = []
+            @col = []
 
-        return if foo is bar
+            for i in [0...height]
+                @row[i] = []
+                for j in [0...width]
+                    @row[i][j] = new cellClass
 
-        [foo, bar] = for item in [foo, bar]
-            item.gets Point, Range
+            for i in [0...width]
+                @col[i] = []
+                for j in [0...height]
+                    @col[i][j] = @row[j][i]
 
-        [top, bottom] = `foo.point.y < bar.point.y ? [foo, bar] : [bar, foo]`
-        [left, right] = `foo.point.x < bar.point.x ? [foo, bar] : [bar, foo]`
+        height: -> @row.length
+        width: -> @col.length
 
-        absX = right.point.x - left.point.x
-        absY = bottom.point.y - top.point.y
+        getRow: (index) -> @row[index]
+        getCol: (index) -> @col[index]
 
-        if foo.point.y is bar.point.y and absX is left.range.right + 1
-            return true
+        getCell: (x, y) ->
 
-        if foo.point.x is bar.point.x and absY is top.range.bottom + 1
-            return true
+            return null if x < 0 or x >= @width()
+            return null if y < 0 or y >= @height()
 
-        if top is left
-            if top.range.bottom >= absY and bottom.range.left >= absX
-                return true
-            if bottom.range.top >= absY and top.range.right >= absX
-                return true
-        else
-            if top.range.bottom >= absY and bottom.range.right >= absX
-                return true
-            if bottom.range.top >= absY and top.range.left >= absX
+            @getRow(y)[x]
+
+
+    class Calculate
+
+        constructor: (@grid) ->
+
+        hasMatch: (foo, bar) ->
+
+            return if foo is bar
+
+            [foo, bar] = for item in [foo, bar]
+                item.gets Point, Range
+
+            [top, bottom] = `foo.point.y < bar.point.y ? [foo, bar] : [bar, foo]`
+            [left, right] = `foo.point.x < bar.point.x ? [foo, bar] : [bar, foo]`
+
+            absX = right.point.x - left.point.x
+            absY = bottom.point.y - top.point.y
+
+            if foo.point.y is bar.point.y and absX is left.range.right + 1
                 return true
 
-        [fooOuter, barOuter] = for item in [foo, bar]
-            getOuterBits item, @grid.width(), @grid.height()
+            if foo.point.x is bar.point.x and absY is top.range.bottom + 1
+                return true
 
-        return true if fooOuter & barOuter
+            if top is left
+                if top.range.bottom >= absY and bottom.range.left >= absX
+                    return true
+                if bottom.range.top >= absY and top.range.right >= absX
+                    return true
+            else
+                if top.range.bottom >= absY and bottom.range.right >= absX
+                    return true
+                if bottom.range.top >= absY and top.range.left >= absX
+                    return true
 
-        [fooMarks, barMarks] = (getMarkBits item for item in [foo, bar])
+            [fooOuter, barOuter] = for item in [foo, bar]
+                getOuterBits item, @grid.width(), @grid.height()
 
-        if result = getBitAdd fooMarks.x, barMarks.x
-            for i in [0...result.length]
-                list = @grid.getCol i + result.offset
-                for j in [top.point.y...bottom.point.y]
-                    break unless list[j].get(State).done
-                return true if j is bottom.point.y
+            return true if fooOuter & barOuter
 
-        if result = getBitAdd fooMarks.y, barMarks.y
-            for i in [0...result.length]
-                list = @grid.getRow i + result.offset
-                for j in [left.point.x...right.point.x]
-                    break unless list[j].get(State).done
-                return true if j is right.point.x
+            [fooMarks, barMarks] = (getMarkBits item for item in [foo, bar])
 
-        false
+            if result = getBitAdd fooMarks.x, barMarks.x
+                for i in [0...result.length]
+                    list = @grid.getCol i + result.offset
+                    for j in [top.point.y...bottom.point.y]
+                        break unless list[j].get(State).done
+                    return true if j is bottom.point.y
 
-    markMatch: (cell) ->
+            if result = getBitAdd fooMarks.y, barMarks.y
+                for i in [0...result.length]
+                    list = @grid.getRow i + result.offset
+                    for j in [left.point.x...right.point.x]
+                        break unless list[j].get(State).done
+                    return true if j is right.point.x
 
-        state = cell.get State
-        state.done = true
+            false
 
-        range = cell.get Range
+        markMatch: (cell) ->
 
-        cellRange = getCellRange @grid, cell
+            state = cell.get State
+            state.done = true
 
-        cellRange.bottom?.top = range.unitY()
-        cellRange.top?.bottom = range.unitY()
+            range = cell.get Range
 
-        cellRange.right?.left = range.unitX()
-        cellRange.left?.right = range.unitX()
+            cellRange = getCellRange @grid, cell
 
-    getCellRange = (grid, cell) ->
+            cellRange.bottom?.top = range.unitY()
+            cellRange.top?.bottom = range.unitY()
 
-        point = cell.get Point
-        range = cell.get Range
+            cellRange.right?.left = range.unitX()
+            cellRange.left?.right = range.unitX()
 
-        list =
-            top:    grid.getCell point.x, point.y - range.top - 1
-            bottom: grid.getCell point.x, point.y + range.bottom + 1
-            left:   grid.getCell point.x - range.left - 1, point.y
-            right:  grid.getCell point.x + range.right + 1, point.y
+        getCellRange = (grid, cell) ->
 
-        for key, value of list
-            list[key] = value?.get Range
+            point = cell.get Point
+            range = cell.get Range
 
-        list
+            list =
+                top:    grid.getCell point.x, point.y - range.top - 1
+                bottom: grid.getCell point.x, point.y + range.bottom + 1
+                left:   grid.getCell point.x - range.left - 1, point.y
+                right:  grid.getCell point.x + range.right + 1, point.y
 
-    getOuterBits = (item, width, height) ->
-        result   = 0
-        result  += item.point.y is item.range.top
-        result <<= 1
-        result  += item.point.y + item.range.bottom + 1 is height
-        result <<= 1
-        result  += item.point.x is item.range.left
-        result <<= 1
-        result  += item.point.x + item.range.right + 1 is width
-        result
+            for key, value of list
+                list[key] = value?.get Range
 
-    getMarkBits = (item) ->
-        x: item.range.markX item.point.x
-        y: item.range.markY item.point.y
+            list
 
-    getBitAdd = (a, b) ->
+        getOuterBits = (item, width, height) ->
+            result   = 0
+            result  += item.point.y is item.range.top
+            result <<= 1
+            result  += item.point.y + item.range.bottom + 1 is height
+            result <<= 1
+            result  += item.point.x is item.range.left
+            result <<= 1
+            result  += item.point.x + item.range.right + 1 is width
+            result
 
-        result = a & b
+        getMarkBits = (item) ->
+            x: item.range.markX item.point.x
+            y: item.range.markY item.point.y
 
-        @hash or= 0: false
+        getBitAdd = (a, b) ->
 
-        return @hash[result] if result of @hash
+            result = a & b
 
-        list = result.toString(2).split('0')
+            @hash or= 0: false
 
-        @hash[result] =
-            offset: list.length - 1
-            length: list[0].length
+            return @hash[result] if result of @hash
+
+            list = result.toString(2).split('0')
+
+            @hash[result] =
+                offset: list.length - 1
+                length: list[0].length
 
 
 
-exports = {
-    State, Point, Range, CellModel, GridModel, Calculate
-}
+    exports = {
+        State, Point, Range, CellModel, GridModel, Calculate
+    }
 
-unless module?.exports = exports
-    @components = exports
+    unless module?.exports = exports
+        @components = exports
