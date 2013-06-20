@@ -53,7 +53,7 @@ class CellModel
 
 class GridModel
 
-    constructor: (cellClass = Object, width = 0, height = 0) ->
+    constructor: (width = 0, height = 0, cellClass = Object) ->
 
         @row = []
         @col = []
