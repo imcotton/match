@@ -217,7 +217,9 @@ class Calculate
 
 
 
-exports = module?.exports or @
-exports.components = {
+exports = {
     State, Point, Range, Color, CellModel, GridModel, Calculate
 }
+
+unless module?.exports = exports
+    @components = exports
