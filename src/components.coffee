@@ -71,15 +71,18 @@ class GridModel
 
     constructor: (cellClass = Object, width = 0, height = 0) ->
 
-        # TODO: remove dependency of underscore
-        @row = _.arrayInit height, ->
-            _.arrayInit width, ->
-                new cellClass
+        @row = []
+        @col = []
 
-        # TODO: remove dependency of underscore
-        @col = _.arrayInit width, (i) =>
-            _.arrayInit height, (j) =>
-                @row[j][i]
+        for i in [0...height]
+            @row[i] = []
+            for j in [0...width]
+                @row[i][j] = new cellClass
+
+        for i in [0...width]
+            @col[i] = []
+            for j in [0...height]
+                @col[i][j] = @row[j][i]
 
     height: -> @row.length
     width: -> @col.length
@@ -198,20 +201,19 @@ class Calculate
         x: item.range.markX item.point.x
         y: item.range.markY item.point.y
 
-    # TODO: remove dependency of underscore
-    getBitAdd = _.memoize(
+    getBitAdd = (a, b) ->
 
-        (a, b) ->
+        result = a & b
 
-            return false if 0 is result = a & b
+        @hash or= 0: false
 
-            result = result.toString(2).split('0')
+        return @hash[result] if result of @hash
 
-            offset: result.length - 1
-            length: result[0].length
+        list = result.toString(2).split('0')
 
-        (a, b) -> a & b
-    )
+        @hash[result] =
+            offset: list.length - 1
+            length: list[0].length
 
 
 
