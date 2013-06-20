@@ -23,22 +23,6 @@ class Range
     markY: (offset) -> ((1 << @unitY()) - 1) << offset - @top
 
 
-class Color
-
-    @list = [
-        @MAROON = new @ '#800000', 'maroon'
-        @NAVY   = new @ '#000080', 'navy'
-        @PURPLE = new @ '#800080', 'purple'
-        @GREEN  = new @ '#008000', 'green'
-        @TEAL   = new @ '#008080', 'teal'
-        @OLIVE  = new @ '#808000', 'olive'
-    ]
-
-    constructor: (@hex, @name) ->
-
-    toString: -> @name
-
-
 class CellModel
 
     constructor: ->
@@ -69,15 +53,20 @@ class CellModel
 
 class GridModel
 
-    constructor: (width = 0, height = 0) ->
+    constructor: (cellClass = Object, width = 0, height = 0) ->
 
-        @row = _.arrayInit height, ->
-            _.arrayInit width, ->
-                new CellModel
+        @row = []
+        @col = []
 
-        @col = _.arrayInit width, (i) =>
-            _.arrayInit height, (j) =>
-                @row[j][i]
+        for i in [0...height]
+            @row[i] = []
+            for j in [0...width]
+                @row[i][j] = new cellClass
+
+        for i in [0...width]
+            @col[i] = []
+            for j in [0...height]
+                @col[i][j] = @row[j][i]
 
     height: -> @row.length
     width: -> @col.length
@@ -196,23 +185,25 @@ class Calculate
         x: item.range.markX item.point.x
         y: item.range.markY item.point.y
 
-    getBitAdd = _.memoize(
+    getBitAdd = (a, b) ->
 
-        (a, b) ->
+        result = a & b
 
-            return false if 0 is result = a & b
+        @hash or= 0: false
 
-            result = result.toString(2).split('0')
+        return @hash[result] if result of @hash
 
-            offset: result.length - 1
-            length: result[0].length
+        list = result.toString(2).split('0')
 
-        (a, b) -> a & b
-    )
+        @hash[result] =
+            offset: list.length - 1
+            length: list[0].length
 
 
 
-exports = module?.exports or @
-exports.components = {
-    State, Point, Range, Color, CellModel, GridModel, Calculate
+exports = {
+    State, Point, Range, CellModel, GridModel, Calculate
 }
+
+unless module?.exports = exports
+    @components = exports

@@ -1,19 +1,14 @@
-{
-    State, Point, Range, Color
-    CellModel, GridModel, Calculate
-} = components
+{State, Point, Range, CellModel, GridModel, Calculate} = components
 
 
 describe 'loading modules', ->
 
-    list = {
-        State, Point, Range, Color
-        CellModel, GridModel, Calculate
-    }
+    list = {State, Point, Range, CellModel, GridModel, Calculate}
 
     for key, value of list
-        it "has component: #{key}", ->
-            expect(value).toBeDefined()
+        do (key, value) ->
+            it "has component: #{key}", ->
+                expect(value).toBeDefined()
 
 
 describe 'components init check', ->
