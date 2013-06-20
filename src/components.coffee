@@ -23,22 +23,6 @@ class Range
     markY: (offset) -> ((1 << @unitY()) - 1) << offset - @top
 
 
-class Color
-
-    @list = [
-        @MAROON = new @ '#800000', 'maroon'
-        @NAVY   = new @ '#000080', 'navy'
-        @PURPLE = new @ '#800080', 'purple'
-        @GREEN  = new @ '#008000', 'green'
-        @TEAL   = new @ '#008080', 'teal'
-        @OLIVE  = new @ '#808000', 'olive'
-    ]
-
-    constructor: (@hex, @name) ->
-
-    toString: -> @name
-
-
 class CellModel
 
     constructor: ->
@@ -218,7 +202,7 @@ class Calculate
 
 
 exports = {
-    State, Point, Range, Color, CellModel, GridModel, Calculate
+    State, Point, Range, CellModel, GridModel, Calculate
 }
 
 unless module?.exports = exports

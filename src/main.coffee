@@ -1,3 +1,19 @@
+class Color
+
+    @list = [
+        @MAROON = new @ '#800000', 'maroon'
+        @NAVY   = new @ '#000080', 'navy'
+        @PURPLE = new @ '#800080', 'purple'
+        @GREEN  = new @ '#008000', 'green'
+        @TEAL   = new @ '#008080', 'teal'
+        @OLIVE  = new @ '#808000', 'olive'
+    ]
+
+    constructor: (@hex, @name) ->
+
+    toString: -> @name
+
+
 angular.module('controller')
 
     .controller 'PanelCtrl', class
@@ -5,7 +21,7 @@ angular.module('controller')
         constructor: (components) ->
 
             {
-                State, Point, Range, Color
+                State, Point, Range
                 CellModel, GridModel, Calculate
             } = components
 
@@ -22,11 +38,11 @@ angular.module('controller')
                         state: new State
                         point: new Point x, y
                         range: new Range
-                        color: _.shuffle(Color.list)[0]
 
                     cell = grid.getCell x, y
                     cell.add value for key, value of item
 
+                    item.color    = _.shuffle(Color.list)[0]
                     item.toString = -> @point.toString()
 
                     @hash[item] = cell
