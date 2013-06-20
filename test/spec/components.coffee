@@ -12,8 +12,9 @@ describe 'loading modules', ->
     }
 
     for key, value of list
-        it "has component: #{key}", ->
-            expect(value).toBeDefined()
+        do (key, value) ->
+            it "has component: #{key}", ->
+                expect(value).toBeDefined()
 
 
 describe 'components init check', ->
