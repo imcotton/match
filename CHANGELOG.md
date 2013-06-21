@@ -1,3 +1,9 @@
+## NEXT
+
+- unit tests increase and refactor
+- core logic code add literate CoffeeScript init
+
+
 ## 0.2.1 (2013-06-20)
 
 - move Color into game logic instead of core
