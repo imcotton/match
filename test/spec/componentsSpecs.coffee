@@ -58,7 +58,52 @@ describe 'components init check', ->
 
 describe 'Calculate check', ->
 
-    [BLOCK, TARGET, PATH, SEPARATOR, NEWLINE] = '#@= \n'.split('')
+    it 'connecting', ->
+
+        blocks = [
+            '''
+            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
+            · · 0 · ·|· · · · ·|· 0 x · ·|· · · 0 ·|· x x x ·|· x x x ·
+            · · 0 · ·|· 0 0 · ·|· · x · ·|· x x x ·|· 0 · 0 ·|· x · x ·
+            · · · · ·|· · · · ·|· · x 0 ·|· 0 · · ·|· · · · ·|· 0 · 0 ·
+            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
+            '''
+        ]
+
+        for row in blocks
+            for block in separate row
+                expect(block).connecting()
+
+    it 'not connecting', ->
+
+        blocks = [
+            '''
+            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
+            · · 0 · ·|· · · · ·|· x · x ·|· 0 x · ·|· 0 · · ·|· 0 · x ·
+            · · · · ·|· 0 · 0 ·|· 0 · 0 ·|· · · · ·|· x · x ·|· x · x ·
+            · · 0 · ·|· · · · ·|· · · · ·|· · x 0 ·|· · · 0 ·|· x · 0 ·
+            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
+            '''
+        ]
+
+        for row in blocks
+            for block in separate row
+                expect(block).not.connecting()
+
+
+    [BLOCK, TARGET, PATH, SPACE, SEPARATOR, NEWLINE] = '·0x |\n'.split('')
+
+    separate = (blocks) ->
+
+        matrix = for row in blocks.split NEWLINE
+            row.split SEPARATOR
+
+        [width, height] = [matrix[0].length, matrix.length]
+
+        blocks = for i in [0...width]
+            block = for j in [0...height]
+                matrix[j][i]
+            block.join NEWLINE
 
     beforeEach ->
 
@@ -67,7 +112,7 @@ describe 'Calculate check', ->
             connecting: ->
 
                 matrix = for row in @actual.split NEWLINE
-                    row.split SEPARATOR
+                    row.split SPACE
 
                 [width, height] = [matrix.length, matrix[0].length]
 
@@ -109,70 +154,3 @@ describe 'Calculate check', ->
                         range.bottom++
 
                 calulate.hasMatch targets...
-
-    it 'connecting', ->
-
-        expect(i).connecting() for i in [
-            '''
-            # # # # #
-            # # @ # #
-            # # @ # #
-            # # # # #
-            # # # # #
-            '''
-            '''
-            # # # # #
-            # # # # #
-            # @ @ # #
-            # # # # #
-            # # # # #
-            '''
-            '''
-            # # # # #
-            # # @ # #
-            # # = # #
-            # # @ # #
-            # # # # #
-            '''
-            '''
-            # # # # #
-            # @ = # #
-            # # = # #
-            # # = @ #
-            # # # # #
-            '''
-            '''
-            # # # # #
-            # # # @ #
-            # = = = #
-            # @ # # #
-            # # # # #
-            '''
-        ]
-
-    it 'not connecting', ->
-
-        expect(i).not.connecting() for i in [
-            '''
-            # # # # #
-            # # @ # #
-            # # # # #
-            # # @ # #
-            # # # # #
-            '''
-            '''
-            # # # # #
-            # # # # #
-            # @ # @ #
-            # # # # #
-            # # # # #
-            '''
-            '''
-            # # # # #
-            # = # = #
-            # @ # @ #
-            # # # # #
-            # # # # #
-            '''
-        ]
-
