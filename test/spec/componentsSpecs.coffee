@@ -1,3 +1,4 @@
+
 {State, Point, Range, CellModel, GridModel, Calculate} = components
 
 
@@ -13,14 +14,24 @@ describe 'loading modules', ->
 
 describe 'components init check', ->
 
+    state = point = range = grid = null
+
+    beforeEach ->
+
+        [state, point, range, grid] = [
+            new State true
+            new Point 3, 5
+            new Range 2, 3, 4, 5
+            new GridModel 3, 5, Array
+        ]
+
     it 'State', ->
-        expect(new State().done).toBeFalsy()
+        expect(state.done).toBeTruthy()
 
     it 'Point', ->
-        expect(new Point(3, 5).toString()).toEqual('3-5')
+        expect(point.toString()).toEqual('3-5')
 
     it 'Range', ->
-        range = new Range 2, 3, 4, 5
         expect(range.unitX()).toBe(10)
         expect(range.unitY()).toBe(6)
         expect(range.markX(4).toString(2)).toBe('1111111111')
@@ -31,13 +42,13 @@ describe 'components init check', ->
 
     it 'CellModel', ->
         list =
-            clazz:    [    State,           Point,           Range            ]
-            instance: [new State(true), new Point(1, 2), new Range(3, 4, 5, 6)]
+            clazz:    [State, Point, Range]
+            instance: [state, point, range]
 
         cellModel = new CellModel()
         cellModel.add i for i in list.instance
 
-        item = cellModel.gets State, Point, Range
+        item = cellModel.gets list.clazz...
 
         for i in [0...list.clazz.length]
             expect(cellModel.get(list.clazz[i])).toBe(list.instance[i])
@@ -46,7 +57,6 @@ describe 'components init check', ->
             expect(v in list.instance).toBeTruthy()
 
     it 'GridModel', ->
-        grid = new GridModel 3, 5, Array
         expect(grid.getCell(0, 0)).toEqual(jasmine.any(Array))
         expect(grid.width()).toBe(3)
         expect(grid.height()).toBe(5)
@@ -131,6 +141,10 @@ describe 'Calculate check', ->
         @addMatchers
 
             connecting: ->
+
+                @message = ->
+                    resule = if @isNot then 'not connected' else 'connected'
+                    "Expected below to be #{resule} \n#{@actual}"
 
                 matrix = for row in @actual.split NEWLINE
                     row.split SPACE
