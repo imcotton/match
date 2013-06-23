@@ -1,5 +1,7 @@
 ## NEXT
 
+- unit test specs to use literate coffee
+- using CoffeeScript 1.6.4-rc1 (*homemade* version)
 - unit tests increase and refactor
 - core logic code add literate CoffeeScript init
 
