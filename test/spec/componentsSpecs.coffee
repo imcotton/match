@@ -1,191 +1,191 @@
 
-{State, Point, Range, CellModel, GridModel, Calculate} = components
+    {State, Point, Range, CellModel, GridModel, Calculate} = components
 
 
-describe 'loading modules', ->
+    describe 'loading modules', ->
 
-    list = {State, Point, Range, CellModel, GridModel, Calculate}
+        list = {State, Point, Range, CellModel, GridModel, Calculate}
 
-    for key, value of list
-        do (key, value) ->
-            it "has component: #{key}", ->
-                expect(value).toBeDefined()
-
-
-describe 'components init check', ->
-
-    state = point = range = grid = null
-
-    beforeEach ->
-
-        [state, point, range, grid] = [
-            new State true
-            new Point 3, 5
-            new Range 2, 3, 4, 5
-            new GridModel 3, 5, Array
-        ]
-
-    it 'State', ->
-        expect(state.done).toBeTruthy()
-
-    it 'Point', ->
-        expect(point.toString()).toEqual('3-5')
-
-    it 'Range', ->
-        expect(range.unitX()).toBe(10)
-        expect(range.unitY()).toBe(6)
-        expect(range.markX(4).toString(2)).toBe('1111111111')
-        expect(range.markX(5).toString(2)).toBe('11111111110')
-        expect(range.markX(6).toString(2)).toBe('111111111100')
-        expect(range.markY(2).toString(2)).toBe('111111')
-        expect(range.markY(6).toString(2)).toBe('1111110000')
-
-    it 'CellModel', ->
-        list =
-            clazz:    [State, Point, Range]
-            instance: [state, point, range]
-
-        cellModel = new CellModel()
-        cellModel.add i for i in list.instance
-
-        item = cellModel.gets list.clazz...
-
-        for i in [0...list.clazz.length]
-            expect(cellModel.get(list.clazz[i])).toBe(list.instance[i])
-
-        for k, v in item
-            expect(v in list.instance).toBeTruthy()
-
-    it 'GridModel', ->
-        expect(grid.getCell(0, 0)).toEqual(jasmine.any(Array))
-        expect(grid.width()).toBe(3)
-        expect(grid.height()).toBe(5)
-        expect(grid.getRow(1)[2]).toBe(grid.getCol(2)[1])
-        expect(grid.getRow(2)[2]).toBe(grid.getCol(2)[2])
-        expect(grid.getCol(1)[2]).toBe(grid.getCell(1, 2))
-        expect(grid.getRow(2)[1]).toBe(grid.getCell(1, 2))
+        for key, value of list
+            do (key, value) ->
+                it "has component: #{key}", ->
+                    expect(value).toBeDefined()
 
 
-describe 'Calculate check', ->
+    describe 'components init check', ->
 
-    it 'connecting', ->
+        state = point = range = grid = null
 
-        blocks = [
-            '''
-            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
-            · · 0 · ·|· · · · ·|· 0 x · ·|· · · 0 ·|· x x x ·|· x x x ·
-            · · 0 · ·|· 0 0 · ·|· · x · ·|· x x x ·|· 0 · 0 ·|· x · x ·
-            · · · · ·|· · · · ·|· · x 0 ·|· 0 · · ·|· · · · ·|· 0 · 0 ·
-            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
-            '''
-            '''
-            0 · · · 0|· · · · ·|0 · · · ·|· · · · 0|· 0 · 0 ·|· · · · ·
-            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
-            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
-            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
-            · · · · ·|0 · · · 0|0 · · · ·|· · · · 0|· · · · ·|· 0 · 0 ·
-            '''
-            '''
-            · 0 · x ·|· x · x ·|· · · · ·|· · · · ·|0 x x · ·|· · · · ·
-            · · · x ·|· 0 · x ·|0 · · · ·|x x 0 · ·|· · x · ·|· · · 0 x
-            · · · x ·|· · · x ·|· · · · ·|· · · · ·|· · x · ·|· · · · ·
-            · · · 0 ·|· · · 0 ·|x x 0 · ·|x x 0 · ·|· · x · ·|· 0 x x x
-            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · x x 0|· · · · ·
-            '''
-        ]
+        beforeEach ->
 
-        for row in blocks
-            for block in separate row
-                expect(block).connecting()
+            [state, point, range, grid] = [
+                new State true
+                new Point 3, 5
+                new Range 2, 3, 4, 5
+                new GridModel 3, 5, Array
+            ]
 
-    it 'not connecting', ->
+        it 'State', ->
+            expect(state.done).toBeTruthy()
 
-        blocks = [
-            '''
-            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
-            · · 0 · ·|· · · · ·|· x · x ·|· 0 x · ·|· 0 · · ·|· 0 · x ·
-            · · · · ·|· 0 · 0 ·|· 0 · 0 ·|· · · · ·|· x · x ·|· x · x ·
-            · · 0 · ·|· · · · ·|· · · · ·|· · x 0 ·|· · · 0 ·|· x · 0 ·
-            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
-            '''
-            '''
-            0 · · · ·|· · · · 0|· · · · ·|· · 0 · ·|· · · · 0|· · x · ·
-            · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · x|· · 0 · ·
-            · · · · ·|· · · · ·|0 · · · 0|· · · · ·|x x · x x|· · · · ·
-            · · · · ·|· · · · ·|· · · · ·|· · · · ·|x · · · ·|· · 0 · ·
-            · · · · 0|0 · · · ·|· · · · ·|· · 0 · ·|0 · · · ·|· · x · ·
-            '''
-        ]
+        it 'Point', ->
+            expect(point.toString()).toEqual('3-5')
 
-        for row in blocks
-            for block in separate row
-                expect(block).not.connecting()
+        it 'Range', ->
+            expect(range.unitX()).toBe(10)
+            expect(range.unitY()).toBe(6)
+            expect(range.markX(4).toString(2)).toBe('1111111111')
+            expect(range.markX(5).toString(2)).toBe('11111111110')
+            expect(range.markX(6).toString(2)).toBe('111111111100')
+            expect(range.markY(2).toString(2)).toBe('111111')
+            expect(range.markY(6).toString(2)).toBe('1111110000')
+
+        it 'CellModel', ->
+            list =
+                clazz:    [State, Point, Range]
+                instance: [state, point, range]
+
+            cellModel = new CellModel()
+            cellModel.add i for i in list.instance
+
+            item = cellModel.gets list.clazz...
+
+            for i in [0...list.clazz.length]
+                expect(cellModel.get(list.clazz[i])).toBe(list.instance[i])
+
+            for k, v in item
+                expect(v in list.instance).toBeTruthy()
+
+        it 'GridModel', ->
+            expect(grid.getCell(0, 0)).toEqual(jasmine.any(Array))
+            expect(grid.width()).toBe(3)
+            expect(grid.height()).toBe(5)
+            expect(grid.getRow(1)[2]).toBe(grid.getCol(2)[1])
+            expect(grid.getRow(2)[2]).toBe(grid.getCol(2)[2])
+            expect(grid.getCol(1)[2]).toBe(grid.getCell(1, 2))
+            expect(grid.getRow(2)[1]).toBe(grid.getCell(1, 2))
 
 
-    [BLOCK, TARGET, PATH, SPACE, SEPARATOR, NEWLINE] = '·0x |\n'.split('')
+    describe 'Calculate check', ->
 
-    separate = (blocks) ->
+        it 'connecting', ->
 
-        matrix = for row in blocks.split NEWLINE
-            row.split SEPARATOR
+            blocks = [
+                '''
+                · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
+                · · 0 · ·|· · · · ·|· 0 x · ·|· · · 0 ·|· x x x ·|· x x x ·
+                · · 0 · ·|· 0 0 · ·|· · x · ·|· x x x ·|· 0 · 0 ·|· x · x ·
+                · · · · ·|· · · · ·|· · x 0 ·|· 0 · · ·|· · · · ·|· 0 · 0 ·
+                · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
+                '''
+                '''
+                0 · · · 0|· · · · ·|0 · · · ·|· · · · 0|· 0 · 0 ·|· · · · ·
+                · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
+                · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
+                · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
+                · · · · ·|0 · · · 0|0 · · · ·|· · · · 0|· · · · ·|· 0 · 0 ·
+                '''
+                '''
+                · 0 · x ·|· x · x ·|· · · · ·|· · · · ·|0 x x · ·|· · · · ·
+                · · · x ·|· 0 · x ·|0 · · · ·|x x 0 · ·|· · x · ·|· · · 0 x
+                · · · x ·|· · · x ·|· · · · ·|· · · · ·|· · x · ·|· · · · ·
+                · · · 0 ·|· · · 0 ·|x x 0 · ·|x x 0 · ·|· · x · ·|· 0 x x x
+                · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · x x 0|· · · · ·
+                '''
+            ]
 
-        [width, height] = [matrix[0].length, matrix.length]
+            for row in blocks
+                for block in separate row
+                    expect(block).connecting()
 
-        blocks = for i in [0...width]
-            block = for j in [0...height]
-                matrix[j][i]
-            block.join NEWLINE
+        it 'not connecting', ->
 
-    beforeEach ->
+            blocks = [
+                '''
+                · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
+                · · 0 · ·|· · · · ·|· x · x ·|· 0 x · ·|· 0 · · ·|· 0 · x ·
+                · · · · ·|· 0 · 0 ·|· 0 · 0 ·|· · · · ·|· x · x ·|· x · x ·
+                · · 0 · ·|· · · · ·|· · · · ·|· · x 0 ·|· · · 0 ·|· x · 0 ·
+                · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · ·
+                '''
+                '''
+                0 · · · ·|· · · · 0|· · · · ·|· · 0 · ·|· · · · 0|· · x · ·
+                · · · · ·|· · · · ·|· · · · ·|· · · · ·|· · · · x|· · 0 · ·
+                · · · · ·|· · · · ·|0 · · · 0|· · · · ·|x x · x x|· · · · ·
+                · · · · ·|· · · · ·|· · · · ·|· · · · ·|x · · · ·|· · 0 · ·
+                · · · · 0|0 · · · ·|· · · · ·|· · 0 · ·|0 · · · ·|· · x · ·
+                '''
+            ]
 
-        @addMatchers
+            for row in blocks
+                for block in separate row
+                    expect(block).not.connecting()
 
-            connecting: ->
 
-                @message = ->
-                    resule = if @isNot then 'not connected' else 'connected'
-                    "Expected below to be #{resule} \n#{@actual}"
+        [BLOCK, TARGET, PATH, SPACE, SEPARATOR, NEWLINE] = '·0x |\n'.split('')
 
-                matrix = for row in @actual.split NEWLINE
-                    row.split SPACE
+        separate = (blocks) ->
 
-                [width, height] = [matrix.length, matrix[0].length]
+            matrix = for row in blocks.split NEWLINE
+                row.split SEPARATOR
 
-                targets = []
-                grid = new GridModel width, height, CellModel
-                calulate = new Calculate grid
+            [width, height] = [matrix[0].length, matrix.length]
 
-                for x in [0...height]
-                    for y in [0...width]
-                        char = matrix[y][x]
+            blocks = for i in [0...width]
+                block = for j in [0...height]
+                    matrix[j][i]
+                block.join NEWLINE
 
-                        cell = grid.getCell x, y
-                        cell.add new State char is PATH
-                        cell.add new Point x, y
-                        cell.add new Range
+        beforeEach ->
 
-                        targets.push cell if char is TARGET
+            @addMatchers
 
-                for target in targets
-                    point = target.get Point
-                    range = target.get Range
-                    row = grid.getRow point.y
-                    col = grid.getCol point.x
+                connecting: ->
 
-                    for i in [point.x - 1..0]
-                        break unless row[i]?.get(State).done
-                        range.left++
+                    @message = ->
+                        resule = ['connected', 'not connected'][+@isNot]
+                        "Expected below to be #{resule} \n#{@actual}"
 
-                    for i in [point.x + 1...row.length]
-                        break unless row[i]?.get(State).done
-                        range.right++
+                    matrix = for row in @actual.split NEWLINE
+                        row.split SPACE
 
-                    for i in [point.y - 1..0]
-                        break unless col[i]?.get(State).done
-                        range.top++
+                    [width, height] = [matrix.length, matrix[0].length]
 
-                    for i in [point.y + 1...col.length]
-                        break unless col[i]?.get(State).done
-                        range.bottom++
+                    targets = []
+                    grid = new GridModel width, height, CellModel
+                    calulate = new Calculate grid
 
-                calulate.hasMatch targets...
+                    for x in [0...height]
+                        for y in [0...width]
+                            char = matrix[y][x]
+
+                            cell = grid.getCell x, y
+                            cell.add new State char is PATH
+                            cell.add new Point x, y
+                            cell.add new Range
+
+                            targets.push cell if char is TARGET
+
+                    for target in targets
+                        point = target.get Point
+                        range = target.get Range
+                        row = grid.getRow point.y
+                        col = grid.getCol point.x
+
+                        for i in [point.x - 1..0]
+                            break unless row[i]?.get(State).done
+                            range.left++
+
+                        for i in [point.x + 1...row.length]
+                            break unless row[i]?.get(State).done
+                            range.right++
+
+                        for i in [point.y - 1..0]
+                            break unless col[i]?.get(State).done
+                            range.top++
+
+                        for i in [point.y + 1...col.length]
+                            break unless col[i]?.get(State).done
+                            range.bottom++
+
+                    calulate.hasMatch targets...
