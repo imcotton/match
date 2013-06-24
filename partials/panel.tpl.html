@@ -2,21 +2,19 @@
      class="panel content"
 >
 
-    <div class="area">
+    <table class="area">
 
-        <div ng-repeat="row in panel.list"
+        <tr ng-repeat="row in panel.list"
              class="cell-row"
         >
-
-            <span ng-repeat="item in row"
-                  ng-style="{'background-color': item.color.hex}"
+            <td ng-repeat="item in row"
+                  ng-style="{'background-color': item.color.hex, 'border-color': item.color.hex}"
                   ng-class="{click: item.click, done: item.state.done}"
                   ng-click="panel.cellClick(item)"
                   class="cell"
-            ></span>
+            ></td>
+        </tr>
 
-        </div>
-
-    </div>
+    </table>
 
 </div>

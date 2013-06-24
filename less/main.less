@@ -8,7 +8,7 @@
     margin-bottom: 20px;
 
     .area {
-      text-align: center;
+      margin: 0 auto;
 
       .cell-row {
         line-height: 0;
@@ -16,17 +16,19 @@
         .cell {
           cursor: pointer;
           display: inline-block;
-          border: 2px solid #ffffff;
-          width: 40px;
-          height: 40px;
+          margin: 1px;
+          border: 6px solid;
+          width: 28px;
+          height: 28px;
 
           &.click {
-            border: 2px solid black;
+            border-color: #000 !important;
           }
 
           &.done {
             cursor: default;
             background-color: transparent !important;
+            border-color: transparent !important;
           }
         }
       }
