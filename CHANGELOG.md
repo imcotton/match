@@ -1,4 +1,12 @@
-## NEXT
+## NEXT (TBD)
+
+- TBD
+
+
+## 0.2.3 (2013-06-25)
+
+- loading Github Ribbon image asynchronously
+- tiny document updates
 
 
 ## 0.2.2 (2013-06-25)
@@ -13,7 +21,7 @@
 
 ## 0.2.1 (2013-06-20)
 
-- move Color into game logic instead of core
+- move `Color` into game logic instead of core
 - better support for Node module
 - remove dependency of underscore from core logic
 - add CHANGELOG file
