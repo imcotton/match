@@ -2,6 +2,17 @@
   margin: 0 auto;
 }
 
+.ribbon {
+  @media (max-width: 600px) { display: none; }
+
+  > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+}
+
 #main {
   .panel {
     margin-top: 40px;
