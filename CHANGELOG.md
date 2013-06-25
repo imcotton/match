@@ -1,5 +1,9 @@
 ## NEXT
 
+
+## 0.2.2 (2013-06-25)
+
+- add README
 - add `ngMobile` directive for non-delay clicking
 - unit test specs to use literate coffee
 - using CoffeeScript 1.6.4-rc1 (*homemade* version)
