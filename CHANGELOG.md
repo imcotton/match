@@ -1,5 +1,6 @@
 ## NEXT
 
+- add `ngMobile` directive for non-delay clicking
 - unit test specs to use literate coffee
 - using CoffeeScript 1.6.4-rc1 (*homemade* version)
 - unit tests increase and refactor
