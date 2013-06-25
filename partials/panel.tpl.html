@@ -5,13 +5,16 @@
     <table class="area">
 
         <tr ng-repeat="row in panel.list"
-             class="cell-row"
+            class="cell-row"
         >
             <td ng-repeat="item in row"
-                  ng-style="{'background-color': item.color.hex, 'border-color': item.color.hex}"
-                  ng-class="{click: item.click, done: item.state.done}"
-                  ng-click="panel.cellClick(item)"
-                  class="cell"
+                ng-style="{
+                    'background-color': item.color.hex,
+                    'border-color': item.color.hex
+                }"
+                ng-class="{click: item.click, done: item.state.done}"
+                ng-click="panel.cellClick(item)"
+                class="cell"
             ></td>
         </tr>
 
