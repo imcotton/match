@@ -13,35 +13,33 @@
   }
 }
 
-#main {
-  .panel {
-    margin-top: 40px;
-    margin-bottom: 20px;
+.panel {
+  margin-top: 40px;
+  margin-bottom: 20px;
 
-    .area {
-      margin: 0 auto;
-      border: 1px solid;
+  .area {
+    margin: 0 auto;
+    border: 1px solid;
 
-      .cell-row {
-        line-height: 0;
+    .cell-row {
+      line-height: 0;
 
-        .cell {
-          cursor: pointer;
-          display: inline-block;
-          margin: 1px;
-          border: 6px solid;
-          width: 28px;
-          height: 28px;
+      .cell {
+        cursor: pointer;
+        display: inline-block;
+        margin: 1px;
+        border: 6px solid;
+        width: 28px;
+        height: 28px;
 
-          &.click {
-            border-color: #000 !important;
-          }
+        &.click {
+          border-color: #000 !important;
+        }
 
-          &.done {
-            cursor: default;
-            background-color: transparent !important;
-            border-color: transparent !important;
-          }
+        &.done {
+          cursor: default;
+          background-color: transparent !important;
+          border-color: transparent !important;
         }
       }
     }
