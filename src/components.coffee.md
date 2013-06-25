@@ -1,6 +1,8 @@
 Literate CoffeeScript
 =====================
-Code as document 
+_Code as documentation_
+
+#### This file contains several classes provide for core logic of what so called _Match_ game
 
     ###
     Copyright (c) 2013 Cotton Hou
@@ -57,6 +59,7 @@ Range
 
 CellModel
 ---------
+#### This is an _Entity_ like system, which uses composition rather than inheritance to organise related components
 
     class CellModel
 
@@ -87,6 +90,7 @@ CellModel
 
 GridModel
 ---------
+#### This creates _two_ 2-dimension Array internally in order to obtain lists of column data easily
 
     class GridModel
 
@@ -120,6 +124,7 @@ GridModel
 
 Calculate
 ---------
+#### Major logic for calculation
 
     class Calculate
 
@@ -241,10 +246,16 @@ Calculate
 
 exports
 -------
+#### Here is the place to export all classes in this file
 
     exports = {
         State, Point, Range, CellModel, GridModel, Calculate
     }
 
+CommonJS Module if necessary
+
     unless module?.exports = exports
+
+Otherwise bind to `this.components`, where in the browser `this` is `window` typically
+
         @components = exports
