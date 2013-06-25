@@ -252,7 +252,7 @@ exports
         State, Point, Range, CellModel, GridModel, Calculate
     }
 
-CommonJS Module if necessary
+CommonJS module if possible
 
     unless module?.exports = exports
 
