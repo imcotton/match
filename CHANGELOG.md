@@ -1,3 +1,16 @@
+## NEXT
+
+
+## 0.2.2 (2013-06-25)
+
+- add README
+- add `ngMobile` directive for non-delay clicking
+- unit test specs to use literate coffee
+- using CoffeeScript 1.6.4-rc1 (*homemade* version)
+- unit tests increase and refactor
+- core logic code add literate CoffeeScript init
+
+
 ## 0.2.1 (2013-06-20)
 
 - move Color into game logic instead of core

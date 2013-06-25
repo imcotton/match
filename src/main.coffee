@@ -28,7 +28,7 @@ angular.module('controller')
             @list = []
             @hash = {}
 
-            grid = new GridModel CellModel, 7, 7
+            grid = new GridModel 7, 7, CellModel
 
             for y in _.range grid.height()
                 @list[y] = []
