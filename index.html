@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <base href=".">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <title>Match Game</title>
+
+    <link rel="stylesheet"      href="lib/pure/0.2.0/base-min.css">
+    <link rel="stylesheet/less" href="less/main.less">
+
+
+    <script src="lib/underscore/1.4.4/underscore-min.js"></script>
+    <script src="lib/angular/1.1.5/angular.min.js"></script>
+    <script src="lib/angular/1.1.5/angular-mobile.min.js"></script>
+
+    <script src="lib/less/1.3.3/less.min.js"></script>
+    <script src="lib/coffee-script/1.6.4-rc1/coffee-script-min.js"></script>
+
+</head>
+<body>
+
+    <a class="ribbon" href="https://github.com/imcotton/match">
+        <img alt="Fork me on GitHub"
+             src="http://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"
+        >
+    </a>
+
+
+    <div ng-controller="PanelCtrl as panel"
+         class="panel content"
+    >
+
+        <table class="area">
+
+            <tr ng-repeat="row in panel.list"
+                class="cell-row"
+            >
+                <td ng-repeat="item in row"
+                    ng-style="{
+                        'background-color': item.color.hex,
+                        'border-color': item.color.hex
+                    }"
+                    ng-class="{
+                        click: item.click,
+                        done: item.state.done
+                    }"
+                    ng-click="panel.cellClick(item)"
+                    class="cell"
+                ></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <footer>
+        <a href="test/runner.html">run unit tests</a>
+    </footer>
+
+
+    <script type="text/coffeescript" src="src/components.coffee"></script>
+    <script type="text/coffeescript" src="src/modules-bootstrap.coffee"></script>
+    <script type="text/coffeescript" src="src/main.coffee"></script>
+    <script type="text/coffeescript" src="src/app.coffee"></script>
+
+</body>
+</html>

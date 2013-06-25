@@ -1,0 +1,51 @@
+.content {
+  margin: 0 auto;
+}
+
+.ribbon {
+  @media (max-width: 600px) { display: none; }
+
+  > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+}
+
+.panel {
+  margin-top: 40px;
+  margin-bottom: 20px;
+
+  .area {
+    margin: 0 auto;
+    border: 1px solid;
+
+    .cell-row {
+      line-height: 0;
+
+      .cell {
+        cursor: pointer;
+        display: inline-block;
+        margin: 1px;
+        border: 6px solid;
+        width: 28px;
+        height: 28px;
+
+        &.click {
+          border-color: #000 !important;
+        }
+
+        &.done {
+          cursor: default;
+          background-color: transparent !important;
+          border-color: transparent !important;
+        }
+      }
+    }
+  }
+}
+
+footer {
+  text-align: center;
+}
