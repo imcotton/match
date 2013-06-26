@@ -1,6 +1,6 @@
 ## NEXT (TBD)
 
-- TBD
+- add ability to custom grid size by url parameter
 
 
 ## 0.2.3 (2013-06-25)
