@@ -1,3 +1,11 @@
+.transition (@property: all, @duration: 0.5s, @function: ease) {
+  -webkit-transition: @property @duration @function;
+  -moz-transition: @property @duration @function;
+  -ms-transition: @property @duration @function;
+  -o-transition: @property @duration @function;
+  transition: @property @duration @function;
+}
+
 .content {
   margin: 0 auto;
 }
@@ -35,6 +43,7 @@ header {
         border: 6px solid;
         width: 28px;
         height: 28px;
+        .transition(opacity);
 
         &.click {
           border-color: #000 !important;
@@ -42,8 +51,7 @@ header {
 
         &.done {
           cursor: default;
-          background-color: transparent !important;
-          border-color: transparent !important;
+          opacity: 0;
         }
       }
     }
