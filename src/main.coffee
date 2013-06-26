@@ -18,7 +18,7 @@ angular.module('controller')
 
     .controller 'PanelCtrl', class
 
-        constructor: (components) ->
+        constructor: (components, $window) ->
 
             {
                 State, Point, Range
@@ -28,7 +28,10 @@ angular.module('controller')
             @list = []
             @hash = {}
 
-            grid = new GridModel 7, 7, CellModel
+            size = $window.location.search.match /^\?size=(\d+).(\d+)/
+            size or= [0, 7, 7]
+
+            grid = new GridModel size[1], size[2], CellModel
 
             for y in _.range grid.height()
                 @list[y] = []
