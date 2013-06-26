@@ -19,7 +19,7 @@
     <script src="lib/coffee-script/1.6.4-rc1/coffee-script-min.js"></script>
 
 </head>
-<body>
+<body ng-cloak>
 
     <a class="ribbon" href="https://github.com/imcotton/match">
         <img alt="Fork me on GitHub"
@@ -60,6 +60,10 @@
             </tr>
 
         </table>
+
+        <p ng-show="panel.wellDone" class="done">
+            <button ng-click="panel.$window.location.reload()">Play Again</button>?
+        </p>
 
     </div>
 

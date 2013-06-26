@@ -18,7 +18,7 @@ angular.module('controller')
 
     .controller 'PanelCtrl', class
 
-        constructor: (components, $window) ->
+        constructor: (components, @$window) ->
 
             {
                 State, Point, Range
@@ -26,7 +26,9 @@ angular.module('controller')
             } = components
 
             @list = []
-            @hash = {}
+            @itemHash = {}
+            @colorHash = {}
+            @nextMatchs = []
 
             size = $window.location.search.match /^\?size=(\d+).(\d+)/
             size or= [0, 7, 7]
@@ -48,12 +50,31 @@ angular.module('controller')
                     item.color    = _.shuffle(Color.list)[0]
                     item.toString = -> @point.toString()
 
-                    @hash[item] = cell
+                    @itemHash[item] = cell
+
+                    @colorHash[item.color] or= []
+                    @colorHash[item.color].push item
 
             @calulate = new Calculate grid
 
+        hasMatch: (foo, bar) ->
+            @calulate.hasMatch (@getCell item for item in [foo, bar])...
+
+        markMatch: (item) ->
+            @calulate.markMatch @getCell item
+
         getCell: (item) ->
-            @hash[item]
+            @itemHash[item]
+
+        getConnectable: ->
+            unless @nextMatchs.length
+                for list in _.values @colorHash
+                    list = _.filter list, (item) -> !item.state.done
+                    for foo in [0...list.length]
+                        for bar in [1...list.length]
+                            if @hasMatch list[foo], list[bar]
+                                @nextMatchs = [list[foo], list[bar]]
+            @nextMatchs
 
         cellClick: (item) ->
 
@@ -73,10 +94,15 @@ angular.module('controller')
 
             return unless item.color is prev.color
 
-            return unless @calulate.hasMatch @getCell(item), @getCell(prev)
+            return unless @hasMatch item, prev
 
             for i in [item, prev]
-                @calulate.markMatch @getCell i
+                @markMatch i
+                if i in @nextMatchs
+                    @nextMatchs.length = 0
 
             @prev.click = false
             @prev = null
+
+            unless @getConnectable().length
+                @wellDone = true
