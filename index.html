@@ -2,8 +2,6 @@
 <html>
 <head>
 
-    <base href=".">
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
@@ -30,11 +28,10 @@
     </a>
 
 
-    <div ng-controller="PanelCtrl as panel"
-         class="panel content"
-    >
 
-        <table class="area">
+    <div ng-controller="PanelCtrl as panel" class="panel">
+
+        <table class="area content">
 
             <tr ng-repeat="row in panel.list"
                 class="cell-row"
