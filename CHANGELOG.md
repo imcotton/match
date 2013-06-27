@@ -1,6 +1,12 @@
 ## NEXT (TBD)
 
+- TBD
+
+
+## 0.3.0 (2013-06-27)
+
 - **auto plays**
+- add button style from **Pure.css**
 - _play again_ button
 - CSS animation when cell eliminate
 - add ability to custom grid size by url parameter
@@ -35,7 +41,7 @@
 
 - add Jasmine for unit test
 - modularize code of core logic
-- use Pure.css (base) for CSS normalization
+- use **Pure.css** (base) for CSS normalization
 
 
 ## 0.1.1 (2013-06-19)
