@@ -1,5 +1,17 @@
+.transition (@property: all, @duration: 0.5s, @function: ease) {
+  -webkit-transition: @property @duration @function;
+  -moz-transition: @property @duration @function;
+  -ms-transition: @property @duration @function;
+  -o-transition: @property @duration @function;
+  transition: @property @duration @function;
+}
+
 .content {
   margin: 0 auto;
+}
+
+header {
+  margin-top: 10px;
 }
 
 .ribbon {
@@ -14,7 +26,7 @@
 }
 
 .panel {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 20px;
 
   .area {
@@ -31,6 +43,7 @@
         border: 6px solid;
         width: 28px;
         height: 28px;
+        .transition(opacity);
 
         &.click {
           border-color: #000 !important;
@@ -38,14 +51,23 @@
 
         &.done {
           cursor: default;
-          background-color: transparent !important;
-          border-color: transparent !important;
+          opacity: 0;
         }
       }
     }
   }
+
+  .done {
+    text-align: center;
+  }
 }
 
-footer {
+header, footer {
   text-align: center;
+}
+
+
+.pure-button-success {
+  color: #FFFFFF;
+  background: rgb(28, 184, 65);
 }

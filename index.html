@@ -2,14 +2,14 @@
 <html>
 <head>
 
-    <base href=".">
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
     <title>Match Game</title>
 
-    <link rel="stylesheet"      href="lib/pure/0.2.0/base-min.css">
+    <link rel="stylesheet" href="lib/pure/0.2.0/base-min.css">
+    <link rel="stylesheet" href="lib/pure/0.2.0/buttons-min.css">
+
     <link rel="stylesheet/less" href="less/main.less">
 
 
@@ -21,7 +21,7 @@
     <script src="lib/coffee-script/1.6.4-rc1/coffee-script-min.js"></script>
 
 </head>
-<body>
+<body ng-cloak ng-controller="MainCtrl as main" >
 
     <a class="ribbon" href="https://github.com/imcotton/match">
         <img alt="Fork me on GitHub"
@@ -30,13 +30,21 @@
     </a>
 
 
-    <div ng-controller="PanelCtrl as panel"
-         class="panel content"
-    >
+    <header>
+        <span class="size">
+            <i>size:</i>
+            <a href="/">defaule</a>
+            <a href="?size=11x11">11</a>
+            <a href="?size=19x19">19</a>
+        </span>
+    </header>
 
-        <table class="area">
 
-            <tr ng-repeat="row in panel.list"
+    <div class="panel">
+
+        <table class="area content">
+
+            <tr ng-repeat="row in main.list"
                 class="cell-row"
             >
                 <td ng-repeat="item in row"
@@ -48,24 +56,34 @@
                         click: item.click,
                         done: item.state.done
                     }"
-                    ng-click="panel.cellClick(item)"
+                    ng-click="!autoPlays && main.cellClick(item)"
                     class="cell"
                 ></td>
             </tr>
 
         </table>
 
+        <p ng-show="main.wellDone" class="done">
+            <button ng-click="main.$window.location.reload()"
+                    class="pure-button pure-button-success"
+            >restart</button>
+        </p>
+
     </div>
 
 
     <footer>
-        <a href="test/runner.html">run unit tests</a>
+        <a class="pure-button" href="test/runner.html">unit test</a>
+        <button ng-click="main.autoPlay(); autoPlays = true"
+                ng-hide="autoPlays || main.wellDone"
+                class="pure-button pure-button-primary"
+        >auto play</button>
     </footer>
 
 
     <script type="text/coffeescript" src="src/components.coffee"></script>
     <script type="text/coffeescript" src="src/modules-bootstrap.coffee"></script>
-    <script type="text/coffeescript" src="src/main.coffee"></script>
+    <script type="text/coffeescript" src="src/main-ctrl.coffee"></script>
     <script type="text/coffeescript" src="src/app.coffee"></script>
 
 </body>
