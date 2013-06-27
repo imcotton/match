@@ -15,6 +15,7 @@ Spotlight
 - AngularJS
 - git-flow
 - unit test (Jasmine)
+- mobile friendly
 
 
 License
