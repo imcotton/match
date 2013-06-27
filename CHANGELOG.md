@@ -1,5 +1,6 @@
 ## NEXT (TBD)
 
+- **auto plays**
 - _play again_ button
 - CSS animation when cell eliminate
 - add ability to custom grid size by url parameter

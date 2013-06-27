@@ -21,7 +21,7 @@
     <script src="lib/coffee-script/1.6.4-rc1/coffee-script-min.js"></script>
 
 </head>
-<body ng-cloak>
+<body ng-cloak ng-controller="MainCtrl as main" >
 
     <a class="ribbon" href="https://github.com/imcotton/match">
         <img alt="Fork me on GitHub"
@@ -40,11 +40,11 @@
     </header>
 
 
-    <div ng-controller="PanelCtrl as panel" class="panel">
+    <div class="panel">
 
         <table class="area content">
 
-            <tr ng-repeat="row in panel.list"
+            <tr ng-repeat="row in main.list"
                 class="cell-row"
             >
                 <td ng-repeat="item in row"
@@ -56,17 +56,17 @@
                         click: item.click,
                         done: item.state.done
                     }"
-                    ng-click="panel.cellClick(item)"
+                    ng-click="!autoPlays && main.cellClick(item)"
                     class="cell"
                 ></td>
             </tr>
 
         </table>
 
-        <p ng-show="panel.wellDone" class="done">
-            <button ng-click="panel.$window.location.reload()"
+        <p ng-show="main.wellDone" class="done">
+            <button ng-click="main.$window.location.reload()"
                     class="pure-button pure-button-success"
-            >play again</button>
+            >restart</button>
         </p>
 
     </div>
@@ -74,12 +74,16 @@
 
     <footer>
         <a class="pure-button" href="test/runner.html">unit test</a>
+        <button ng-click="main.autoPlay(); autoPlays = true"
+                ng-hide="autoPlays || main.wellDone"
+                class="pure-button pure-button-primary"
+        >auto play</button>
     </footer>
 
 
     <script type="text/coffeescript" src="src/components.coffee"></script>
     <script type="text/coffeescript" src="src/modules-bootstrap.coffee"></script>
-    <script type="text/coffeescript" src="src/panel-ctrl.coffee"></script>
+    <script type="text/coffeescript" src="src/main-ctrl.coffee"></script>
     <script type="text/coffeescript" src="src/app.coffee"></script>
 
 </body>

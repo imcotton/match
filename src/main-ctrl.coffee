@@ -16,9 +16,9 @@ class Color
 
 angular.module('controller')
 
-    .controller 'PanelCtrl', class
+    .controller 'MainCtrl', class
 
-        constructor: (components, @$window) ->
+        constructor: (components, @$window, @$timeout) ->
 
             {
                 State, Point, Range
@@ -57,6 +57,11 @@ angular.module('controller')
 
             @calulate = new Calculate grid
 
+            for key, value of @colorHash
+                @colorHash[key] = _.shuffle value
+
+            @checkPlayability()
+
         hasMatch: (foo, bar) ->
             @calulate.hasMatch (@getCell item for item in [foo, bar])...
 
@@ -68,13 +73,19 @@ angular.module('controller')
 
         getConnectable: ->
             unless @nextMatchs.length
-                for list in _.values @colorHash
+                lists = _.values @colorHash
+                lists.push lists[_.random lists.length]
+                for list in lists by -1
                     list = _.filter list, (item) -> !item.state.done
                     for foo in [0...list.length]
                         for bar in [1...list.length]
                             if @hasMatch list[foo], list[bar]
-                                @nextMatchs = [list[foo], list[bar]]
+                                return @nextMatchs = [list[foo], list[bar]]
             @nextMatchs
+
+        checkPlayability: ->
+            unless @getConnectable().length
+                @wellDone = true
 
         cellClick: (item) ->
 
@@ -96,13 +107,20 @@ angular.module('controller')
 
             return unless @hasMatch item, prev
 
+            @prev.click = false
+
             for i in [item, prev]
                 @markMatch i
                 if i in @nextMatchs
                     @nextMatchs.length = 0
 
-            @prev.click = false
             @prev = null
 
-            unless @getConnectable().length
-                @wellDone = true
+            @checkPlayability()
+
+        autoPlay: ->
+            do run = =>
+                matchs = @getConnectable()
+                if matchs.length
+                    @cellClick item for item in matchs
+                    @$timeout run, 500
