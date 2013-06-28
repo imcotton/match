@@ -73,7 +73,7 @@ angular.module('controller')
         getConnectable: ->
             unless @nextMatchs.length
                 lists = _.values @colorHash
-                lists.push lists[_.random lists.length]
+                lists.push lists[_.random lists.length - 1]
                 for list in lists by -1
                     list = _.filter list, (item) -> !item.state.done
                     for foo in [0...list.length - 1]
