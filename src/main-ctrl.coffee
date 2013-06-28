@@ -1,12 +1,11 @@
 class Color
 
     @list = [
-        new @ '#046380'
+        new @ '#356B8A'
         new @ '#C84663'
         new @ '#62B422'
         new @ '#FF9666'
         new @ '#F0EDBB'
-        new @ '#0078E7'
     ]
 
     constructor: (@hex, @name) ->
