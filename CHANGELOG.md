@@ -3,6 +3,13 @@
 - TBD
 
 
+## 0.3.1 (2013-06-28)
+
+- add _Logo_
+- new _Colors_
+- size button links
+
+
 ## 0.3.0 (2013-06-27)
 
 - **auto plays**
