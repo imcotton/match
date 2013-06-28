@@ -1,6 +1,8 @@
 ## NEXT (TBD)
 
 - add _hints_ button
+- color schema changes
+- bug fixes
 
 
 ## 0.3.2 (2013-06-28)
