@@ -1,6 +1,6 @@
 ## NEXT (TBD)
 
-- TBD
+- add _hints_ button
 
 
 ## 0.3.2 (2013-06-28)

@@ -15,6 +15,11 @@ class Color
 
 angular.module('controller')
 
+    .filter 'repeat', ->
+        (amount, ingredient) ->
+            new Array(amount + 1).join(ingredient)
+
+
     .controller 'MainCtrl', class
 
         constructor: (components, @$window, @$timeout) ->
@@ -117,9 +122,16 @@ angular.module('controller')
 
             @checkPlayability()
 
-        autoPlay: ->
+        hintOnce: ->
+            @autoPlay true
+
+        autoPlay: (once = false) ->
+
+            @prev?.click = false
+            @prev = null
+
             do run = =>
                 matchs = @getConnectable()
                 if matchs.length
                     @cellClick item for item in matchs
-                    @$timeout run, 500
+                    @$timeout run, 500 unless once

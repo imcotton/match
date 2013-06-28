@@ -73,12 +73,22 @@
     </div>
 
 
-    <footer>
-        <a class="pure-button" href="test/runner.html">unit test</a>
+    <footer ng-init="hits = 3">
+
+        <button ng-click="main.hintOnce(); hits = hits - 1"
+                ng-hide="main.wellDone || hits <= 0"
+                class="pure-button pure-button-success"
+        >hint me {{ hits | repeat:'!' }}</button>
+
         <button ng-click="main.autoPlay(); autoPlays = true"
-                ng-hide="autoPlays || main.wellDone"
+                ng-hide="autoPlays || main.wellDone || hits > 0"
                 class="pure-button pure-button-primary"
         >auto play</button>
+
+        <p>
+            <a href="test/runner.html">unit test</a>
+        </p>
+
     </footer>
 
 
