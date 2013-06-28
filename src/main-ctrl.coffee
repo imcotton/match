@@ -1,17 +1,17 @@
 class Color
 
     @list = [
-        @MAROON = new @ '#800000', 'maroon'
-        @NAVY   = new @ '#000080', 'navy'
-        @PURPLE = new @ '#800080', 'purple'
-        @GREEN  = new @ '#008000', 'green'
-        @TEAL   = new @ '#008080', 'teal'
-        @OLIVE  = new @ '#808000', 'olive'
+        new @ '#046380'
+        new @ '#C84663'
+        new @ '#62B422'
+        new @ '#FF9666'
+        new @ '#F0EDBB'
+        new @ '#0078E7'
     ]
 
     constructor: (@hex, @name) ->
 
-    toString: -> @name
+    toString: -> @name or @hex
 
 
 angular.module('controller')
