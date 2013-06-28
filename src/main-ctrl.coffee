@@ -77,8 +77,8 @@ angular.module('controller')
                 lists.push lists[_.random lists.length]
                 for list in lists by -1
                     list = _.filter list, (item) -> !item.state.done
-                    for foo in [0...list.length]
-                        for bar in [1...list.length]
+                    for foo in [0...list.length - 1]
+                        for bar in [foo + 1...list.length]
                             if @hasMatch list[foo], list[bar]
                                 return @nextMatchs = [list[foo], list[bar]]
             @nextMatchs
