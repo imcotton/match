@@ -1,12 +1,11 @@
 class Color
 
     @list = [
-        new @ '#046380'
+        new @ '#356B8A'
         new @ '#C84663'
         new @ '#62B422'
         new @ '#FF9666'
         new @ '#F0EDBB'
-        new @ '#0078E7'
     ]
 
     constructor: (@hex, @name) ->
@@ -15,6 +14,11 @@ class Color
 
 
 angular.module('controller')
+
+    .filter 'repeat', ->
+        (amount, ingredient) ->
+            new Array(amount + 1).join(ingredient)
+
 
     .controller 'MainCtrl', class
 
@@ -74,11 +78,11 @@ angular.module('controller')
         getConnectable: ->
             unless @nextMatchs.length
                 lists = _.values @colorHash
-                lists.push lists[_.random lists.length]
+                lists.push lists[_.random lists.length - 1]
                 for list in lists by -1
                     list = _.filter list, (item) -> !item.state.done
-                    for foo in [0...list.length]
-                        for bar in [1...list.length]
+                    for foo in [0...list.length - 1]
+                        for bar in [foo + 1...list.length]
                             if @hasMatch list[foo], list[bar]
                                 return @nextMatchs = [list[foo], list[bar]]
             @nextMatchs
@@ -118,9 +122,16 @@ angular.module('controller')
 
             @checkPlayability()
 
-        autoPlay: ->
+        hintOnce: ->
+            @autoPlay true
+
+        autoPlay: (once = false) ->
+
+            @prev?.click = false
+            @prev = null
+
             do run = =>
                 matchs = @getConnectable()
                 if matchs.length
                     @cellClick item for item in matchs
-                    @$timeout run, 500
+                    @$timeout run, 500 unless once
