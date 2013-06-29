@@ -1,5 +1,11 @@
 ## NEXT (TBD)
 
+- TBD
+
+
+## 0.3.3 (2013-06-29)
+
+- UX improves
 - add _hints_ button
 - color schema changes
 - bug fixes
