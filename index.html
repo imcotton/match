@@ -64,26 +64,34 @@
 
         </table>
 
-        <p ng-show="main.wellDone" class="done">
-            <button ng-click="main.$window.location.reload()"
-                    class="pure-button pure-button-success"
-            >restart</button>
-        </p>
-
     </div>
 
 
     <footer ng-init="hits = 3">
 
-        <button ng-click="main.hintOnce(); hits = hits - 1"
-                ng-hide="main.wellDone || hits <= 0"
-                class="pure-button pure-button-success"
-        >hint me {{ hits | repeat:'!' }}</button>
+        <p ng-hide="main.wellDone">
+            <button ng-click="main.hintOnce(); hits = hits - 1"
+                    ng-hide="hits <= 0"
+                    class="pure-button pure-button-success"
+            >hint me {{ hits | repeat:'!' }}</button>
 
-        <button ng-click="main.autoPlay(); autoPlays = true"
-                ng-hide="autoPlays || main.wellDone || hits > 0"
-                class="pure-button pure-button-primary"
-        >auto play</button>
+            <button ng-click="main.autoPlay(); autoPlays = true"
+                    ng-hide="autoPlays || hits > 0"
+                    class="pure-button pure-button-primary"
+            >auto play</button>
+        </p>
+
+        <p ng-show="main.wellDone">
+            <button ng-click="main.$window.location.reload()"
+                    class="pure-button pure-button-primary"
+            >restart</button>
+        </p>
+
+        <p ng-show="autoPlays && !main.wellDone"
+           style="visibility: hidden"
+        >
+            <button class="pure-button">place holder</button>
+        </p>
 
         <p>
             <a href="https://github.com/imcotton/match">source code</a>
