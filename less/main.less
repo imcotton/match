@@ -63,6 +63,37 @@ header {
   }
 }
 
+footer ul.links {
+  padding-left: 0;
+  margin-top: 2em;
+  margin-bottom: 0;
+
+  li {
+    display: inline;
+    list-style-type: none;
+    border-right: 2px solid #CCC;
+    margin-left: 2px;
+    margin-right: 6px;
+    padding-right: 6px;
+
+    &.last {
+      border-right: none;
+      margin-right: 0;
+      padding-right: 0;
+    }
+
+    a {
+      color: #999;
+      text-decoration: none;
+
+      &:hover {
+        color: #777;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 header, footer {
   text-align: center;
 }
