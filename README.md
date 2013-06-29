@@ -16,6 +16,7 @@ Spotlight
 - CoffeeScript and *Literate* CoffeeScript
 - AngularJS
 - git-flow
+- LESS CSS
 - unit test (Jasmine)
 - mobile friendly
 

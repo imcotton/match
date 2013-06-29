@@ -3,6 +3,14 @@
 - TBD
 
 
+## 0.3.3 (2013-06-29)
+
+- UX improves
+- add _hints_ button
+- color schema changes
+- bug fixes
+
+
 ## 0.3.2 (2013-06-28)
 
 - fix default links
