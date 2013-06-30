@@ -43,14 +43,13 @@ header {
     background-color: #3C3C3C;
 
     .cell-row {
-      line-height: 0;
 
       .cell {
         @size: 40px;
         @border: 12px;
 
         cursor: pointer;
-        display: inline-block;
+        float: left;
         margin: 1px;
         border: @border solid;
         width: (@size - @border * 2);

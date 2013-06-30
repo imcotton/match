@@ -66,6 +66,9 @@ angular.module('controller')
 
             @checkPlayability()
 
+        reload: ->
+            @$window.location.reload()
+
         hasMatch: (foo, bar) ->
             @calulate.hasMatch (@getCell item for item in [foo, bar])...
 
