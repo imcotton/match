@@ -66,6 +66,9 @@ angular.module('controller')
 
             @checkPlayability()
 
+        reload: ->
+            @$window.location.reload()
+
         hasMatch: (foo, bar) ->
             @calulate.hasMatch (@getCell item for item in [foo, bar])...
 
@@ -76,15 +79,26 @@ angular.module('controller')
             @itemHash[item]
 
         getConnectable: ->
+
             unless @nextMatchs.length
+
+                for color, list of @colorHash
+                    @colorHash[color] = list =
+                        _.filter list, (item) -> !item.state.done
+                    delete @colorHash[color] if list.length < 2
+
                 lists = _.values @colorHash
+
+                return @nextMatchs unless lists[0]
+
                 lists.push lists[_.random lists.length - 1]
+
                 for list in lists by -1
-                    list = _.filter list, (item) -> !item.state.done
                     for foo in [0...list.length - 1]
                         for bar in [foo + 1...list.length]
                             if @hasMatch list[foo], list[bar]
                                 return @nextMatchs = [list[foo], list[bar]]
+
             @nextMatchs
 
         checkPlayability: ->

@@ -3,6 +3,13 @@
 - TBD
 
 
+## 0.3.4 (2013-07-01)
+
+- IE9 compatible
+- footer links prettify
+- optimization
+
+
 ## 0.3.3 (2013-06-29)
 
 - UX improves

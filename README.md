@@ -1,4 +1,4 @@
-[![logo](./image/logo.png)](http://imcotton.github.io/match/)
+[![logo](./image/logo.png)](http://match.imcotton.com)
 
 The Game of Match
 =================
@@ -15,8 +15,10 @@ Spotlight
 - algorithm of core logic
 - CoffeeScript and *Literate* CoffeeScript
 - AngularJS
-- git-flow
 - LESS CSS
+- jQuery free
+- compile free, runs on-the-fly in browser
+- git-flow
 - unit test (Jasmine)
 - mobile friendly
 
