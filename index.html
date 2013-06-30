@@ -82,7 +82,7 @@
         </p>
 
         <p ng-show="main.wellDone">
-            <button ng-click="main.$window.location.reload()"
+            <button ng-click="main.reload()"
                     class="pure-button pure-button-primary"
             >restart</button>
         </p>
@@ -93,11 +93,14 @@
             <button class="pure-button">place holder</button>
         </p>
 
-        <p>
-            <a href="https://github.com/imcotton/match">source code</a>
-            |
-            <a href="test/runner.html">unit test</a>
-        </p>
+        <ul class="links">
+            <li>
+                <a href="https://github.com/imcotton/match">source code</a>
+            </li>
+            <li class="last">
+                <a href="test/runner.html">unit test</a>
+            </li>
+        </ul>
 
     </footer>
 
