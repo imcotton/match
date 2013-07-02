@@ -67,16 +67,16 @@
     </div>
 
 
-    <footer ng-init="hits = 3">
+    <footer ng-init="hints = 3">
 
         <p ng-hide="main.wellDone">
-            <button ng-click="main.hintOnce(); hits = hits - 1"
-                    ng-hide="hits <= 0"
+            <button ng-click="main.hintOnce(); hints = hints - 1"
+                    ng-hide="hints <= 0"
                     class="pure-button pure-button-success"
-            >hint me {{ hits | repeat:'!' }}</button>
+            >hint me {{ hints | repeat:'!' }}</button>
 
             <button ng-click="main.autoPlay(); autoPlays = true"
-                    ng-hide="autoPlays || hits > 0"
+                    ng-hide="autoPlays || hints > 0"
                     class="pure-button pure-button-primary"
             >auto play</button>
         </p>
