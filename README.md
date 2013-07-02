@@ -21,6 +21,7 @@ Spotlight
 - git-flow
 - unit test (Jasmine)
 - mobile friendly
+- IE8+
 
 
 License
