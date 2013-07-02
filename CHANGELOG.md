@@ -3,6 +3,11 @@
 - TBD
 
 
+## 0.3.5 (2013-07-02)
+
+- IE8 compatible
+
+
 ## 0.3.4 (2013-07-01)
 
 - IE9 compatible
