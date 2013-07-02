@@ -31,14 +31,14 @@
     </a>
 
 
-    <header>
+    <div class="header">
         <span class="size">
             <i>size:</i>
             <a href="./">defaule</a>
             <a href="?size=11x11" class="pure-button">11</a>
             <a href="?size=17x17" class="pure-button">17</a>
         </span>
-    </header>
+    </div>
 
 
     <div class="panel">
@@ -67,7 +67,7 @@
     </div>
 
 
-    <footer ng-init="hints = 3">
+    <div ng-init="hints = 3" class="footer">
 
         <p ng-hide="main.wellDone">
             <button ng-click="main.hintOnce(); hints = hints - 1"
@@ -102,7 +102,7 @@
             </li>
         </ul>
 
-    </footer>
+    </div>
 
 
     <script type="text/coffeescript" src="src/components.coffee"></script>
