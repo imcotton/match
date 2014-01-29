@@ -34,11 +34,11 @@
         it 'Range', ->
             expect(range.unitX()).toBe(10)
             expect(range.unitY()).toBe(6)
-            expect(range.markX(4).toString(2)).toBe('1111111111')
-            expect(range.markX(5).toString(2)).toBe('11111111110')
-            expect(range.markX(6).toString(2)).toBe('111111111100')
-            expect(range.markY(2).toString(2)).toBe('111111')
-            expect(range.markY(6).toString(2)).toBe('1111110000')
+            expect(range.markX(4)).toBe(0b1111111111)
+            expect(range.markX(5)).toBe(0b11111111110)
+            expect(range.markX(6)).toBe(0b111111111100)
+            expect(range.markY(2)).toBe(0b111111)
+            expect(range.markY(6)).toBe(0b1111110000)
 
         it 'CellModel', ->
             list =
