@@ -1,6 +1,7 @@
 ## NEXT (TBD)
 
-- TBD
+- upgrade AngulerJS to 1.2.11
+- upgrade CoffeeScript to 1.7.1
 
 
 ## 0.3.6 (2013-07-04)
