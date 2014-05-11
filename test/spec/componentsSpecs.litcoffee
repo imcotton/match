@@ -65,6 +65,7 @@
             expect(grid.getCol(1)[2]).toBe(grid.getCell(1, 2))
             expect(grid.getRow(2)[1]).toBe(grid.getCell(1, 2))
 
+#### Here are some handy `inline` map samples for easy testing purpose
 
     describe 'Calculate check', ->
 

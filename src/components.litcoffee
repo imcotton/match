@@ -1,11 +1,8 @@
-Literate CoffeeScript
-=====================
-_Code as documentation_
 
 #### This file contains several classes provide for core logic of what so called _Match_ game
 
     ###
-    Copyright (c) 2013 Cotton Hou
+    Copyright (c) 2013-2014 Cotton Hou
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
