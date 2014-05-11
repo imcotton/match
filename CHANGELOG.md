@@ -3,6 +3,7 @@
 - change suffix of Literate CoffeeScript from `.coffee.md` to `.litcoffee`
 - upgrade AngulerJS to 1.2.11
 - upgrade CoffeeScript to 1.7.1
+- upgrade Pure css to 4.2.0
 - upgrade Jasmine to 2.0.0
 
 
