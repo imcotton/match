@@ -1,5 +1,9 @@
 ## NEXT (TBD)
 
+
+## 0.3.7 (2014-09-03)
+
+- typo fixes
 - change suffix of Literate CoffeeScript from `.coffee.md` to `.litcoffee`
 - upgrade AngulerJS to 1.2.11
 - upgrade CoffeeScript to 1.7.1
