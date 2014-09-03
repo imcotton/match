@@ -26,7 +26,7 @@ angular.module('controller')
 
             {
                 State, Point, Range
-                CellModel, GridModel, Calculate
+                CellModel, GridModel, Calculator
             } = components
 
             @list = []
@@ -59,7 +59,7 @@ angular.module('controller')
                     @colorHash[item.color] or= []
                     @colorHash[item.color].push item
 
-            @calulate = new Calculate grid
+            @calculator = new Calculator grid
 
             for key, value of @colorHash
                 @colorHash[key] = _.shuffle value
@@ -70,10 +70,10 @@ angular.module('controller')
             @$window.location.reload()
 
         hasMatch: (foo, bar) ->
-            @calulate.hasMatch (@getCell item for item in [foo, bar])...
+            @calculator.hasMatch (@getCell item for item in [foo, bar])...
 
         markMatch: (item) ->
-            @calulate.markMatch @getCell item
+            @calculator.markMatch @getCell item
 
         getCell: (item) ->
             @itemHash[item]
