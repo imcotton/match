@@ -9,19 +9,19 @@
 
     <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" href="lib/pure/0.2.0/base-min.css">
-    <link rel="stylesheet" href="lib/pure/0.2.0/buttons-min.css">
+    <link rel="stylesheet" href="lib/pure/0.4.2/base-min.css">
+    <link rel="stylesheet" href="lib/pure/0.4.2/buttons-min.css">
 
     <link rel="stylesheet/less" href="less/main.less">
 
 
     <script src="lib/underscore/1.4.4/underscore-min.js"></script>
 
-    <script src="lib/angular/1.1.5/angular.min.js"></script>
-    <script src="lib/angular/1.1.5/angular-mobile.min.js"></script>
+    <script src="lib/angular/1.2.11/angular.min.js"></script>
+    <script src="lib/angular/1.2.11/angular-touch.min.js"></script>
 
     <script src="lib/less/1.3.3/less.min.js"></script>
-    <script src="lib/coffee-script/1.6.4-rc1/coffee-script-min.js"></script>
+    <script src="lib/coffee-script/1.7.1/coffee-script.min.js"></script>
 
 </head>
 <body ng-cloak ng-controller="MainCtrl as main">
@@ -36,7 +36,7 @@
     <div class="header">
         <span class="size">
             <i>size:</i>
-            <a href="./">defaule</a>
+            <a href="./">default</a>
             <a href="?size=11x11" class="pure-button">11</a>
             <a href="?size=17x17" class="pure-button">17</a>
         </span>
@@ -107,7 +107,7 @@
     </div>
 
 
-    <script type="text/coffeescript" src="src/components.coffee"></script>
+    <script type="text/literate-coffeescript" src="src/components.litcoffee"></script>
     <script type="text/coffeescript" src="src/modules-bootstrap.coffee"></script>
     <script type="text/coffeescript" src="src/main-ctrl.coffee"></script>
     <script type="text/coffeescript" src="src/app.coffee"></script>

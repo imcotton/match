@@ -1,10 +1,10 @@
 
-    {State, Point, Range, CellModel, GridModel, Calculate} = components
+    {State, Point, Range, CellModel, GridModel, Calculator} = components
 
 
     describe 'loading modules', ->
 
-        list = {State, Point, Range, CellModel, GridModel, Calculate}
+        list = {State, Point, Range, CellModel, GridModel, Calculator}
 
         for key, value of list
             do (key, value) ->
@@ -34,11 +34,11 @@
         it 'Range', ->
             expect(range.unitX()).toBe(10)
             expect(range.unitY()).toBe(6)
-            expect(range.markX(4).toString(2)).toBe('1111111111')
-            expect(range.markX(5).toString(2)).toBe('11111111110')
-            expect(range.markX(6).toString(2)).toBe('111111111100')
-            expect(range.markY(2).toString(2)).toBe('111111')
-            expect(range.markY(6).toString(2)).toBe('1111110000')
+            expect(range.markX(4)).toBe(0b1111111111)
+            expect(range.markX(5)).toBe(0b11111111110)
+            expect(range.markX(6)).toBe(0b111111111100)
+            expect(range.markY(2)).toBe(0b111111)
+            expect(range.markY(6)).toBe(0b1111110000)
 
         it 'CellModel', ->
             list =
@@ -65,6 +65,7 @@
             expect(grid.getCol(1)[2]).toBe(grid.getCell(1, 2))
             expect(grid.getRow(2)[1]).toBe(grid.getCell(1, 2))
 
+#### Here are some handy `inline` map samples for easy testing purpose
 
     describe 'Calculate check', ->
 
@@ -138,54 +139,57 @@
 
         beforeEach ->
 
-            @addMatchers
+            jasmine.Expectation.addMatchers
 
                 connecting: ->
+                    compare: (actual) ->
 
-                    @message = ->
-                        resule = ['connected', 'not connected'][+@isNot]
-                        "Expected below to be #{resule} \n#{@actual}"
+                        matrix = for row in actual.split NEWLINE
+                            row.split SPACE
 
-                    matrix = for row in @actual.split NEWLINE
-                        row.split SPACE
+                        [width, height] = [matrix.length, matrix[0].length]
 
-                    [width, height] = [matrix.length, matrix[0].length]
+                        targets = []
+                        grid = new GridModel width, height, CellModel
+                        calculator = new Calculator grid
 
-                    targets = []
-                    grid = new GridModel width, height, CellModel
-                    calulate = new Calculate grid
+                        for x in [0...height]
+                            for y in [0...width]
+                                char = matrix[y][x]
 
-                    for x in [0...height]
-                        for y in [0...width]
-                            char = matrix[y][x]
+                                cell = grid.getCell x, y
+                                cell.add new State char is PATH
+                                cell.add new Point x, y
+                                cell.add new Range
 
-                            cell = grid.getCell x, y
-                            cell.add new State char is PATH
-                            cell.add new Point x, y
-                            cell.add new Range
+                                targets.push cell if char is TARGET
 
-                            targets.push cell if char is TARGET
+                        for target in targets
+                            point = target.get Point
+                            range = target.get Range
+                            row = grid.getRow point.y
+                            col = grid.getCol point.x
 
-                    for target in targets
-                        point = target.get Point
-                        range = target.get Range
-                        row = grid.getRow point.y
-                        col = grid.getCol point.x
+                            for i in [point.x - 1..0]
+                                break unless row[i]?.get(State).done
+                                range.left++
 
-                        for i in [point.x - 1..0]
-                            break unless row[i]?.get(State).done
-                            range.left++
+                            for i in [point.x + 1...row.length]
+                                break unless row[i]?.get(State).done
+                                range.right++
 
-                        for i in [point.x + 1...row.length]
-                            break unless row[i]?.get(State).done
-                            range.right++
+                            for i in [point.y - 1..0]
+                                break unless col[i]?.get(State).done
+                                range.top++
 
-                        for i in [point.y - 1..0]
-                            break unless col[i]?.get(State).done
-                            range.top++
+                            for i in [point.y + 1...col.length]
+                                break unless col[i]?.get(State).done
+                                range.bottom++
 
-                        for i in [point.y + 1...col.length]
-                            break unless col[i]?.get(State).done
-                            range.bottom++
+                        pass = calculator.hasMatch targets...
+                        result = ['connected', 'not connected'][+pass]
 
-                    calulate.hasMatch targets...
+                        {
+                            pass: pass
+                            message: "Expected below to be #{result} \n#{actual}"
+                        }

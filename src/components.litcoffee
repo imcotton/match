@@ -1,11 +1,8 @@
-Literate CoffeeScript
-=====================
-_Code as documentation_
 
 #### This file contains several classes provide for core logic of what so called _Match_ game
 
     ###
-    Copyright (c) 2013 Cotton Hou
+    Copyright (c) 2013-2014 Cotton Hou
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -122,11 +119,11 @@ GridModel
 
             @getRow(y)[x]
 
-Calculate
----------
+Calculator
+----------
 #### Major logic for calculation
 
-    class Calculate
+    class Calculator
 
         constructor: (@grid) ->
 
@@ -249,7 +246,7 @@ exports
 #### Here is the place to export all classes in this file
 
     exports = {
-        State, Point, Range, CellModel, GridModel, Calculate
+        State, Point, Range, CellModel, GridModel, Calculator
     }
 
 CommonJS module if possible
