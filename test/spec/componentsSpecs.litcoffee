@@ -1,10 +1,10 @@
 
-    {State, Point, Range, CellModel, GridModel, Calculate} = components
+    {State, Point, Range, CellModel, GridModel, Calculator} = components
 
 
     describe 'loading modules', ->
 
-        list = {State, Point, Range, CellModel, GridModel, Calculate}
+        list = {State, Point, Range, CellModel, GridModel, Calculator}
 
         for key, value of list
             do (key, value) ->
@@ -151,7 +151,7 @@
 
                         targets = []
                         grid = new GridModel width, height, CellModel
-                        calulate = new Calculate grid
+                        calculator = new Calculator grid
 
                         for x in [0...height]
                             for y in [0...width]
@@ -186,10 +186,10 @@
                                 break unless col[i]?.get(State).done
                                 range.bottom++
 
-                        pass = calulate.hasMatch targets...
-                        resule = ['connected', 'not connected'][+pass]
+                        pass = calculator.hasMatch targets...
+                        result = ['connected', 'not connected'][+pass]
 
                         {
                             pass: pass
-                            message: "Expected below to be #{resule} \n#{actual}"
+                            message: "Expected below to be #{result} \n#{actual}"
                         }

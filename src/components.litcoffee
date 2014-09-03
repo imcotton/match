@@ -119,11 +119,11 @@ GridModel
 
             @getRow(y)[x]
 
-Calculate
----------
+Calculator
+----------
 #### Major logic for calculation
 
-    class Calculate
+    class Calculator
 
         constructor: (@grid) ->
 
@@ -246,7 +246,7 @@ exports
 #### Here is the place to export all classes in this file
 
     exports = {
-        State, Point, Range, CellModel, GridModel, Calculate
+        State, Point, Range, CellModel, GridModel, Calculator
     }
 
 CommonJS module if possible
