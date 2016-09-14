@@ -1,4 +1,4 @@
-[![logo](./image/logo.png)](http://match.imcotton.com)
+[![logo](./source/assets/image/logo.png)](http://match.imcotton.com)
 
 The Game of Match
 =================
