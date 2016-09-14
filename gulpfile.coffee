@@ -321,4 +321,27 @@ gulp.task 'build', utils.list 'assets css.vendor polyfills rollup'
 
 
 
+gulp.task 'bundle.engin', utils.list('scripts'), ->
+
+    $.rollup {
+        entry: utils.path.dst 'app/@shared/engin/index.js'
+    }
+
+    .then (bundle) ->
+
+        bundle.write {
+            format: 'umd'
+            moduleName: 'engin'
+            dest: utils.path.dst 'app/@shared/engin/index.umd.js'
+        }
+
+
+
+gulp.task 'test.engin', utils.list('bundle.engin'), ->
+
+    gulp.src 'test/spec/**/*[sS]pec.{coffee,coffee.md,litcoffee,js}'
+        .pipe $.jasmine()
+
+
+
 gulp.task 'default', ['dev']

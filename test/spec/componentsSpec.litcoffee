@@ -1,5 +1,9 @@
 
-    {State, Point, Range, CellModel, GridModel, Calculator} = components
+    {
+        State, Point, Range,
+        CellModel, GridModel, Calculator
+
+    } = require '../../dist/app/@shared/engin/index.umd'
 
 
     describe 'loading modules', ->
@@ -29,11 +33,11 @@
             expect(state.done).toBeTruthy()
 
         it 'Point', ->
-            expect(point.toString()).toEqual('3-5')
+            expect(point.toString()).toEqual('(3, 5)')
 
         it 'Range', ->
-            expect(range.unitX()).toBe(10)
-            expect(range.unitY()).toBe(6)
+            expect(range.unitX).toBe(10)
+            expect(range.unitY).toBe(6)
             expect(range.markX(4)).toBe(0b1111111111)
             expect(range.markX(5)).toBe(0b11111111110)
             expect(range.markX(6)).toBe(0b111111111100)
@@ -48,18 +52,18 @@
             cellModel = new CellModel()
             cellModel.add i for i in list.instance
 
-            item = cellModel.gets list.clazz...
+            item = list.clazz.map (item) -> cellModel.get item
 
             for i in [0...list.clazz.length]
                 expect(cellModel.get(list.clazz[i])).toBe(list.instance[i])
 
-            for k, v in item
-                expect(v in list.instance).toBeTruthy()
+            for i in item
+                expect(i in list.instance).toBeTruthy()
 
         it 'GridModel', ->
             expect(grid.getCell(0, 0)).toEqual(jasmine.any(Array))
-            expect(grid.width()).toBe(3)
-            expect(grid.height()).toBe(5)
+            expect(grid.width).toBe(3)
+            expect(grid.height).toBe(5)
             expect(grid.getRow(1)[2]).toBe(grid.getCol(2)[1])
             expect(grid.getRow(2)[2]).toBe(grid.getCol(2)[2])
             expect(grid.getCol(1)[2]).toBe(grid.getCell(1, 2))
@@ -139,7 +143,7 @@
 
         beforeEach ->
 
-            jasmine.Expectation.addMatchers
+            jasmine.addMatchers
 
                 connecting: ->
                     compare: (actual) ->
