@@ -63,8 +63,6 @@ gulp.task 'assets', ->
             utils.path.src 'assets/*'
         ]
 
-        # .pipe $.debug minimal: true
-
         .pipe $.if (({path}) -> not utils.prod and path.endsWith 'assets/index.html'),
             $.replace /(<script)\s+async/, '$1'
 
@@ -132,8 +130,6 @@ gulp.task 'css.vendor', ->
 
 gulp.task 'rollup', utils.list('scripts'), (callback) ->
 
-    show_bundle_size = _.some Boolean, [utils.prod, $.util.env.build]
-
     $.rollup {
         entry: utils.path.dst(
             if utils.prod then 'scripts/main.aot.js' else 'scripts/main.js'
@@ -173,18 +169,6 @@ gulp.task 'rollup', utils.list('scripts'), (callback) ->
                 make = map_w_key (value, key) -> ['tslib/tslib.es6.js', key]
 
                 return _.merge config, make require 'tslib'
-
-            utils.prod and utils.require 'rollup-plugin-uglify', {
-                mangle:
-                    screw_ie8: true
-                    keep_fnames: false
-
-                compress:
-                    screw_ie8: true
-                    dead_code: true
-            }
-
-            show_bundle_size and utils.require 'rollup-plugin-filesize'
         ]
     }
 
@@ -199,10 +183,27 @@ gulp.task 'rollup', utils.list('scripts'), (callback) ->
 
 
 
-gulp.task 'rollup_strip', utils.list('rollup'), ->
+gulp.task 'rollup.post', utils.list('rollup'), ->
 
     gulp.src utils.path.dst 'scripts/bundle.js'
-        .pipe $.stripComments space: true
+
+        .pipe $.if not utils.prod,
+            $.stripComments space: true
+
+        .pipe $.if utils.prod,
+            $.regenerator includeRuntime: false
+
+        .pipe $.if utils.prod,
+            $.uglify {
+                mangle:
+                    screw_ie8: true
+                    keep_fnames: false
+
+                compress:
+                    screw_ie8: true
+                    dead_code: true
+            }
+
         .pipe gulp.dest utils.path.dst 'scripts'
 
 
@@ -276,11 +277,6 @@ gulp.task 'typescript', utils.list('tmp'), (callback) ->
 
 gulp.task 'scripts', utils.list('typescript'), ->
 
-    type = {
-        coffee: '**/*.{coffee,coffee.md,litecoffee}'
-        typescript: '**/*.{ts,tsx,d.ts}'
-    }
-
     gulp.src [
             utils.path.src '**'
             '!**/*.ts'
@@ -292,21 +288,18 @@ gulp.task 'scripts', utils.list('typescript'), ->
 
         .pipe $.plumber()
 
-        .pipe $.if type.coffee,
+        .pipe $.if '**/*.{coffee,coffee.md,litecoffee}',
             $.coffee bare: true
-
-        .pipe $.if (({path}) -> utils.prod and path.endsWith '.js'),
-            $.regenerator includeRuntime: false
 
         .pipe gulp.dest utils.path.dst()
 
 
 
-gulp.task 'dev', utils.list('assets css.vendor polyfills rollup_strip'), ->
+gulp.task 'dev', utils.list('assets css.vendor polyfills rollup.post'), ->
 
     return if $.util.env.build
 
-    $.watch utils.list('rollup_strip'), [
+    $.watch utils.list('rollup.post'), [
        utils.path.src 'app/**/*.{css,html}'
        utils.path.src '**/*.{js,coffee,coffee.md,litecoffee,ts,tsx}'
     ]
@@ -317,7 +310,7 @@ gulp.task 'dev', utils.list('assets css.vendor polyfills rollup_strip'), ->
 
 
 
-gulp.task 'build', utils.list 'assets css.vendor polyfills rollup'
+gulp.task 'build', utils.list 'assets css.vendor polyfills rollup.post'
 
 
 
