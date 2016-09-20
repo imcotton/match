@@ -74,7 +74,6 @@ gulp.task 'polyfills', ->
 
     vendor = '
         core-js/client/shim.min.js
-        regenerator-runtime/runtime.js
         zone.js/dist/zone.min.js
     '
 

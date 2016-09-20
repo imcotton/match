@@ -1,5 +1,6 @@
 
 import 'reflect-metadata';
+import 'regenerator-runtime/runtime';
 import './utils/rxjs-operators';
 
 
@@ -14,10 +15,15 @@ import { ready } from './utils/boot';
 
 
 
-ready.subscribe(good => {
-    if (!good) return;
+ready
 
-    enableProdMode();
-    platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
-});
+    .then(()=> {
+        enableProdMode();
+        platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
+    })
+
+    .catch(()=> {
+        console.error('polyfills not present');
+    })
+;
 

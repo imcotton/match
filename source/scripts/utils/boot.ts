@@ -12,7 +12,12 @@ export const ready = (function (window) {
         .first(
             v => 'Zone' in window,
             v => true,
-            false,
+                 false,
+        )
+        .toPromise()
+        .then(resolution => resolution
+                          ? Promise.resolve(true)
+                          : Promise.reject(false)
         )
     ;
 }(window || {}));
