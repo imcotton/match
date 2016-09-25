@@ -11,7 +11,7 @@
     "dev:build": "gulp dev --build",
     "build": "gulp clean && gulp build --production",
     "build:serve": "concurrently -k \"npm run build\" \"npm run lite\"",
-    "test": "gulp test.engin",
+    "test": "gulp test.engine",
     "lite": "lite-server -c dev/bs-config.js",
     "gulp": "gulp",
     "jasmine": "jasmine",

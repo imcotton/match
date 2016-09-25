@@ -3,7 +3,7 @@
         State, Point, Range,
         CellModel, GridModel, Calculator
 
-    } = require '../../dist/app/@shared/engin/index.umd'
+    } = require '../../dist/app/@shared/engine/index.umd'
 
 
     describe 'loading modules', ->
