@@ -8,3 +8,10 @@ declare module '*!text' {
 
 declare module '../codegen/*';
 
+
+
+interface IterableIterator<T> {
+    [index: number]: any;
+    length: number;
+}
+
