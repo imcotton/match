@@ -2,12 +2,14 @@
 _ = require 'lodash/fp'
 path = require 'path'
 gulp = require 'gulp'
+request = require 'request'
+url = require 'url'
 
 $ = _.merge do require('gulp-load-plugins'), {
     del: (option, glob) -> require('del')(glob, option)
     rollup: require('rollup').rollup
     exec: require('child_process').exec
-    watch: (task, glob) -> gulp.watch glob, debounceDelay: 2000, task
+    watch: (task, glob) -> gulp.watch glob, debounceDelay: 1000, task
 }
 
 
@@ -16,6 +18,7 @@ val = {
     npm: 'node_modules'
     source: 'source'
     dist: 'dist'
+    dev: 'dev'
     tmp: '.tmp'
 }
 
@@ -31,9 +34,10 @@ utils = {
         src: (str = '') -> path.join val.source, str
         dst: (str = '') -> path.join val.dist, str
         tmp: (str = '') -> path.join val.tmp, str
+        dev: (str = '') -> path.join val.dev, str
         npm: (str = '') -> path.join val.npm, str
 
-    require: (module, config = {}) ->
+    require: _.memoize (module, config = {}) ->
         if _.isString config then config = require config
         require(module)(config)
 
@@ -42,6 +46,10 @@ utils = {
 
     prod: !!$.util.env.production
 }
+
+
+
+
 
 
 
@@ -57,6 +65,12 @@ gulp.task 'clean', ->
 
 
 
+
+
+
+
+
+
 gulp.task 'assets', ->
 
     gulp.src [
@@ -66,7 +80,16 @@ gulp.task 'assets', ->
         .pipe $.if (({path}) -> not utils.prod and path.endsWith 'assets/index.html'),
             $.replace /(<script)\s+async/, '$1'
 
+        .pipe $.if (({path}) -> utils.prod and path.endsWith 'assets/index.html'),
+            $.replace /(<link rel="icon" href=")(.*)(">)/, '$1favicon.ico$3'
+
         .pipe gulp.dest utils.path.dst()
+
+
+
+
+
+
 
 
 
@@ -101,6 +124,12 @@ gulp.task 'polyfills', ->
 
 
 
+
+
+
+
+
+
 gulp.task 'css.vendor', ->
 
     vendor = '
@@ -127,12 +156,19 @@ gulp.task 'css.vendor', ->
 
 
 
-gulp.task 'rollup', utils.list('scripts'), (callback) ->
+
+
+
+
+
+
+gulp.task 'rollup', ['scripts'], (callback) ->
 
     $.rollup {
         entry: utils.path.dst(
             if utils.prod then 'scripts/main.aot.js' else 'scripts/main.js'
         )
+        context: 'window'
         cache: utils.cache
         plugins: _.compact [
             resolveId: (id, from) ->
@@ -162,12 +198,14 @@ gulp.task 'rollup', utils.list('scripts'), (callback) ->
             }
 
             utils.require 'rollup-plugin-inject', do ->
-                config = exclude: 'node_modules/**'
+                config = exclude: 'node_modules/**', modules: {}
 
                 map_w_key = _.mapValues.convert 'cap': false
                 make = map_w_key (value, key) -> ['tslib/tslib.es6.js', key]
 
-                return _.merge config, make require 'tslib'
+                modules = make require 'tslib'
+
+                return _.assign config, {modules}
         ]
     }
 
@@ -182,7 +220,13 @@ gulp.task 'rollup', utils.list('scripts'), (callback) ->
 
 
 
-gulp.task 'rollup.post', utils.list('rollup'), ->
+
+
+
+
+
+
+gulp.task 'rollup.post', ['rollup'], ->
 
     gulp.src utils.path.dst 'scripts/bundle.js'
 
@@ -205,48 +249,94 @@ gulp.task 'rollup.post', utils.list('rollup'), ->
 
         .pipe gulp.dest utils.path.dst 'scripts'
 
+        .on 'end', ->
+
+            uri = url.format {
+                protocol: 'http:'
+                port: (require './'.concat utils.path.dev 'bs-config').port
+                hostname: 'localhost'
+                pathname: '__browser_sync__'
+                search: '?method=reload'
+            }
+
+            request(uri)
+                .on 'response', _.noop
+                .on 'error', _.noop
 
 
-gulp.task 'tmp', ->
 
-    gulp.src utils.path.src '**'
-        .pipe $.plumber()
 
-        .pipe $.if (({path}) -> utils.prod and path.endsWith 'tsconfig.json'),
-            $.replace /(strictNullChecks.:(\s+)?)true/, '$1false'
 
-        .pipe $.if '**/*.css',
-            $.postcss [
-                utils.require 'postcss-simple-vars', {
-                    variables: require './'.concat utils.path.src 'styles/variables'
-                }
-                utils.require 'postcss-selector-not'
-                utils.require 'postcss-nesting'
-                utils.require 'postcss-color-function'
-                utils.require 'autoprefixer', {
-                    browsers: [
-                        'last 2 versions'
-                        'ie >= 9'
-                        'iOS >= 8'
-                        'Safari >= 8'
-                    ]
-                }
-            ]
+
+
+
+
+gulp.task 'tmp', ['tmp.inlineNg2']
+
+
+gulp.task 'tmp.src', ->
+
+    gulp.src [
+            utils.path.src '**'
+            utils.path.src '!**/assets/**'
+            utils.path.src '!**/*.css'
+        ]
         .pipe gulp.dest utils.path.tmp(), dot: true
 
+
+gulp.task 'tmp.tsconfig', ['tmp.src'], ->
+
+    gulp.src utils.path.tmp 'tsconfig.json'
+        .pipe $.if utils.prod,
+            $.replace /(strictNullChecks.:(\s+)?)true/, '$1false'
+        .pipe gulp.dest utils.path.tmp(), dot: true
+
+
+gulp.task 'tmp.css', ['tmp.tsconfig'],  ->
+
+    gulp.src [
+            utils.path.src '**/*.css'
+            utils.path.tmp '!**/*.less'
+        ]
+        .pipe $.postcss [
+            utils.require 'postcss-simple-vars', {
+                variables: require './'.concat utils.path.src 'styles/variables'
+            }
+            utils.require 'postcss-selector-not'
+            utils.require 'postcss-nesting'
+            utils.require 'postcss-color-function'
+            utils.require 'autoprefixer', {
+                browsers: [
+                    'last 2 versions'
+                    'ie >= 9'
+                    'iOS >= 8'
+                    'Safari >= 8'
+                ]
+            }
+        ]
+        .pipe gulp.dest utils.path.tmp(), dot: true
+        .pipe gulp.dest utils.path.dst()
+
+
+gulp.task 'tmp.inlineNg2', ['tmp.css'], ->
+
+    gulp.src utils.path.tmp '**'
         .pipe $.if not utils.prod,
             $.inlineNg2Template {
                 base: 'source'
                 useRelativePaths: true
             }
-        .pipe $.if not utils.prod,
-            gulp.dest utils.path.tmp(), dot: true
-
-        .pipe $.if '**/*.css', gulp.dest utils.path.dst()
+        .pipe gulp.dest utils.path.tmp(), dot: true
 
 
 
-gulp.task 'typescript', utils.list('tmp'), (callback) ->
+
+
+
+
+
+
+gulp.task 'typescript', ['tmp'], (callback) ->
 
     if utils.prod
 
@@ -269,12 +359,18 @@ gulp.task 'typescript', utils.list('tmp'), (callback) ->
                 '!**/main.aot.ts'
             ]
             .pipe $.plumber()
-            .pipe $.typescript ts
+            .pipe ts()
             .pipe gulp.dest utils.path.dst()
 
 
 
-gulp.task 'scripts', utils.list('typescript'), ->
+
+
+
+
+
+
+gulp.task 'scripts', ['typescript'], ->
 
     gulp.src [
             utils.path.src '**'
@@ -294,6 +390,12 @@ gulp.task 'scripts', utils.list('typescript'), ->
 
 
 
+
+
+
+
+
+
 gulp.task 'dev', utils.list('assets css.vendor polyfills rollup.post'), ->
 
     return if $.util.env.build
@@ -309,14 +411,26 @@ gulp.task 'dev', utils.list('assets css.vendor polyfills rollup.post'), ->
 
 
 
+
+
+
+
+
+
 gulp.task 'build', utils.list 'assets css.vendor polyfills rollup.post'
 
 
 
-gulp.task 'bundle.engin', utils.list('scripts'), ->
+
+
+
+
+
+
+gulp.task 'bundle.engine', utils.list('scripts'), ->
 
     $.rollup {
-        entry: utils.path.dst 'app/@shared/engin/index.js'
+        entry: utils.path.dst 'app/@shared/engine/index.js'
     }
 
     .then (bundle) ->
@@ -324,15 +438,27 @@ gulp.task 'bundle.engin', utils.list('scripts'), ->
         bundle.write {
             format: 'umd'
             moduleName: 'engin'
-            dest: utils.path.dst 'app/@shared/engin/index.umd.js'
+            dest: utils.path.dst 'app/@shared/engine/index.umd.js'
         }
 
 
 
-gulp.task 'test.engin', utils.list('bundle.engin'), ->
+
+
+
+
+
+
+gulp.task 'test.engine', utils.list('bundle.engine'), ->
 
     gulp.src 'test/spec/**/*[sS]pec.{coffee,coffee.md,litcoffee,js}'
         .pipe $.jasmine()
+
+
+
+
+
+
 
 
 
