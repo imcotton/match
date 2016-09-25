@@ -1,0 +1,103 @@
+
+*:not(.non-border-box) {
+    box-sizing: border-box;
+
+    &:before, &:after {
+        box-sizing: border-box;
+    }
+
+    & * {
+        box-sizing: content-box;
+    }
+}
+
+
+
+.text-center {
+    text-align: center;
+}
+
+
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1em;
+    padding-right: 1em;
+
+    &.fixed {
+        max-width: 1140px;
+
+        &.small {
+            max-width: 768px;
+        }
+    }
+
+    &.omit-margin {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+
+
+.github-fork-ribbon {
+    @media (max-width: 600px) {
+        display: none;
+    }
+}
+
+
+
+.button {
+    &-success, &-error, &-warning, &-primary, &-secondary, &-default {
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 4px;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    &-success {
+        color: #FFF;
+        background: $colors_green;
+        border-color: color($colors_green saturation(+ 10%) b(+ 20%));
+    }
+
+    &-error {
+        color: #FFF;
+        background: $colors_red;
+        border-color: color($colors_red saturation(+ 10%) b(+ 20%));
+    }
+
+    &-warning {
+        color: #FFF;
+        background: $colors_yellow;
+        border-color: color($colors_yellow saturation(+ 10%) b(+ 20%));
+    }
+
+    &-primary {
+        color: #FFF;
+        background: $colors_blue;
+        border-color: color($colors_blue saturation(+ 10%) b(+ 20%));
+    }
+
+    &-secondary {
+        color: #FFF;
+        background: $colors_cyan;
+        border-color: color($colors_cyan saturation(+ 10%) b(+ 20%));
+    }
+
+    &-xs {
+        font-size: 70%;
+    }
+    &-sm {
+        font-size: 85%;
+    }
+    &-lg {
+        font-size: 110%;
+    }
+    &-xl {
+        font-size: 125%;
+    }
+}
+

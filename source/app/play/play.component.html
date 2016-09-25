@@ -1,0 +1,37 @@
+
+<main>
+
+    <ol class="size container fixed">
+        <li class="link"
+            *ngFor="let size of [5, 7, 9, 13, 19]"
+            [ngClass]="{small: size < 9}"
+        >
+            <a class="pure-button button-default button-xs"
+               routerLink="./"
+               [queryParams]="{w: size, h: size}"
+            >{{ size }} &times; {{ size }}</a>
+        </li>
+    </ol>
+
+    <board
+        [grid]="source?.data"
+        [renderObs]="renderSubject"
+        (pairObs)="onPair($event)"
+    ></board>
+
+    <p class="buttons text-center"
+       [style.visibility]="(source?.data | async) ? 'visible' : 'hidden'"
+    >
+        <button class="pure-button button-success"
+                [hidden]="!nextPair"
+                (click)="onHint(nextPair)"
+        >hint me</button>
+
+        <button class="pure-button button-primary"
+                [hidden]="!!nextPair"
+                (click)="onReplay($event)"
+        >play again</button>
+    </p>
+
+</main>
+

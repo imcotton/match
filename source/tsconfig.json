@@ -1,0 +1,54 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "es6",
+        "outDir": "../dist",
+        "moduleResolution": "node",
+        "allowJs": true,
+        "declaration": false,
+        "sourceMap": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": true,
+        "lib": [
+            "es5",
+            "es6",
+            "es2016",
+            "es2017",
+            "dom"
+        ],
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+
+        "noEmitHelpers": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+
+        "strictNullChecks": true,
+        "isolatedModules": true,
+        "pretty": true
+    },
+
+    "angularCompilerOptions": {
+        "genDir": "./codegen",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "debug": true
+    },
+
+    "filesGlob": [
+        "**/*.ts",
+        "**/*.js"
+    ],
+
+    "exclude": [
+        "dist",
+        "node_modules"
+    ],
+
+    "types": [
+    ],
+
+    "compileOnSave": false
+}

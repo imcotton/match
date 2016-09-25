@@ -1,0 +1,27 @@
+
+<section class="container omit-margin playground non-border-box">
+    <table class="container omit-margin table">
+
+        <tr class="cell-row" *ngFor="let row of grid | async"
+        >
+            <td class="cell" *ngFor="let item of row"
+
+                (click)="picker.next(item)"
+
+                [ngStyle]="{
+                    'background-color': item.color.hexString,
+                    'border-color': item.color.hexString
+                }"
+
+                [ngClass]="{
+                    selected: item.selected,
+                    done: item.state.done
+                }"
+            ></td>
+        </tr>
+
+    </table>
+
+    <p class="loading" *ngIf="!(grid | async)">loading...</p>
+</section>
+
