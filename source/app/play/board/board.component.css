@@ -1,0 +1,38 @@
+
+.playground .table {
+    margin: 20px auto;
+    border: 1px solid;
+    background-color: #3C3C3C;
+}
+
+.cell {
+    $size: 40px;
+    $border: 12px;
+
+    cursor: pointer;
+    float: left;
+    margin: 1px;
+    border: $border solid;
+    width: calc($size - $border - $border);
+    height: calc($size - $border - $border);
+    transition: opacity 0.4s;
+
+    &.selected {
+        border-color: #3C3C3C !important;
+        border-style: double;
+    }
+
+    &.done {
+        cursor: default;
+        opacity: 0;
+    }
+}
+
+.loading {
+    text-align: center;
+    margin: 10vh 0;
+    font-style: italic;
+    font-size: 1.5em;
+    color: grey;
+}
+
