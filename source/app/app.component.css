@@ -1,0 +1,27 @@
+
+header {
+    padding: 6px;
+    text-align: right;
+    border-bottom: 1px solid lightgray;
+
+    & nav * {
+        transition: all 0.4s;
+    }
+
+    & nav a.active {
+        pointer-events: none;
+        cursor: default;
+    }
+}
+
+footer {
+    margin: 0 auto;
+    padding: 4px 8px;
+    text-align: center;
+    border-top: 1px solid lightgray;
+
+    & .rights {
+        color: #888;
+        font-size: 0.8rem;
+    }
+}

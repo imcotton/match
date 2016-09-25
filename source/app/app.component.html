@@ -1,0 +1,29 @@
+
+<a class="github-fork-ribbon left-bottom non-border-box"
+   href="https://github.com/imcotton/match"
+   title="Fork me on GitHub"
+   rel="noreferrer noopener"
+>Fork me on GitHub</a>
+
+<header class="container fixed">
+    <nav>
+        <a class="pure-button button-default button-sm"
+           routerLink="/"
+           routerLinkActive="active button-secondary"
+           [routerLinkActiveOptions]="{exact: true}"
+        >Play</a>
+
+        <a class="pure-button button-default button-sm"
+           routerLink="/leaderboard"
+           routerLinkActive="active button-secondary"
+        >Leaderboard</a>
+    </nav>
+</header>
+
+<router-outlet></router-outlet>
+
+<footer class="container fixed">
+    <p class="rights">
+        &copy; 2013 - 2016
+    </p>
+</footer>
