@@ -1,0 +1,13 @@
+
+.size {
+    & > .link {
+        display: inline;
+
+        &:not(.small) {
+            @media (max-width: 600px) {
+                display: none;
+            }
+        }
+    }
+}
+
