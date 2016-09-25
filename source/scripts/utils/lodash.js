@@ -6,6 +6,9 @@ import each  from 'lodash-es/each'
 import times from 'lodash-es/times'
 import range from 'lodash-es/range'
 import flatten from 'lodash-es/flatten'
+import shuffle from 'lodash-es/shuffle'
+import memoize from 'lodash-es/memoize'
+import noop from 'lodash-es/noop'
 
 
 
@@ -18,4 +21,8 @@ export default {
     times,
     range,
     flatten,
+    shuffle,
+    memoize,
+    noop,
 }
+
