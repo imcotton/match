@@ -54,7 +54,7 @@ export class PlayService {
         const unpack = (item: Board.Item) => cache.get(item) as CellModel;
 
         const checking = ({bob, alice}: Board.Pair) =>
-            calculator.hasMatch(unpack(bob), unpack(alice))
+            calculator.hasMatch(unpack(bob), unpack(alice));
 
         const boardItemList: Board.ItemList = [];
 

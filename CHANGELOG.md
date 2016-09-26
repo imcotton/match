@@ -1,12 +1,12 @@
 ## NEXT (TBD)
 
 
-## 1.0.0.beta.0 (2016-09-26)
+## 1.0.0-beta.0 (2016-09-26)
 
 - rewritten to Angular 2
 - Gulp and Rollup for building and bundling
-- detach CoffeeScript in flavor of TypeScript
-- detach LESS CSS in flavor of Post CSS
+- detach CoffeeScript in favor of TypeScript
+- detach LESS CSS in favor of Post CSS
 - dropping IE8 support
 
 
