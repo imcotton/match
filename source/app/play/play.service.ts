@@ -8,6 +8,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { State, Point, Range, CellModel, GridModel, Calculator } from '../@shared/engine';
 
+import { shuffle } from '../@shared/helper';
+
 import { Board } from './board/board.component';
 
 import _ from '../../scripts/utils/lodash';
@@ -34,7 +36,7 @@ export class PlayService {
     private *genHex (count = 0) {
 
         const range = Array.from(Array(count), (n, i) => i);
-        const indexs = _.shuffle(range) as number[];
+        const indexs = shuffle(range);
 
         while (indexs.length) {
             yield PlayService.hexStore[
