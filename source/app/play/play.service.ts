@@ -165,10 +165,14 @@ export class PlayService {
 
 class BoardItem implements Board.Item {
 
-    private static colorGen = _.memoize((hex: number) => <Board.Color>{
-        hex: hex,
-        hexString: `#${ hex.toString(0x10) }`,
-    });
+    private static colorGen = (function (cache) {
+        return function (hex: number) {
+            return cache[hex] = cache[hex] || {
+                hex,
+                hexString: `#${ hex.toString(0x10) }`,
+            };
+        }
+    }(<{[key: number]: Board.Color;}>{}));
 
     constructor (
         private state: State,
