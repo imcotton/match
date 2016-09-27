@@ -12,7 +12,6 @@ import { shuffle } from '../@shared/helper';
 
 import { Board } from './board/board.component';
 
-import _ from '../../scripts/utils/lodash';
 
 
 

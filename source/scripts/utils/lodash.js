@@ -21,8 +21,8 @@ export default {
     // times,
     // range,
     // flatten,
-    shuffle,
-    memoize,
-    noop,
+    // shuffle,
+    // memoize,
+    // noop,
 }
 
