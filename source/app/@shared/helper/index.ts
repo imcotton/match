@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 
 
-import { Subscription } from 'rxjs/Subscription';
+import { AnonymousSubscription } from 'rxjs/Subscription';
 
 
 
@@ -11,9 +11,9 @@ import { Subscription } from 'rxjs/Subscription';
 @Injectable()
 export class Bucket {
 
-    private subscriptions = new Set<Subscription>();
+    private subscriptions = new Set<AnonymousSubscription>();
 
-    add = (subscription: Subscription) => {
+    add = (subscription: AnonymousSubscription) => {
         this.subscriptions.add(subscription);
         return this;
     };
