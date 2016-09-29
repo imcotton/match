@@ -37,3 +37,7 @@ export const shuffle = function <T>(list: T[]) {
     return list;
 }
 
+
+
+export const noop = function () {};
+
