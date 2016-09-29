@@ -105,11 +105,11 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
     onPair (pair: Board.Pair, skipChecks = false) {
         let connected = true;
 
-        if (!skipChecks) {
+        if (skipChecks === false) {
             connected = this.source!.checking(pair);
         }
 
-        if (!connected) return;
+        if (connected === false) return;
 
         this.source!.marking(pair.bob, pair.alice);
     }
