@@ -2,6 +2,7 @@
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/range';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/fromPromise';
 
@@ -17,6 +18,7 @@ import 'rxjs/add/operator/ignoreElements';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/takeWhile';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/last';
 import 'rxjs/add/operator/filter';

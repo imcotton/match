@@ -7,6 +7,9 @@ import {
     OnDestroy,
     OnChanges,
 
+    Pipe,
+    PipeTransform,
+
     ChangeDetectionStrategy,
     ChangeDetectorRef,
 } from '@angular/core';
@@ -55,7 +58,10 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
 
 
     nextPair?: Board.Pair;
+
     renderSubject = new Subject<Board.Pair>();
+
+    hint = 0;
 
     source?: {
         data: Promise<Board.ItemList[]>;
@@ -82,6 +88,8 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
                     },
                 })
         );
+
+        this.hint = 3;
     }
 
     ngOnInit () {
@@ -107,6 +115,8 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     onHint (validated: Board.Pair) {
+        this.hint--;
+
         this.onPair(validated, true);
         this.renderSubject.next(validated);
     }
@@ -120,6 +130,18 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
 
     ngOnDestroy () {
         this.bucket.release();
+    }
+}
+
+
+
+@Pipe({
+    name: 'repeat',
+})
+export class RepeatPipe implements PipeTransform {
+
+    transform (amount: number, ingredient = '') {
+        return Array(amount + 1).join(ingredient);
     }
 }
 
