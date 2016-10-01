@@ -47,7 +47,6 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
         private bucket: Bucket,
     ) {
         const grouping = this.picker
-            .startWith(<Board.Item>{})
             .filter(item => !item.done)
             .distinctUntilChanged()
             .pairwise()
@@ -56,7 +55,7 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
 
         this.pairObs = grouping
             .filter(([last, current]) =>
-                !last.done && last.color === current.color
+                !last.pseudo && last.color === current.color
             )
             .map(([bob, alice]) => <Board.Pair>{bob, alice})
             .share()
@@ -85,7 +84,10 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
     ngOnChanges (changes: SimpleChanges) {
         Object.entries<SimpleChange>(changes).forEach(([key, change]) => {
             if (key === 'grid' && !!change.currentValue) {
-                this.picker.next(<Board.Item>{});
+                const item = <Board.Item>{};
+                      item.pseudo = true;
+
+                this.picker.next(item);
             }
         });
     }
@@ -112,6 +114,7 @@ export namespace Board {
         readonly color: Color
 
         selected?: boolean
+        pseudo?: boolean
     }
 
     export type ItemList = Item[]
