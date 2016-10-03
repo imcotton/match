@@ -60,11 +60,9 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
 
 
     nextPair?: Board.Pair;
-
     renderSubject = new Subject<Board.Pair>();
 
     hint = 0;
-
     timer = {h: 0, m: 0, s: 0};
 
     source?: {
@@ -99,30 +97,33 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnInit () {
-        this.bucket.add(
-            this.activated
-                .queryParams
-                .subscribe(({w = 7, h}: Params) => {
-                    this.create(+w, +(h || w));
-                })
-        );
+        this.bucket
 
-        this.bucket.add(
-            Observable
-                .interval(99)
-                .map(n => this.stopWatch.time)
-                .map(ms => ~~(ms / 1000))
-                .distinctUntilChanged()
-                .map(s => ({
-                    h: ~~(s / 3600),
-                    m: ~~(s % 3600 / 60),
-                    s: ~~(s % 3600 % 60 + 0.5),
-                }))
-                .subscribe(timer => {
-                    this.timer = timer;
-                    this.cdr.markForCheck();
-                })
-        );
+            .add(
+                this.activated
+                    .queryParams
+                    .subscribe(({w = 7, h}: Params) => {
+                        this.create(+w, +(h || w));
+                    })
+            )
+
+            .add(
+                Observable
+                    .interval(99)
+                    .map(n => this.stopWatch.time)
+                    .map(ms => ~~(ms / 1000))
+                    .distinctUntilChanged()
+                    .map(s => ({
+                        h: ~~(s / 3600),
+                        m: ~~(s % 3600 / 60),
+                        s: ~~(s % 3600 % 60 + 0.5),
+                    }))
+                    .subscribe(timer => {
+                        this.timer = timer;
+                        this.cdr.markForCheck();
+                    })
+            )
+        ;
     }
 
     onPair (pair: Board.Pair, skipChecks = false) {

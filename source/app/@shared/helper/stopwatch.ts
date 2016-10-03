@@ -29,7 +29,7 @@ export class StopWatch {
             this.tape.start = this.now - this.time;
             this.tape.stop = 0;
         }
-    }
+    };
 
     stop = () => {
         if (this.tape.stop > 0) return;
@@ -39,11 +39,10 @@ export class StopWatch {
         }
 
         this.tape.stop = this.now;
-    }
+    };
 
     reset = () => {
         this.tape.start = this.tape.stop = 0;
-    }
+    };
 }
-
 

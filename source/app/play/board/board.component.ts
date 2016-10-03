@@ -89,8 +89,8 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
     ngOnChanges (changes: SimpleChanges) {
         Object.entries<SimpleChange>(changes).forEach(([key, change]) => {
             if (key === 'grid' && !!change.currentValue) {
-                const item = <Board.Item>{};
-                      item.pseudo = true;
+                let item = <Board.Item>{};
+                    item.pseudo = true;
 
                 this.picker.next(item);
             }

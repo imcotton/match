@@ -81,7 +81,7 @@ export class PlayService {
                 return item;
             })
             .toArray()
-            .subscribe(list => boardItemList.push(...list));
+            .subscribe(list => boardItemList.push(...list))
         ;
 
         type ColorGroup = {
