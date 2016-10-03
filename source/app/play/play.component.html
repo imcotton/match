@@ -13,6 +13,14 @@
         </li>
     </ol>
 
+    <p class="text-center">
+        <samp>
+              {{ timer.h | number: '2.' }}
+            : {{ timer.m | number: '2.' }}
+            : {{ timer.s | number: '2.' }}
+        </samp>
+    </p>
+
     <board
         [grid]="source?.data"
         [renderObs]="renderSubject"

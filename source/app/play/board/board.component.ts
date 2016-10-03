@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 
-import { Bucket } from '../../@shared/helper';
+import { Bucket, StopWatch } from '../../@shared/helper';
 
 
 
@@ -45,6 +45,7 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
     constructor (
         private cdr: ChangeDetectorRef,
         private bucket: Bucket,
+        private stopWatch: StopWatch,
     ) {
         const grouping = this.picker
             .filter(item => !item.done)
@@ -65,6 +66,10 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
             grouping.subscribe(([last, current]) => {
                 last.selected = false;
                 current.selected = true;
+
+                if (!current.pseudo) {
+                    this.stopWatch.start();
+                }
             })
         );
     }
