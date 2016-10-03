@@ -11,3 +11,11 @@
     }
 }
 
+.timer {
+    & .blinking {
+        &.invalid {
+            text-decoration: line-through;
+        }
+    }
+}
+

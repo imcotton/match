@@ -21,6 +21,7 @@ import { Title } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 import { Bucket, StopWatch } from '../@shared/helper';
@@ -60,7 +61,9 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
 
 
     nextPair?: Board.Pair;
+
     renderSubject = new Subject<Board.Pair>();
+    autoplaySubject = new BehaviorSubject(false);
 
     hint = 0;
     timer = {h: 0, m: 0, s: 0};
@@ -94,6 +97,7 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
 
         this.hint = 3;
         this.stopWatch.reset();
+        this.autoplaySubject.next(false);
     }
 
     ngOnInit () {
@@ -123,6 +127,21 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
                         this.cdr.markForCheck();
                     })
             )
+
+            .add(
+                this.autoplaySubject
+                    .distinctUntilChanged()
+                    .switchMap(auto => auto && !!this.nextPair
+                        ? Observable.interval(400)
+                        : Observable.never()
+                    )
+                    .map(n => this.nextPair!)
+                    .filter(pair => !!pair)
+                    .subscribe(pair => {
+                        this.onPair(pair, true);
+                        this.renderSubject.next(pair);
+                    })
+            )
         ;
     }
 
@@ -144,6 +163,11 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
 
         this.onPair(validated, true);
         this.renderSubject.next(validated);
+    }
+
+    onAutoplay ($event: Event) {
+        this.stopWatch.stop();
+        this.autoplaySubject.next(true);
     }
 
     onReplay ($event: MouseEvent) {

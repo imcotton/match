@@ -3,6 +3,10 @@
     margin: 20px auto;
     border: 1px solid;
     background-color: #3C3C3C;
+
+    &.disabled * {
+        cursor: not-allowed;
+    }
 }
 
 .cell {

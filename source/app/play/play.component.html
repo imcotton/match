@@ -13,8 +13,12 @@
         </li>
     </ol>
 
-    <p class="text-center">
-        <samp>
+    <p class="text-center timer">
+        <samp class="blinking"
+              [ngClass]="{
+                  invalid: autoplaySubject | async
+              }"
+        >
               {{ timer.h | number: '2.' }}
             : {{ timer.m | number: '2.' }}
             : {{ timer.s | number: '2.' }}
@@ -24,6 +28,7 @@
     <board
         [grid]="source?.data"
         [renderObs]="renderSubject"
+        [autoplayObs]="autoplaySubject"
         (pairObs)="onPair($event)"
     ></board>
 
@@ -34,6 +39,12 @@
                 [hidden]="!nextPair || hint <= 0"
                 (click)="onHint(nextPair)"
         >hint me {{ hint | repeat: '!' }}</button>
+
+        <button class="pure-button button-primary"
+                [hidden]="!nextPair || hint > 0"
+                [disabled]="autoplaySubject | async"
+                (click)="onAutoplay($event)"
+        >{{ (autoplaySubject | async) ? 'playing...' : 'autoplay?' }}</button>
 
         <button class="pure-button button-primary"
                 [hidden]="!!nextPair"

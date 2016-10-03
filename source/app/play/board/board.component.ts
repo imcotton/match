@@ -39,6 +39,7 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() grid: Promise<Board.ItemList[]>;
     @Input() renderObs: Observable<Board.Pair>;
+    @Input() autoplayObs: Observable<boolean>;
 
     @Output() pairObs: Observable<Board.Pair>;
 
@@ -47,40 +48,52 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
         private bucket: Bucket,
         private stopWatch: StopWatch,
     ) {
-        const grouping = this.picker
-            .filter(item => !item.done)
-            .distinctUntilChanged()
-            .pairwise()
-            .share()
-        ;
-
-        this.pairObs = grouping
+        this.pairObs = this.grouping
             .filter(([last, current]) =>
-                !last.pseudo && last.color === current.color
+                   !last.pseudo
+                && last.done === false
+                && last.color === current.color
             )
             .map(([bob, alice]) => <Board.Pair>{bob, alice})
             .share()
         ;
-
-        this.bucket.add(
-            grouping.subscribe(([last, current]) => {
-                last.selected = false;
-                current.selected = true;
-
-                if (!current.pseudo) {
-                    this.stopWatch.start();
-                }
-            })
-        );
     }
 
 
+    autoPlayOn = false;
     picker = new Subject<Board.Item>();
+
+    private grouping = this.picker
+        .filter(item => this.autoPlayOn === false)
+        .filter(item => !item.done)
+        .distinctUntilChanged()
+        .pairwise()
+        .share()
+    ;
 
 
     ngOnInit () {
         this.bucket.add(
             this.renderObs.subscribe(({bob, alice}) => {
+                this.cdr.markForCheck();
+            })
+        );
+
+        this.bucket.add(
+            this.grouping
+                .subscribe(([last, current]) => {
+                    last.selected = false;
+                    current.selected = true;
+
+                    if (!current.pseudo) {
+                        this.stopWatch.start();
+                    }
+                })
+        );
+
+        this.bucket.add(
+            this.autoplayObs.subscribe(auto => {
+                this.autoPlayOn = auto;
                 this.cdr.markForCheck();
             })
         );
