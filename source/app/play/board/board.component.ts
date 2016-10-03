@@ -73,30 +73,33 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
 
 
     ngOnInit () {
-        this.bucket.add(
-            this.renderObs.subscribe(({bob, alice}) => {
-                this.cdr.markForCheck();
-            })
-        );
+        this.bucket
 
-        this.bucket.add(
-            this.grouping
-                .subscribe(([last, current]) => {
-                    last.selected = false;
-                    current.selected = true;
-
-                    if (!current.pseudo) {
-                        this.stopWatch.start();
-                    }
+            .add(
+                this.renderObs.subscribe(({bob, alice}) => {
+                    this.cdr.markForCheck();
                 })
-        );
+            )
 
-        this.bucket.add(
-            this.autoplayObs.subscribe(auto => {
-                this.autoPlayOn = auto;
-                this.cdr.markForCheck();
-            })
-        );
+            .add(
+                this.grouping
+                    .subscribe(([last, current]) => {
+                        last.selected = false;
+                        current.selected = true;
+
+                        if (!current.pseudo) {
+                            this.stopWatch.start();
+                        }
+                    })
+            )
+
+            .add(
+                this.autoplayObs.subscribe(auto => {
+                    this.autoPlayOn = auto;
+                    this.cdr.markForCheck();
+                })
+            )
+        ;
     }
 
     ngOnChanges (changes: SimpleChanges) {
