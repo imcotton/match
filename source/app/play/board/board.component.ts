@@ -40,6 +40,7 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
     @Input() grid: Promise<Board.ItemList[]>;
     @Input() renderObs: Observable<Board.Pair>;
     @Input() autoplayObs: Observable<boolean>;
+    @Input() noMorePairs: boolean;
 
     @Output() pairObs: Observable<Board.Pair>;
 
@@ -48,6 +49,19 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
         private bucket: Bucket,
         private stopWatch: StopWatch,
     ) {
+        this.bucket.add(
+            this.grouping
+                .filter(_ => this.noMorePairs !== true)
+                .subscribe(([last, current]) => {
+                    last.selected = false;
+                    current.selected = true;
+
+                    if (!current.pseudo) {
+                        this.stopWatch.start();
+                    }
+                })
+        );
+
         this.pairObs = this.grouping
             .filter(([last, current]) =>
                    !last.pseudo
@@ -79,18 +93,6 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
                 this.renderObs.subscribe(({bob, alice}) => {
                     this.cdr.markForCheck();
                 })
-            )
-
-            .add(
-                this.grouping
-                    .subscribe(([last, current]) => {
-                        last.selected = false;
-                        current.selected = true;
-
-                        if (!current.pseudo) {
-                            this.stopWatch.start();
-                        }
-                    })
             )
 
             .add(

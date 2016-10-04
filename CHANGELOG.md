@@ -1,6 +1,11 @@
 ## NEXT (TBD)
 
 
+## 1.0.0-beta.3 (2016-10-05)
+
+- fix for stopwatch not been stoped
+
+
 ## 1.0.0-beta.2 (2016-10-04)
 
 - polyfill for Intl API
