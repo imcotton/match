@@ -97,6 +97,10 @@ gulp.task 'polyfills', ->
 
     vendor = '
         core-js/client/shim.min.js
+
+        intl/dist/Intl.min.js
+        intl/locale-data/jsonp/en.js
+
         zone.js/dist/zone.min.js
     '
 
