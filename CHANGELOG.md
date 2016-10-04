@@ -1,6 +1,15 @@
 ## NEXT (TBD)
 
 
+## 1.0.0-beta.1 (2016-10-04)
+
+- autoplay
+- hinting counts
+- recording time spends on each round
+- IE9 polyfills for CSS class list
+- LoDash free (for now)
+
+
 ## 1.0.0-beta.0 (2016-09-26)
 
 - rewritten to Angular 2
