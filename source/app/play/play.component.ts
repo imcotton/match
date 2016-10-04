@@ -100,6 +100,11 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
         this.autoplaySubject.next(false);
     }
 
+    private crossPair = (pair: Board.Pair) => {
+        this.onPair(pair, true);
+        this.renderSubject.next(pair);
+    };
+
     ngOnInit () {
         this.bucket
 
@@ -137,10 +142,7 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
                     )
                     .map(n => this.nextPair!)
                     .filter(pair => !!pair)
-                    .subscribe(pair => {
-                        this.onPair(pair, true);
-                        this.renderSubject.next(pair);
-                    })
+                    .subscribe(this.crossPair)
             )
         ;
     }
@@ -161,8 +163,7 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
         this.hint--;
         this.stopWatch.start();
 
-        this.onPair(validated, true);
-        this.renderSubject.next(validated);
+        this.crossPair(validated);
     }
 
     onAutoplay ($event: Event) {
