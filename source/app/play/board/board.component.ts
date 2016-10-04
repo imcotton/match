@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 
-import { Bucket } from '../../@shared/helper';
+import { Bucket, StopWatch } from '../../@shared/helper';
 
 
 
@@ -39,53 +39,76 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() grid: Promise<Board.ItemList[]>;
     @Input() renderObs: Observable<Board.Pair>;
+    @Input() autoplayObs: Observable<boolean>;
 
     @Output() pairObs: Observable<Board.Pair>;
 
     constructor (
         private cdr: ChangeDetectorRef,
         private bucket: Bucket,
+        private stopWatch: StopWatch,
     ) {
-        const grouping = this.picker
-            .startWith(<Board.Item>{})
-            .filter(item => !item.done)
-            .distinctUntilChanged()
-            .pairwise()
-            .share()
-        ;
-
-        this.pairObs = grouping
+        this.pairObs = this.grouping
             .filter(([last, current]) =>
-                !last.done && last.color === current.color
+                   !last.pseudo
+                && last.done === false
+                && last.color === current.color
             )
             .map(([bob, alice]) => <Board.Pair>{bob, alice})
             .share()
         ;
-
-        this.bucket.add(
-            grouping.subscribe(([last, current]) => {
-                last.selected = false;
-                current.selected = true;
-            })
-        );
     }
 
 
+    autoPlayOn = false;
     picker = new Subject<Board.Item>();
+
+    private grouping = this.picker
+        .filter(item => this.autoPlayOn === false)
+        .filter(item => !item.done)
+        .distinctUntilChanged()
+        .pairwise()
+        .share()
+    ;
 
 
     ngOnInit () {
-        this.bucket.add(
-            this.renderObs.subscribe(({bob, alice}) => {
-                this.cdr.markForCheck();
-            })
-        );
+        this.bucket
+
+            .add(
+                this.renderObs.subscribe(({bob, alice}) => {
+                    this.cdr.markForCheck();
+                })
+            )
+
+            .add(
+                this.grouping
+                    .subscribe(([last, current]) => {
+                        last.selected = false;
+                        current.selected = true;
+
+                        if (!current.pseudo) {
+                            this.stopWatch.start();
+                        }
+                    })
+            )
+
+            .add(
+                this.autoplayObs.subscribe(auto => {
+                    this.autoPlayOn = auto;
+                    this.cdr.markForCheck();
+                })
+            )
+        ;
     }
 
     ngOnChanges (changes: SimpleChanges) {
         Object.entries<SimpleChange>(changes).forEach(([key, change]) => {
             if (key === 'grid' && !!change.currentValue) {
-                this.picker.next(<Board.Item>{});
+                let item = <Board.Item>{};
+                    item.pseudo = true;
+
+                this.picker.next(item);
             }
         });
     }
@@ -112,6 +135,7 @@ export namespace Board {
         readonly color: Color
 
         selected?: boolean
+        pseudo?: boolean
     }
 
     export type ItemList = Item[]

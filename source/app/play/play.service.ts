@@ -8,9 +8,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { State, Point, Range, CellModel, GridModel, Calculator } from '../@shared/engine';
 
+import { shuffle } from '../@shared/helper';
+
 import { Board } from './board/board.component';
 
-import _ from '../../scripts/utils/lodash';
 
 
 
@@ -34,7 +35,7 @@ export class PlayService {
     private *genHex (count = 0) {
 
         const range = Array.from(Array(count), (n, i) => i);
-        const indexs = _.shuffle(range) as number[];
+        const indexs = shuffle(range);
 
         while (indexs.length) {
             yield PlayService.hexStore[
@@ -54,7 +55,7 @@ export class PlayService {
         const unpack = (item: Board.Item) => cache.get(item) as CellModel;
 
         const checking = ({bob, alice}: Board.Pair) =>
-            calculator.hasMatch(unpack(bob), unpack(alice))
+            calculator.hasMatch(unpack(bob), unpack(alice));
 
         const boardItemList: Board.ItemList = [];
 
@@ -80,7 +81,7 @@ export class PlayService {
                 return item;
             })
             .toArray()
-            .subscribe(list => boardItemList.push(...list));
+            .subscribe(list => boardItemList.push(...list))
         ;
 
         type ColorGroup = {
@@ -163,10 +164,14 @@ export class PlayService {
 
 class BoardItem implements Board.Item {
 
-    private static colorGen = _.memoize((hex: number) => <Board.Color>{
-        hex: hex,
-        hexString: `#${ hex.toString(0x10) }`,
-    });
+    private static colorGen = (function (cache) {
+        return function (hex: number) {
+            return cache[hex] = cache[hex] || {
+                hex,
+                hexString: `#${ hex.toString(0x10) }`,
+            };
+        }
+    }(<{[key: number]: Board.Color;}>{}));
 
     constructor (
         private state: State,

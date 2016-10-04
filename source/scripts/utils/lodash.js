@@ -14,15 +14,15 @@ import noop from 'lodash-es/noop'
 
 
 export default {
-    last,
-    pick,
-    map,
-    each,
-    times,
-    range,
-    flatten,
-    shuffle,
-    memoize,
-    noop,
+    // last,
+    // pick,
+    // map,
+    // each,
+    // times,
+    // range,
+    // flatten,
+    // shuffle,
+    // memoize,
+    // noop,
 }
 

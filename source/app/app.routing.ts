@@ -3,7 +3,7 @@ import { ModuleWithProviders, Type }  from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 
 
-import { PlayComponent, BoardComponent } from './play/play.component'
+import { PlayComponent, BoardComponent, RepeatPipe } from './play/play.component'
 import { LeaderboardComponent } from './leaderboard/leaderboard.component'
 
 
@@ -27,7 +27,7 @@ export const ROUTING = RouterModule.forRoot(<Route[]>[
 
 
 export const declarations = [
-    PlayComponent,
+    PlayComponent, RepeatPipe,
         BoardComponent,
 
     LeaderboardComponent,

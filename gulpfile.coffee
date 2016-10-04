@@ -230,8 +230,7 @@ gulp.task 'rollup.post', ['rollup'], ->
 
     gulp.src utils.path.dst 'scripts/bundle.js'
 
-        .pipe $.if not utils.prod,
-            $.stripComments space: true
+        .pipe $.stripComments space: true
 
         .pipe $.if utils.prod,
             $.regenerator includeRuntime: false
