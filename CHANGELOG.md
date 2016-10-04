@@ -1,6 +1,11 @@
 ## NEXT (TBD)
 
 
+## 1.0.0-beta.2 (2016-10-04)
+
+- polyfill for Intl API
+
+
 ## 1.0.0-beta.1 (2016-10-04)
 
 - autoplay
