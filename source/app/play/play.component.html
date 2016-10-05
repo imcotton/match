@@ -28,7 +28,7 @@
     <board
         [grid]="source?.data"
         [renderObs]="renderSubject"
-        [autoplayObs]="autoplaySubject"
+        [autoPlaying]="autoplaySubject | async"
         [noMorePairs]="!nextPair"
         (pairObs)="onPair($event)"
     ></board>
