@@ -8,6 +8,7 @@ url = require 'url'
 $ = _.merge do require('gulp-load-plugins'), {
     del: (option, glob) -> require('del')(glob, option)
     rollup: require('rollup').rollup
+    closure: require('google-closure-compiler-js').gulp()
     exec: require('child_process').exec
     watch: (task, glob) -> gulp.watch glob, debounceDelay: 1000, task
 }
@@ -82,6 +83,9 @@ gulp.task 'assets', ->
 
         .pipe $.if (({path}) -> utils.prod and path.endsWith 'assets/index.html'),
             $.replace /(<link rel="icon" href=")(.*)(">)/, '$1favicon.ico$3'
+
+        .pipe $.if (({path}) -> utils.prod and path.endsWith 'assets/index.html'),
+            $.replace /(src="scripts\/bundle)(.js)/, '$1.min$2'
 
         .pipe gulp.dest utils.path.dst()
 
@@ -216,17 +220,15 @@ gulp.task 'rollup.post', ['rollup'], ->
 
     gulp.src utils.path.dst 'scripts/bundle.js'
 
-        .pipe $.stripComments space: true
+        .pipe $.stripComments space: false
 
         .pipe $.if utils.prod,
-            $.uglify {
-                mangle:
-                    screw_ie8: true
-                    keep_fnames: false
-
-                compress:
-                    screw_ie8: true
-                    dead_code: true
+            $.closure {
+                outputWrapper: '(function(){\n%output%\n}).call(this)'
+                assumeFunctionWrapper: true
+                rewritePolyfills: false
+                warningLevel: 'QUIET'
+                jsOutputFile: 'bundle.min.js'
             }
 
         .pipe gulp.dest utils.path.dst 'scripts'
