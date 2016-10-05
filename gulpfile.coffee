@@ -175,14 +175,12 @@ gulp.task 'rollup', ['scripts'], (callback) ->
         context: 'window'
         cache: utils.cache
         plugins: _.compact [
-            resolveId: (id, from) ->
-                rxjs = 'rxjs'
-                if id.startsWith(rxjs) and not id.startsWith("#{ rxjs }-es")
-                    return utils.npm_resolve id.replace ///(#{ rxjs })(.*)///, '$1-es$2.js'
-
 
             utils.require 'rollup-plugin-node-resolve'
 
+            utils.require 'rollup-plugin-commonjs', {
+                include: 'node_modules/**'
+                sourceMap: false
             }
 
             utils.require 'rollup-plugin-inject', do ->
