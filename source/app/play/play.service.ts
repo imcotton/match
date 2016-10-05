@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 
 import { State, Point, Range, CellModel, GridModel, Calculator } from '../@shared/engine';
@@ -125,7 +125,7 @@ export class PlayService {
             };
         }(groupByColor));
 
-        const nextPair = new BehaviorSubject(<Board.Pair>{});
+        const nextPair = new ReplaySubject<Board.Pair>();
 
         const supplyNextPair = (function (subject, gen) {
             return function (pair = gen()) {
