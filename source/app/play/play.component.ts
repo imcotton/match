@@ -1,7 +1,6 @@
 
 import {
     Component,
-    SimpleChanges,
 
     OnInit,
     OnDestroy,
@@ -45,7 +44,7 @@ import { PlayService } from './play.service';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlayComponent implements OnInit, OnDestroy, OnChanges {
+export class PlayComponent implements OnInit, OnDestroy {
 
     constructor (
         private title: Title,
@@ -136,7 +135,8 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
             .add(
                 this.autoplaySubject
                     .distinctUntilChanged()
-                    .switchMap(auto => auto && !!this.nextPair
+                    .switchMap(auto =>
+                        auto && !!this.nextPair
                         ? Observable.interval(400)
                         : Observable.never()
                     )
@@ -171,11 +171,8 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
         this.autoplaySubject.next(true);
     }
 
-    onReplay ($event: MouseEvent) {
+    onReplay ($event: Event) {
         window.location.reload();
-    }
-
-    ngOnChanges (simpleChanges: SimpleChanges) {
     }
 
     ngOnDestroy () {
