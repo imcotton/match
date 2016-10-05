@@ -237,9 +237,6 @@ gulp.task 'rollup.post', ['rollup'], ->
         .pipe $.stripComments space: true
 
         .pipe $.if utils.prod,
-            $.regenerator includeRuntime: false
-
-        .pipe $.if utils.prod,
             $.uglify {
                 mangle:
                     screw_ie8: true
