@@ -183,14 +183,6 @@ gulp.task 'rollup', ['scripts'], (callback) ->
 
             utils.require 'rollup-plugin-node-resolve'
 
-            utils.require 'rollup-plugin-buble', {
-                transforms: {
-                    modules: false
-                    dangerousForOf: false
-                    spreadRest: true
-                    generator: false
-                    forOf: false
-                }
             }
 
             utils.require 'rollup-plugin-inject', do ->

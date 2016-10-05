@@ -46,7 +46,6 @@
     "@types/node": "^6.0.42",
     "@types/whatwg-fetch": "0.0.31",
     "autoprefixer": "^6.5.0",
-    "buble": "^0.14.0",
     "coffee-script": "^1.11.1",
     "compression": "^1.6.2",
     "concurrently": "^3.1.0",
@@ -82,7 +81,6 @@
     "request": "^2.75.0",
     "rimraf": "^2.5.4",
     "rollup": "^0.36.1",
-    "rollup-plugin-buble": "^0.14.0",
     "rollup-plugin-inject": "^2.0.0",
     "rollup-plugin-node-resolve": "^2.0.0",
     "typescript": "^2.0.3"
