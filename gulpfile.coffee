@@ -180,14 +180,6 @@ gulp.task 'rollup', ['scripts'], (callback) ->
                 if id.startsWith(rxjs) and not id.startsWith("#{ rxjs }-es")
                     return utils.npm_resolve id.replace ///(#{ rxjs })(.*)///, '$1-es$2.js'
 
-                text = '!text'
-                if id.endsWith text
-                    return path.resolve from, '..', id[...-text.length]
-
-            utils.require 'rollup-plugin-string', {
-                include: '**/*.{css,html,txt}'
-                exclude: 'node_modules/**'
-            }
 
             utils.require 'rollup-plugin-node-resolve'
 
