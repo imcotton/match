@@ -41,9 +41,9 @@
     "zone.js": "^0.6.25"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.36",
-    "@types/node": "^6.0.42",
-    "@types/whatwg-fetch": "0.0.31",
+    "@types/lodash": "^4.14.37",
+    "@types/node": "^6.0.43",
+    "@types/whatwg-fetch": "0.0.32",
     "autoprefixer": "^6.5.0",
     "coffee-script": "^1.11.1",
     "compression": "^1.6.2",
