@@ -34,7 +34,7 @@
         "genDir": "./codegen",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "debug": true
+        "debug": false
     },
 
     "filesGlob": [
