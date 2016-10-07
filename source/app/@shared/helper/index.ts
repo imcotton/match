@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { AnonymousSubscription } from 'rxjs/Subscription';
 
 
-export { StopWatch } from './stopwatch'
+export { Stopwatch } from './stopwatch'
 
 
 

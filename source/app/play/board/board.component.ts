@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 
-import { Bucket, StopWatch } from '../../@shared/helper';
+import { Bucket, Stopwatch } from '../../@shared/helper';
 
 
 
@@ -48,7 +48,7 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
     constructor (
         private cdr: ChangeDetectorRef,
         private bucket: Bucket,
-        private stopWatch: StopWatch,
+        private stopWatch: Stopwatch,
     ) {
         this.bucket.add(
             this.grouping

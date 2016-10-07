@@ -23,7 +23,7 @@ import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
-import { Bucket, StopWatch } from '../@shared/helper';
+import { Bucket, Stopwatch } from '../@shared/helper';
 
 import { BoardComponent, Board } from './board/board.component';
 
@@ -40,7 +40,7 @@ import { PlayService } from './play.service';
     providers: [
         PlayService,
         Bucket,
-        StopWatch,
+        Stopwatch,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -53,7 +53,7 @@ export class PlayComponent implements OnInit, OnDestroy {
         private router: Router,
         private activated: ActivatedRoute,
         private playService: PlayService,
-        private stopWatch: StopWatch,
+        private stopwatch: Stopwatch,
     ) {
         this.title.setTitle('Play');
     }
@@ -89,13 +89,13 @@ export class PlayComponent implements OnInit, OnDestroy {
                     },
                     complete: () => {
                         this.nextPair = undefined;
-                        this.stopWatch.stop();
+                        this.stopwatch.stop();
                     },
                 })
         );
 
         this.hint = 3;
-        this.stopWatch.reset();
+        this.stopwatch.reset();
         this.autoplaySubject.next(false);
     }
 
@@ -118,7 +118,7 @@ export class PlayComponent implements OnInit, OnDestroy {
             .add(
                 Observable
                     .interval(99)
-                    .map(n => this.stopWatch.time)
+                    .map(n => this.stopwatch.time)
                     .map(ms => ~~(ms / 1000))
                     .distinctUntilChanged()
                     .map(s => ({
@@ -161,13 +161,13 @@ export class PlayComponent implements OnInit, OnDestroy {
 
     onHint (validated: Board.Pair) {
         this.hint--;
-        this.stopWatch.start();
+        this.stopwatch.start();
 
         this.crossPair(validated);
     }
 
     onAutoplay ($event: Event) {
-        this.stopWatch.stop();
+        this.stopwatch.stop();
         this.autoplaySubject.next(true);
     }
 
