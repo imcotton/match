@@ -5,6 +5,7 @@
         "outDir": "../dist",
         "moduleResolution": "node",
         "allowJs": true,
+        "allowSyntheticDefaultImports": true,
         "declaration": false,
         "sourceMap": false,
         "emitDecoratorMetadata": true,
