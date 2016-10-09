@@ -1,6 +1,13 @@
 ## NEXT (TBD)
 
 
+## 1.0.0-beta.4 (2016-10-09)
+
+- rough implementation of leaderboard page
+- using closure compiler for production builds
+- refine building setups
+
+
 ## 1.0.0-beta.3 (2016-10-05)
 
 - fix for stopwatch not been stoped
