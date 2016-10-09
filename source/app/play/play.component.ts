@@ -1,7 +1,6 @@
 
 import {
     Component,
-    SimpleChanges,
 
     OnInit,
     OnDestroy,
@@ -24,11 +23,13 @@ import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
-import { Bucket, StopWatch } from '../@shared/helper';
+import { Bucket, Stopwatch } from '../@shared/helper';
 
 import { BoardComponent, Board } from './board/board.component';
 
 import { PlayService } from './play.service';
+
+import { LeaderboardService } from '../leaderboard/leaderboard.service';
 
 
 
@@ -40,12 +41,13 @@ import { PlayService } from './play.service';
     styleUrls: ['play.component.css'],
     providers: [
         PlayService,
+        LeaderboardService,
         Bucket,
-        StopWatch,
+        Stopwatch,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlayComponent implements OnInit, OnDestroy, OnChanges {
+export class PlayComponent implements OnInit, OnDestroy {
 
     constructor (
         private title: Title,
@@ -54,7 +56,8 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
         private router: Router,
         private activated: ActivatedRoute,
         private playService: PlayService,
-        private stopWatch: StopWatch,
+        private leaderboardService: LeaderboardService,
+        private stopwatch: Stopwatch,
     ) {
         this.title.setTitle('Play');
     }
@@ -90,13 +93,23 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
                     },
                     complete: () => {
                         this.nextPair = undefined;
-                        this.stopWatch.stop();
+                        this.stopwatch.stop();
+
+                        if (   this.autoplaySubject.value === true
+                            || this.stopwatch.time <= 0
+                        ) {
+                            return;
+                        }
+
+                        this.leaderboardService
+                            .addRecord(this.stopwatch.time, width, height!)
+                        ;
                     },
                 })
         );
 
         this.hint = 3;
-        this.stopWatch.reset();
+        this.stopwatch.reset();
         this.autoplaySubject.next(false);
     }
 
@@ -119,7 +132,7 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
             .add(
                 Observable
                     .interval(99)
-                    .map(n => this.stopWatch.time)
+                    .map(n => this.stopwatch.time)
                     .map(ms => ~~(ms / 1000))
                     .distinctUntilChanged()
                     .map(s => ({
@@ -136,7 +149,8 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
             .add(
                 this.autoplaySubject
                     .distinctUntilChanged()
-                    .switchMap(auto => auto && !!this.nextPair
+                    .switchMap(auto =>
+                        auto && !!this.nextPair
                         ? Observable.interval(400)
                         : Observable.never()
                     )
@@ -161,21 +175,18 @@ export class PlayComponent implements OnInit, OnDestroy, OnChanges {
 
     onHint (validated: Board.Pair) {
         this.hint--;
-        this.stopWatch.start();
+        this.stopwatch.start();
 
         this.crossPair(validated);
     }
 
     onAutoplay ($event: Event) {
-        this.stopWatch.stop();
+        this.stopwatch.stop();
         this.autoplaySubject.next(true);
     }
 
-    onReplay ($event: MouseEvent) {
+    onReplay ($event: Event) {
         window.location.reload();
-    }
-
-    ngOnChanges (simpleChanges: SimpleChanges) {
     }
 
     ngOnDestroy () {

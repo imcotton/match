@@ -5,6 +5,7 @@
         "outDir": "../dist",
         "moduleResolution": "node",
         "allowJs": true,
+        "allowSyntheticDefaultImports": true,
         "declaration": false,
         "sourceMap": false,
         "emitDecoratorMetadata": true,
@@ -34,7 +35,7 @@
         "genDir": "./codegen",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "debug": true
+        "debug": false
     },
 
     "filesGlob": [

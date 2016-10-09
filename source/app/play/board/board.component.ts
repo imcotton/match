@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 
-import { Bucket, StopWatch } from '../../@shared/helper';
+import { Bucket, Stopwatch } from '../../@shared/helper';
 
 
 
@@ -39,7 +39,8 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() grid: Promise<Board.ItemList[]>;
     @Input() renderObs: Observable<Board.Pair>;
-    @Input() autoplayObs: Observable<boolean>;
+
+    @Input() autoPlaying: boolean;
     @Input() noMorePairs: boolean;
 
     @Output() pairObs: Observable<Board.Pair>;
@@ -47,7 +48,7 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
     constructor (
         private cdr: ChangeDetectorRef,
         private bucket: Bucket,
-        private stopWatch: StopWatch,
+        private stopWatch: Stopwatch,
     ) {
         this.bucket.add(
             this.grouping
@@ -74,11 +75,10 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
     }
 
 
-    autoPlayOn = false;
     picker = new Subject<Board.Item>();
 
     private grouping = this.picker
-        .filter(item => this.autoPlayOn === false)
+        .filter(item => this.autoPlaying === false)
         .filter(item => !item.done)
         .distinctUntilChanged()
         .pairwise()
@@ -87,21 +87,11 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
 
 
     ngOnInit () {
-        this.bucket
-
-            .add(
-                this.renderObs.subscribe(({bob, alice}) => {
-                    this.cdr.markForCheck();
-                })
-            )
-
-            .add(
-                this.autoplayObs.subscribe(auto => {
-                    this.autoPlayOn = auto;
-                    this.cdr.markForCheck();
-                })
-            )
-        ;
+        this.bucket.add(
+            this.renderObs.subscribe(_ => {
+                this.cdr.markForCheck();
+            })
+        );
     }
 
     ngOnChanges (changes: SimpleChanges) {

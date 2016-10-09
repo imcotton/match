@@ -1,6 +1,5 @@
 
 import 'reflect-metadata';
-import 'regenerator-runtime/runtime';
 import './utils/rxjs-operators';
 
 
