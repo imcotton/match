@@ -32,6 +32,7 @@
     "core-js": "^2.4.1",
     "github-fork-ribbon-css": "^0.2.1",
     "intl": "^1.2.5",
+    "localforage": "^1.4.3",
     "lodash": "^4.16.4",
     "lodash-es": "^4.16.4",
     "purecss": "^0.6.0",
@@ -41,6 +42,7 @@
     "zone.js": "^0.6.25"
   },
   "devDependencies": {
+    "@types/localforage": "0.0.31",
     "@types/lodash": "^4.14.37",
     "@types/node": "^6.0.45",
     "@types/whatwg-fetch": "0.0.32",

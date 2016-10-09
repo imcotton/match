@@ -29,6 +29,8 @@ import { BoardComponent, Board } from './board/board.component';
 
 import { PlayService } from './play.service';
 
+import { LeaderboardService } from '../leaderboard/leaderboard.service';
+
 
 
 
@@ -39,6 +41,7 @@ import { PlayService } from './play.service';
     styleUrls: ['play.component.css'],
     providers: [
         PlayService,
+        LeaderboardService,
         Bucket,
         Stopwatch,
     ],
@@ -53,6 +56,7 @@ export class PlayComponent implements OnInit, OnDestroy {
         private router: Router,
         private activated: ActivatedRoute,
         private playService: PlayService,
+        private leaderboardService: LeaderboardService,
         private stopwatch: Stopwatch,
     ) {
         this.title.setTitle('Play');
@@ -90,6 +94,16 @@ export class PlayComponent implements OnInit, OnDestroy {
                     complete: () => {
                         this.nextPair = undefined;
                         this.stopwatch.stop();
+
+                        if (   this.autoplaySubject.value === true
+                            || this.stopwatch.time <= 0
+                        ) {
+                            return;
+                        }
+
+                        this.leaderboardService
+                            .addRecord(this.stopwatch.time, width, height!)
+                        ;
                     },
                 })
         );
