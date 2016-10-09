@@ -144,6 +144,7 @@ gulp.task 'css.vendor', ->
         purecss/build/pure-min.css
         purecss/build/grids-responsive-min.css
         purecss/build/buttons-min.css
+        purecss/build/tables-min.css
 
         github-fork-ribbon-css/gh-fork-ribbon.css
     '
