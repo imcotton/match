@@ -181,7 +181,10 @@ gulp.task 'rollup', ['scripts'], (callback) ->
         cache: utils.cache
         plugins: _.compact [
 
-            utils.require 'rollup-plugin-node-resolve'
+            utils.require 'rollup-plugin-node-resolve', {
+                jsnext: true
+                browser: true
+            }
 
             utils.require 'rollup-plugin-commonjs', {
                 include: 'node_modules/**'
