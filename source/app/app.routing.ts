@@ -4,7 +4,7 @@ import { Route, RouterModule } from '@angular/router';
 
 
 import { PlayComponent, BoardComponent, RepeatPipe } from './play/play.component'
-import { LeaderboardComponent } from './leaderboard/leaderboard.component'
+import { RecordsComponent } from './records/records.component'
 
 
 
@@ -18,9 +18,9 @@ export const ROUTING = RouterModule.forRoot(<Route[]>[
     },
 
     {
-        path: 'leaderboard',
+        path: 'records',
         pathMatch: 'full',
-        component: LeaderboardComponent,
+        component: RecordsComponent,
     },
 ]);
 
@@ -30,6 +30,6 @@ export const declarations = [
     PlayComponent, RepeatPipe,
         BoardComponent,
 
-    LeaderboardComponent,
+    RecordsComponent,
 ];
 

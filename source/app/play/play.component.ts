@@ -29,7 +29,7 @@ import { BoardComponent, Board } from './board/board.component';
 
 import { PlayService } from './play.service';
 
-import { LeaderboardService } from '../leaderboard/leaderboard.service';
+import { RecordsService } from '../records/records.service';
 
 
 
@@ -41,7 +41,7 @@ import { LeaderboardService } from '../leaderboard/leaderboard.service';
     styleUrls: ['play.component.css'],
     providers: [
         PlayService,
-        LeaderboardService,
+        RecordsService,
         Bucket,
         Stopwatch,
     ],
@@ -56,7 +56,7 @@ export class PlayComponent implements OnInit, OnDestroy {
         private router: Router,
         private activated: ActivatedRoute,
         private playService: PlayService,
-        private leaderboardService: LeaderboardService,
+        private recordsService: RecordsService,
         private stopwatch: Stopwatch,
     ) {
         this.title.setTitle('Play');
@@ -101,7 +101,7 @@ export class PlayComponent implements OnInit, OnDestroy {
                             return;
                         }
 
-                        this.leaderboardService
+                        this.recordsService
                             .addRecord(this.stopwatch.time, width, height!)
                         ;
                     },

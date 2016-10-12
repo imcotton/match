@@ -13,32 +13,32 @@ import {
 import { Title } from '@angular/platform-browser';
 
 
-import { LeaderboardService } from './leaderboard.service';
+import { RecordsService } from './records.service';
 
 
 
 
 
 @Component({
-    selector: 'leaderboard',
-    templateUrl: 'leaderboard.component.html',
-    styleUrls: ['leaderboard.component.css'],
+    selector: 'records',
+    templateUrl: 'records.component.html',
+    styleUrls: ['records.component.css'],
     providers: [
-        LeaderboardService,
+        RecordsService,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LeaderboardComponent implements OnInit, OnDestroy {
+export class RecordsComponent implements OnInit, OnDestroy {
 
     constructor (
         private title: Title,
-        private leaderboardService: LeaderboardService,
+        private recordsService: RecordsService,
     ) {
-        this.title.setTitle('Leaderboard');
+        this.title.setTitle('Records');
     }
 
 
-    records = this.leaderboardService.getSource().toArray().toPromise();
+    records = this.recordsService.getSource().toArray().toPromise();
 
 
     ngOnInit () {
@@ -51,7 +51,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
 
 
 
-export namespace Leaderboard {
+export namespace Records {
 
     export interface Record extends Serializable {
         readonly time: number
