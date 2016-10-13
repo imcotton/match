@@ -3,10 +3,10 @@
 The Game of Matching (and connecting)
 =====================================
 
-This is basic implementation of a little matching game in Chinese term as
-( **连连看** ), however this project particular focus on the way of
-developments rather than game play mainly, and more importantly its algorithm
-behinds.
+This is basic implementation of a little color matching & connecting game,
+in Chinese term called as ( **连连看** ), however this project particular
+focusing on the code development rather than game play mainly,
+and more importantly on its algorithm behinds.
 
 
 Spotlight
