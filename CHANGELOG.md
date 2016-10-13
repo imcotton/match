@@ -1,6 +1,13 @@
 ## NEXT (TBD)
 
 
+## 1.0.0-rc.1 (2016-10-13)
+
+- leaderboard rename to records
+- upgrade Angular to v2.1
+- refine building setups
+
+
 ## 1.0.0-beta.4 (2016-10-09)
 
 - rough implementation of leaderboard page
