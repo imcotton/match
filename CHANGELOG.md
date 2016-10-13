@@ -1,6 +1,11 @@
 ## NEXT (TBD)
 
 
+## 1.0.0-rc.2 (2016-10-13)
+
+- fix href of html <base> tag
+
+
 ## 1.0.0-rc.1 (2016-10-13)
 
 - leaderboard rename to records
