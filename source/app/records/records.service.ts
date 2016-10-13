@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 
-import { Leaderboard } from './leaderboard.component';
+import { Records } from './records.component';
 
 
 import localForage from 'localforage';
@@ -16,7 +16,7 @@ import localForage from 'localforage';
 
 
 @Injectable()
-export class LeaderboardService {
+export class RecordsService {
 
     static readonly MAX_RECORD_SIZE = 42;
 
@@ -38,7 +38,7 @@ export class LeaderboardService {
     private store = localForage;
 
 
-    getSource (size = LeaderboardService.MAX_RECORD_SIZE) {
+    getSource (size = RecordsService.MAX_RECORD_SIZE) {
         return Observable
             .fromPromise(
                 this.store
@@ -51,7 +51,7 @@ export class LeaderboardService {
     }
 
     addRecord (time: number, width: number, height: number) {
-        const THIS = LeaderboardService;
+        const THIS = RecordsService;
         const record = new Record(time, width, height);
 
         return this.getSource()
@@ -69,7 +69,7 @@ export class LeaderboardService {
 
 
 
-class Record implements Leaderboard.Record {
+class Record implements Records.Record {
 
     private static readonly DOT = '::';
 
@@ -82,7 +82,7 @@ class Record implements Leaderboard.Record {
                 height,
             };
         }
-    }(<{[key: string]: Leaderboard.Size;}>{}));
+    }(<{[key: string]: Records.Size;}>{}));
 
 
     constructor (
@@ -99,7 +99,7 @@ class Record implements Leaderboard.Record {
 
     private _size: {width: number; height: number;};
     get size () {
-        return this._size as Leaderboard.Size;
+        return this._size as Records.Size;
     }
 
 
