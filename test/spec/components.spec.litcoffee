@@ -1,9 +1,9 @@
 
     {
         State, Point, Range,
-        CellModel, GridModel, Calculator
+        CellModel, GridModel, Calculator,
 
-    } = require '../../dist/app/@shared/engine/index.umd'
+    } = require '../../dist/app/@shared'
 
 
     describe 'loading modules', ->
