@@ -1,11 +1,4 @@
 
-import { Injectable } from '@angular/core';
-
-
-
-
-
-@Injectable()
 export class Stopwatch {
 
     private tape = {start: 0, stop: 0};

@@ -1,14 +1,10 @@
 
-import { Injectable } from '@angular/core';
-
-
 import { AnonymousSubscription } from 'rxjs/Subscription';
 
 
 
 
 
-@Injectable()
 export class Bucket {
 
     private subscriptions = new Set<AnonymousSubscription>();
