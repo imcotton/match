@@ -1,6 +1,8 @@
 
-export { Bucket } from './bucket'
-export { Stopwatch } from './stopwatch'
+import * as math from './math';
+
+export { Bucket } from './bucket';
+export { Stopwatch } from './stopwatch';
 
 
 
@@ -15,9 +17,13 @@ export const shuffle = function <T>(list: T[]) {
     }
 
     return list;
-}
+};
 
 
 
 export const noop = function () {};
+
+
+
+export { math }
 

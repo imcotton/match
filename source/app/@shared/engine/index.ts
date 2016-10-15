@@ -23,6 +23,6 @@
 
 
 
-export { State, Point, Range, CellModel, GridModel } from './engine'
-export { Calculator } from './engine-legacy'
+export { State, Point, Range, CellModel, GridModel } from './engine';
+export { Calculator } from './engine-legacy';
 
