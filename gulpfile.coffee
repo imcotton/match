@@ -442,7 +442,7 @@ gulp.task 'bundle.shared', utils.list('scripts'), ->
 
 
 
-gulp.task 'test.engine', utils.list('bundle.shared'), ->
+gulp.task 'test', utils.list('bundle.shared'), ->
 
     gulp.src 'test/spec/**/*.spec.{coffee,coffee.md,litcoffee,js}'
         .pipe $.jasmine()

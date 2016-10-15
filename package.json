@@ -12,7 +12,7 @@
     "build": "gulp clean && gulp build --production",
     "build:serve": "concurrently \"npm run build\" \"npm run lite\"",
     "pretest": "gulp clean",
-    "test": "gulp test.engine",
+    "test": "gulp test",
     "lite": "lite-server -c dev/bs-config.js",
     "gulp": "gulp",
     "jasmine": "jasmine",
