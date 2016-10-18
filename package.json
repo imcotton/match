@@ -15,7 +15,6 @@
     "test": "gulp test",
     "lite": "lite-server -c dev/bs-config.js",
     "gulp": "gulp",
-    "jasmine": "jasmine",
     "tsc": "tsc"
   },
   "dependencies": {
