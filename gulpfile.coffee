@@ -415,18 +415,23 @@ gulp.task 'build', utils.list 'assets css.vendor polyfills rollup.post'
 
 
 
-gulp.task 'bundle.engine', utils.list('scripts'), ->
+gulp.task 'bundle.shared', utils.list('scripts'), ->
 
     $.rollup {
-        entry: utils.path.dst 'app/@shared/engine/index.js'
+        entry: utils.path.dst 'app/@shared/**/index.js'
+        context: 'window'
+        plugins: [
+            utils.require 'rollup-plugin-multi-entry'
+        ]
     }
 
     .then (bundle) ->
 
         bundle.write {
-            format: 'umd'
-            moduleName: 'engin'
-            dest: utils.path.dst 'app/@shared/engine/index.umd.js'
+            format: 'cjs'
+            intro: 'var window = {};'
+            moduleName: 'shared'
+            dest: utils.path.dst 'app/@shared/index.js'
         }
 
 
@@ -437,7 +442,7 @@ gulp.task 'bundle.engine', utils.list('scripts'), ->
 
 
 
-gulp.task 'test.engine', utils.list('bundle.engine'), ->
+gulp.task 'test', utils.list('bundle.shared'), ->
 
     gulp.src 'test/spec/**/*.spec.{coffee,coffee.md,litcoffee,js}'
         .pipe $.jasmine()

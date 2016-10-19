@@ -11,10 +11,10 @@
     "dev:build": "gulp dev --build",
     "build": "gulp clean && gulp build --production",
     "build:serve": "concurrently \"npm run build\" \"npm run lite\"",
-    "test": "gulp test.engine",
+    "pretest": "gulp clean",
+    "test": "gulp test",
     "lite": "lite-server -c dev/bs-config.js",
     "gulp": "gulp",
-    "jasmine": "jasmine",
     "tsc": "tsc"
   },
   "dependencies": {
@@ -28,7 +28,6 @@
     "@angular/platform-browser-dynamic": "^2.1.0",
     "@angular/platform-server": "^2.1.0",
     "@angular/router": "^3.1.0",
-    "@angular/upgrade": "^2.1.0",
     "core-js": "^2.4.1",
     "github-fork-ribbon-css": "^0.2.1",
     "intl": "^1.2.5",
@@ -36,9 +35,9 @@
     "lodash": "^4.16.4",
     "lodash-es": "^4.16.4",
     "purecss": "^0.6.0",
-    "rxjs": "^5.0.0-beta.12",
+    "rxjs": "5.0.0-beta.12",
     "tslib": "^1.0.0",
-    "zone.js": "^0.6.25"
+    "zone.js": "^0.6.26"
   },
   "devDependencies": {
     "@types/localforage": "0.0.31",
@@ -84,6 +83,7 @@
     "rollup": "^0.36.3",
     "rollup-plugin-commonjs": "^5.0.5",
     "rollup-plugin-inject": "^2.0.0",
+    "rollup-plugin-multi-entry": "^2.0.1",
     "rollup-plugin-node-resolve": "^2.0.0",
     "typescript": "^2.0.3"
   },

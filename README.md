@@ -1,4 +1,4 @@
-[![logo](./source/assets/image/logo.png)](http://match.imcotton.com)
+[![logo](./source/assets/image/logo.png)](https://imcotton.github.io/match/)
 
 The Game of Matching (and connecting)
 =====================================

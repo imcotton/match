@@ -1,5 +1,5 @@
 
-import { Range, CellModel, GridModel } from './engine'
+import { Range, CellModel, GridModel } from './engine';
 
 
 

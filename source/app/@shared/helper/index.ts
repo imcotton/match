@@ -1,31 +1,10 @@
 
-import { Injectable } from '@angular/core';
+import * as math from './math';
+
+export { Bucket } from './bucket';
+export { Stopwatch } from './stopwatch';
 
 
-import { AnonymousSubscription } from 'rxjs/Subscription';
-
-
-export { Stopwatch } from './stopwatch'
-
-
-
-
-
-@Injectable()
-export class Bucket {
-
-    private subscriptions = new Set<AnonymousSubscription>();
-
-    add = (subscription: AnonymousSubscription) => {
-        this.subscriptions.add(subscription);
-        return this;
-    };
-
-    release = () => {
-        this.subscriptions.forEach(item => item.unsubscribe());
-        this.subscriptions.clear();
-    };
-}
 
 
 
@@ -38,9 +17,13 @@ export const shuffle = function <T>(list: T[]) {
     }
 
     return list;
-}
+};
 
 
 
 export const noop = function () {};
+
+
+
+export { math }
 

@@ -1,6 +1,11 @@
 ## NEXT (TBD)
 
 
+## 1.0.0-rc.3 (2016-10-19)
+
+- improved unit test case
+
+
 ## 1.0.0-rc.2 (2016-10-13)
 
 - fix href of html <base> tag
