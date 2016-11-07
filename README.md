@@ -3,6 +3,8 @@
 The Game of Matching (and connecting)
 =====================================
 
+[![Build Status](https://travis-ci.org/imcotton/match.svg?branch=master)](https://travis-ci.org/imcotton/match)
+
 This is basic implementation of a little color matching & connecting game,
 in Chinese term called as ( **连连看** ), however this project particular
 focusing on the code development rather than game play mainly,
