@@ -1,6 +1,12 @@
 ## NEXT (TBD)
 
 
+## 1.0.0-rc.4 (2016-11-07)
+
+- add Travis CI
+- upgrade pkg
+
+
 ## 1.0.0-rc.3 (2016-10-19)
 
 - improved unit test case
