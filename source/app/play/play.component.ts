@@ -168,7 +168,7 @@ export class PlayComponent implements OnInit, OnDestroy {
             connected = this.source!.checking(pair);
         }
 
-        if (connected === false) return;
+        if (connected === false) { return; }
 
         this.source!.marking(pair.bob, pair.alice);
     }

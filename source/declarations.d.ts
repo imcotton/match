@@ -10,8 +10,13 @@ declare module '../codegen/*';
 
 
 
-interface IterableIterator<T> {
-    [index: number]: any;
-    length: number;
+interface IterableIterator<T> extends ArrayLike<T> {
+}
+
+
+
+interface String {
+    padStart (targetLength: number, padString: string): string
+    padEnd (targetLength: number, padString: string): string
 }
 

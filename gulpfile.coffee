@@ -119,8 +119,11 @@ gulp.task 'polyfills', ->
 
         utils.list
 
+        _.filter _.negate _.startsWith '-'
+
         not utils.prod and _.map (item) ->
             item.replace '.min.js', '.js'
+
 
         _.map utils.path.npm
     ]
@@ -151,6 +154,8 @@ gulp.task 'css.vendor', ->
 
     make = _.flow _.compact [
         utils.list
+
+        _.filter _.negate _.startsWith '-'
 
         not utils.prod and _.map (item) ->
             item.replace /[-.]min.css/, '.css'

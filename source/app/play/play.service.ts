@@ -61,7 +61,7 @@ export class PlayService {
 
         Observable
             .range(0, width * height)
-            .zip(Observable.from(this.genHex(width * height)))
+            .zip(this.genHex(width * height))
             .map(([index, color]: [number, number]) => {
 
                 const [x, y] = [index % width, ~~(index / width)];
@@ -146,7 +146,8 @@ export class PlayService {
                       .delay(delay)
                       .bufferCount(width)
                       .toArray()
-                      .toPromise(),
+                      .toPromise()
+            ,
 
             checking,
 
