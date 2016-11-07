@@ -15,6 +15,7 @@ Spotlight
 - algorithm of core logic
 - Angular 2
 - TypeScript 2
+- RxJS
 - Post CSS
 - jQuery free
 - git-flow
