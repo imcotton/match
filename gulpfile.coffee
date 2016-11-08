@@ -420,7 +420,7 @@ gulp.task 'build', utils.list 'assets css.vendor polyfills rollup.post'
 
 
 
-gulp.task 'bundle.shared', utils.list('scripts'), ->
+gulp.task 'bundle.shared', ['scripts'], ->
 
     $.rollup {
         entry: utils.path.dst 'app/@shared/**/index.js'
@@ -447,7 +447,7 @@ gulp.task 'bundle.shared', utils.list('scripts'), ->
 
 
 
-gulp.task 'test', utils.list('bundle.shared'), ->
+gulp.task 'test', ['bundle.shared'], ->
 
     gulp.src 'test/spec/**/*.spec.{coffee,coffee.md,litcoffee,js}'
         .pipe $.jasmine()
