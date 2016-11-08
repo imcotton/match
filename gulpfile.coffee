@@ -389,6 +389,29 @@ gulp.task 'scripts', ['typescript'], ->
 
 
 
+gulp.task 'rollup.post.report', ['rollup.post'], ->
+
+    list = utils.list '
+        scripts/polyfills.min.js
+        scripts/bundle.min.js
+        styles/vendor.min.css
+        styles/main.css
+        index.html
+    '
+
+    gulp.src list.map utils.path.dst
+        .pipe $.sizereport {
+            gzip: true
+        }
+
+
+
+
+
+
+
+
+
 gulp.task 'dev', utils.list('assets css.vendor polyfills rollup.post'), ->
 
     return if $.util.env.build
@@ -410,7 +433,7 @@ gulp.task 'dev', utils.list('assets css.vendor polyfills rollup.post'), ->
 
 
 
-gulp.task 'build', utils.list 'assets css.vendor polyfills rollup.post'
+gulp.task 'build', utils.list 'assets css.vendor polyfills rollup.post.report'
 
 
 
