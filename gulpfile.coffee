@@ -192,15 +192,17 @@ gulp.task 'rollup', ['scripts'], (callback) ->
             }
 
             utils.require 'rollup-plugin-commonjs', {
-                include: 'node_modules/**'
                 sourceMap: false
+                namedExports: {
+                    tslib: Object.keys require 'tslib'
+                }
             }
 
             utils.require 'rollup-plugin-inject', do ->
                 config = exclude: 'node_modules/**', modules: {}
 
                 map_w_key = _.mapValues.convert 'cap': false
-                make = map_w_key (value, key) -> ['tslib/tslib.es6.js', key]
+                make = map_w_key (value, key) -> ['tslib', key]
 
                 modules = make require 'tslib'
 
