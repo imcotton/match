@@ -42,9 +42,6 @@ utils = {
         if _.isString config then config = require config
         require(module)(config)
 
-    npm_resolve: (rest...) ->
-        path.resolve [__dirname, val.npm, rest...]...
-
     prod: !!$.util.env.production
 }
 
@@ -123,7 +120,6 @@ gulp.task 'polyfills', ->
 
         not utils.prod and _.map (item) ->
             item.replace '.min.js', '.js'
-
 
         _.map utils.path.npm
     ]
