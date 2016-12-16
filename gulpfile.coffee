@@ -189,9 +189,6 @@ gulp.task 'rollup', ['scripts'], (callback) ->
 
             utils.require 'rollup-plugin-commonjs', {
                 sourceMap: false
-                namedExports: {
-                    tslib: Object.keys require 'tslib'
-                }
             }
 
             utils.require 'rollup-plugin-inject', do ->
