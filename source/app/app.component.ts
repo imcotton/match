@@ -12,7 +12,7 @@ import { Component, Version, VERSION as ngVer } from '@angular/core';
 })
 export class AppComponent {
 
-    appVersion = new Version('1.0.0-rc.4').full;
+    appVersion = new Version('1.0.0').full;
     ngVersion = ngVer.full;
 
 }

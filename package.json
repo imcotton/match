@@ -87,5 +87,5 @@
     "rollup-plugin-node-resolve": "^2.0.0",
     "typescript": "2.0.x"
   },
-  "version": "1.0.0-rc.4"
+  "version": "1.0.0"
 }
