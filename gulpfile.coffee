@@ -42,9 +42,6 @@ utils = {
         if _.isString config then config = require config
         require(module)(config)
 
-    npm_resolve: (rest...) ->
-        path.resolve [__dirname, val.npm, rest...]...
-
     prod: !!$.util.env.production
 }
 
@@ -124,7 +121,6 @@ gulp.task 'polyfills', ->
         not utils.prod and _.map (item) ->
             item.replace '.min.js', '.js'
 
-
         _.map utils.path.npm
     ]
 
@@ -192,7 +188,6 @@ gulp.task 'rollup', ['scripts'], (callback) ->
             }
 
             utils.require 'rollup-plugin-commonjs', {
-                include: 'node_modules/**'
                 sourceMap: false
             }
 
@@ -200,7 +195,7 @@ gulp.task 'rollup', ['scripts'], (callback) ->
                 config = exclude: 'node_modules/**', modules: {}
 
                 map_w_key = _.mapValues.convert 'cap': false
-                make = map_w_key (value, key) -> ['tslib/tslib.es6.js', key]
+                make = map_w_key (value, key) -> ['tslib', key]
 
                 modules = make require 'tslib'
 
@@ -389,6 +384,29 @@ gulp.task 'scripts', ['typescript'], ->
 
 
 
+gulp.task 'rollup.post.report', ['rollup.post'], ->
+
+    list = utils.list '
+        scripts/polyfills.min.js
+        scripts/bundle.min.js
+        styles/vendor.min.css
+        styles/main.css
+        index.html
+    '
+
+    gulp.src list.map utils.path.dst
+        .pipe $.sizereport {
+            gzip: true
+        }
+
+
+
+
+
+
+
+
+
 gulp.task 'dev', utils.list('assets css.vendor polyfills rollup.post'), ->
 
     return if $.util.env.build
@@ -410,7 +428,7 @@ gulp.task 'dev', utils.list('assets css.vendor polyfills rollup.post'), ->
 
 
 
-gulp.task 'build', utils.list 'assets css.vendor polyfills rollup.post'
+gulp.task 'build', utils.list 'assets css.vendor polyfills rollup.post.report'
 
 
 
@@ -420,7 +438,7 @@ gulp.task 'build', utils.list 'assets css.vendor polyfills rollup.post'
 
 
 
-gulp.task 'bundle.shared', utils.list('scripts'), ->
+gulp.task 'bundle.shared', ['scripts'], ->
 
     $.rollup {
         entry: utils.path.dst 'app/@shared/**/index.js'
@@ -447,7 +465,7 @@ gulp.task 'bundle.shared', utils.list('scripts'), ->
 
 
 
-gulp.task 'test', utils.list('bundle.shared'), ->
+gulp.task 'test', ['bundle.shared'], ->
 
     gulp.src 'test/spec/**/*.spec.{coffee,coffee.md,litcoffee,js}'
         .pipe $.jasmine()

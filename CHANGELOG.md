@@ -1,4 +1,13 @@
+
 ## NEXT (TBD)
+
+
+## 1.0.0 (2016-12-19)
+
+- release 1.0.0 final
+- add version info
+- upgrade pkg
+- pin TypeScript version in 2.0.x
 
 
 ## 1.0.0-rc.4 (2016-11-07)

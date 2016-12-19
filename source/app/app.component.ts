@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, Version, VERSION as ngVer } from '@angular/core';
 
 
 
@@ -11,5 +11,9 @@ import { Component } from '@angular/core';
     styleUrls: ['app.component.css'],
 })
 export class AppComponent {
+
+    appVersion = new Version('1.0.0').full;
+    ngVersion = ngVer.full;
+
 }
 
