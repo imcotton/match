@@ -17,8 +17,27 @@ header {
 footer {
     margin: 0 auto;
     padding: 4px 8px;
+    position: relative;
     text-align: center;
     border-top: 1px solid lightgray;
+
+    & .ver {
+        position: absolute;
+        margin: 0;
+        top: -0.5em;
+        right: 8px;
+        padding: 2px;
+        margin-top: -3px;
+        border: 1px solid lightgray;
+        border-radius: 4px;
+        line-height: 1;
+        display: inline-block;
+        background-color: white;
+        font-size: 12px;
+        font-family: sans-serif;
+        font-weight: 100;
+        color: lightgray;
+    }
 
     & .rights {
         color: #888;
