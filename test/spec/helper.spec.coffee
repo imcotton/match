@@ -43,8 +43,8 @@ describe 'Utils: shuffle', ->
         exp = Math.sqrt cycle.length * 1 / math.factorial before.length
         std = math.std _.values sum
 
-        expect(std)    .toBeGreaterThan(exp * 0.9)
-        expect(std).not.toBeGreaterThan(exp * 1.1)
+        expect(std)    .toBeGreaterThan(exp * 0.85)
+        expect(std).not.toBeGreaterThan(exp * 1.15)
 
 
 
