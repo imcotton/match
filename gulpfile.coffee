@@ -251,6 +251,14 @@ gulp.task 'rollup.post', ['rollup'], ->
                 .on 'response', _.noop
                 .on 'error', _.noop
 
+        .on 'end', ->
+
+            return unless utils.prod
+
+            $.del {force: true}, [
+                utils.path.tmp()
+            ]
+
 
 
 
