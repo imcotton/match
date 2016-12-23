@@ -293,14 +293,7 @@ gulp.task 'tmp.css', ['tmp.tsconfig'],  ->
             utils.require 'postcss-selector-not'
             utils.require 'postcss-nesting'
             utils.require 'postcss-color-function'
-            utils.require 'autoprefixer', {
-                browsers: [
-                    'last 2 versions'
-                    'ie >= 9'
-                    'iOS >= 8'
-                    'Safari >= 8'
-                ]
-            }
+            utils.require 'autoprefixer'
         ]
         .pipe gulp.dest utils.path.tmp(), dot: true
         .pipe gulp.dest utils.path.dst()

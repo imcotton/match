@@ -17,6 +17,12 @@
     "gulp": "gulp",
     "tsc": "tsc"
   },
+  "browserslist": [
+    "last 2 versions",
+    "ie >= 9",
+    "iOS >= 8",
+    "Safari >= 8"
+  ],
   "dependencies": {
     "@angular/common": "^2.3.1",
     "@angular/compiler": "^2.3.1",
