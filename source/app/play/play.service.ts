@@ -52,7 +52,7 @@ export class PlayService {
         const calculator = new Calculator(grid);
 
         const cache = new WeakMap<Board.Item, CellModel>();
-        const unpack = (item: Board.Item) => cache.get(item) as CellModel;
+        const unpack = (item: Board.Item) => cache.get(item)!;
 
         const checking = ({bob, alice}: Board.Pair) =>
             calculator.hasMatch(unpack(bob), unpack(alice));
@@ -66,7 +66,7 @@ export class PlayService {
 
                 const [x, y] = [index % width, ~~(index / width)];
 
-                const cellModel = grid.getCell(x, y) as CellModel;
+                const cellModel = grid.getCell(x, y)!;
                       cellModel.add(new Range());
 
                 const item: Board.Item = new BoardItem(
