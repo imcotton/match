@@ -190,16 +190,6 @@ gulp.task 'rollup', ['scripts'], (callback) ->
             utils.require 'rollup-plugin-commonjs', {
                 sourceMap: false
             }
-
-            utils.require 'rollup-plugin-inject', do ->
-                config = exclude: 'node_modules/**', modules: {}
-
-                map_w_key = _.mapValues.convert 'cap': false
-                make = map_w_key (value, key) -> ['tslib', key]
-
-                modules = make require 'tslib'
-
-                return _.assign config, {modules}
         ]
     }
 
