@@ -319,7 +319,7 @@ gulp.task 'typescript', ['tmp'], (callback) ->
 
     if utils.prod
 
-        $.exec "cd #{ utils.path.tmp() } ; ../node_modules/.bin/ngc",
+        $.exec "./node_modules/.bin/ngc -p #{ utils.path.tmp() }",
 
             (err, stdout, stderr) ->
                 $.debug stdout
