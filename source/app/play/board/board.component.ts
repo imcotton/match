@@ -95,7 +95,7 @@ export class BoardComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges (changes: SimpleChanges) {
-        Object.entries<SimpleChange>(changes).forEach(([key, change]) => {
+        Object.entries(changes).forEach(([key, change]) => {
             if (key === 'grid' && !!change.currentValue) {
                 let item = <Board.Item>{};
                     item.pseudo = true;
