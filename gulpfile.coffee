@@ -219,7 +219,9 @@ gulp.task 'rollup.post', ['rollup'], ->
 
     gulp.src utils.path.dst 'scripts/bundle.js'
 
-        .pipe $.stripComments space: false
+        .pipe $.stripComments space: true
+
+        .pipe $.replace /ɵ/g, 'QAQ'
 
         .pipe $.if utils.prod,
             $.closure {
