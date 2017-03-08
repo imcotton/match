@@ -22,6 +22,7 @@
         "skipDefaultLibCheck": true,
 
         "noEmitHelpers": true,
+        "importHelpers": true,
         "noImplicitThis": true,
         "noImplicitAny": true,
         "noImplicitReturns": true,

@@ -190,16 +190,6 @@ gulp.task 'rollup', ['scripts'], (callback) ->
             utils.require 'rollup-plugin-commonjs', {
                 sourceMap: false
             }
-
-            utils.require 'rollup-plugin-inject', do ->
-                config = exclude: 'node_modules/**', modules: {}
-
-                map_w_key = _.mapValues.convert 'cap': false
-                make = map_w_key (value, key) -> ['tslib', key]
-
-                modules = make require 'tslib'
-
-                return _.assign config, {modules}
         ]
     }
 
@@ -251,6 +241,14 @@ gulp.task 'rollup.post', ['rollup'], ->
                 .on 'response', _.noop
                 .on 'error', _.noop
 
+        .on 'end', ->
+
+            return unless utils.prod
+
+            $.del {force: true}, [
+                utils.path.tmp()
+            ]
+
 
 
 
@@ -293,14 +291,7 @@ gulp.task 'tmp.css', ['tmp.tsconfig'],  ->
             utils.require 'postcss-selector-not'
             utils.require 'postcss-nesting'
             utils.require 'postcss-color-function'
-            utils.require 'autoprefixer', {
-                browsers: [
-                    'last 2 versions'
-                    'ie >= 9'
-                    'iOS >= 8'
-                    'Safari >= 8'
-                ]
-            }
+            utils.require 'autoprefixer'
         ]
         .pipe gulp.dest utils.path.tmp(), dot: true
         .pipe gulp.dest utils.path.dst()
@@ -328,7 +319,7 @@ gulp.task 'typescript', ['tmp'], (callback) ->
 
     if utils.prod
 
-        $.exec "cd #{ utils.path.tmp() } ; ../node_modules/.bin/ngc",
+        $.exec "./node_modules/.bin/ngc -p #{ utils.path.tmp() }",
 
             (err, stdout, stderr) ->
                 $.debug stdout
