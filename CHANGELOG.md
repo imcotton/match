@@ -2,6 +2,12 @@
 ## NEXT (TBD)
 
 
+## 1.1.0 (2017-03-08)
+
+- upgrade pkg
+- pin TypeScript version in 2.1.x
+
+
 ## 1.0.0 (2016-12-19)
 
 - release 1.0.0 final
