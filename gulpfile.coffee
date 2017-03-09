@@ -190,6 +190,11 @@ gulp.task 'rollup', ['scripts'], (callback) ->
             utils.require 'rollup-plugin-commonjs', {
                 sourceMap: false
             }
+
+            utils.require 'rollup-plugin-json', {
+                exclude: 'node_modules/**'
+                preferConst: true
+            }
         ]
     }
 
