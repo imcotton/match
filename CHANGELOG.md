@@ -2,6 +2,11 @@
 ## NEXT (TBD)
 
 
+## 1.1.1 (2017-03-09)
+
+- fix app version
+
+
 ## 1.1.0 (2017-03-08)
 
 - upgrade pkg

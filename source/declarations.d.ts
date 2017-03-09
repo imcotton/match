@@ -1,22 +1,26 @@
 
-declare module '*!text' {
-    const text: string;
-    export default text;
-}
-
-
-
 declare module '../codegen/*';
 
 
 
-interface IterableIterator<T> extends ArrayLike<T> {
+declare module '*/package.json' {
+
+    const package: {
+        name: string;
+        version: string;
+    };
+
+    export const {
+        name,
+        version
+
+    } = package;
+
+    export default package;
 }
 
 
 
-interface String {
-    padStart (targetLength: number, padString: string): string
-    padEnd (targetLength: number, padString: string): string
+interface IterableIterator<T> extends ArrayLike<T> {
 }
 

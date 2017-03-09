@@ -86,9 +86,10 @@
     "rollup": "^0.41.4",
     "rollup-plugin-commonjs": "^7.1.0",
     "rollup-plugin-inject": "^2.0.0",
+    "rollup-plugin-json": "^2.1.0",
     "rollup-plugin-multi-entry": "^2.0.1",
     "rollup-plugin-node-resolve": "^2.0.0",
     "typescript": "2.1.x"
   },
-  "version": "1.1.0"
+  "version": "1.1.1"
 }

@@ -2,6 +2,9 @@
 import { Component, Version, VERSION as ngVer } from '@angular/core';
 
 
+import { version as appVer } from '../../package.json';
+
+
 
 
 
@@ -12,7 +15,7 @@ import { Component, Version, VERSION as ngVer } from '@angular/core';
 })
 export class AppComponent {
 
-    appVersion = new Version('1.0.0').full;
+    appVersion = new Version(appVer).full;
     ngVersion = ngVer.full;
 
 }
