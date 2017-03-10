@@ -39,7 +39,7 @@ export class PlayService {
 
         while (indexs.length) {
             yield PlayService.hexStore[
-                indexs.pop() % PlayService.hexStore.length
+                indexs.pop()! % PlayService.hexStore.length
             ];
         }
 

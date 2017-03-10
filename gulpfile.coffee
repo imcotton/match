@@ -278,8 +278,6 @@ gulp.task 'tmp.src', ->
 gulp.task 'tmp.tsconfig', ['tmp.src'], ->
 
     gulp.src utils.path.tmp 'tsconfig.json'
-        .pipe $.if utils.prod,
-            $.replace /(strictNullChecks.:(\s+)?)true/, '$1false'
         .pipe gulp.dest utils.path.tmp(), dot: true
 
 
