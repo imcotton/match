@@ -71,13 +71,7 @@ export class PlayComponent implements OnInit, OnDestroy {
     hint = 0;
     timer = {h: 0, m: 0, s: 0};
 
-    source?: {
-        data: Promise<Board.ItemList[]>;
-        checking: (pair: Board.Pair) => boolean;
-        marking: (...item: Board.ItemList) => void;
-        nextPairObs: Observable<Board.Pair>;
-    };
-
+    source = (false as true) && this.playService.getSource();
 
     private create (width = 1, height?: number) {
         height = height || width;
