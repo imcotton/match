@@ -2,6 +2,12 @@
 ## NEXT (TBD)
 
 
+## 1.2.0 (2017-03-30)
+
+- Angular v4
+- enable strictNullChecks for AoT
+
+
 ## 1.1.1 (2017-03-09)
 
 - fix app version
