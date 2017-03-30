@@ -38,7 +38,7 @@
     >
         <button class="pure-button button-success"
                 [hidden]="!nextPair || hint <= 0"
-                (click)="onHint(nextPair)"
+                (click)="nextPair && onHint(nextPair)"
         >hint me {{ hint | repeat: '!' }}</button>
 
         <button class="pure-button button-primary"
